@@ -1,0 +1,34 @@
+# Лабораторная 11: непрерывная интеграция (GitHub Actions)
+# Соответствует требованиям: .github/workflows/, триггер push, запуск pytest.
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - "fix/**"
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest requests
+
+      - name: Run lab 11 + unit tests (no live server)
+        run: |
+          pytest tests/test_ci_cd_lab11.py tests/tests_server.py -q --tb=short

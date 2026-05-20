@@ -1,0 +1,41 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "CRM backend scaffold (Express + Prisma + MVC)",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "dev:frontend": "npm --prefix ../frontend run dev",
+    "start": "node src/server.js",
+    "certs": "node scripts/gen-dev-certs.js",
+    "certs:mkcert": "node scripts/gen-mkcert-certs.js",
+    "mkcert:download": "node scripts/download-mkcert.js",
+    "prisma:generate": "prisma generate",
+    "prisma:generate:clean": "node scripts/rm-prisma-engine-cache.js && prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "prisma db seed",
+    "db:test-data": "prisma db execute --file ../tests/seed_test_data.sql --schema prisma/schema.prisma"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "prisma": "^6.19.3",
+    "selfsigned": "^5.5.0"
+  }
+}

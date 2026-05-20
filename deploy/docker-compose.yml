@@ -1,0 +1,116 @@
+# Запуск из родителя каталога deploy (корень репозитория или пакета crm):
+#   cd B:\Course\Project
+#   docker compose -f deploy/docker-compose.yml up -d
+# или после распаковки архива:
+#   cd ...\crm
+#   docker compose -f deploy/docker-compose.yml up -d
+#
+# Рядом с deploy/ должны быть:  .env  certs/  uploads/  (папку uploads создайте пустой при необходимости)
+# Для полного репозитория: при отсутствии .env в корне скопируйте backend/.env → .env в корне проекта.
+#
+# Образы deploy-* после `docker load` подхватываются без pull с Docker Hub (pull_policy: never).
+# Сборка из исходников: docker compose -f deploy/docker-compose.yml build
+#
+# Сеть: порты 0.0.0.0 — доступ по IP хоста (LAN / сервер). URL: deploy/print-access.ps1 из корня проекта.
+x-backend-build: &backend_build
+  context: ..
+  dockerfile: deploy/Dockerfile.backend
+
+networks:
+  crm_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+
+services:
+  db:
+    image: postgres:16-alpine
+    networks:
+      - crm_net
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: crm_course
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d crm_course"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Схема + admin@crm.by (и менеджеры из prisma/seed.js) до старта API.
+  db-bootstrap:
+    image: deploy-backend:latest
+    pull_policy: never
+    build: *backend_build
+    restart: "no"
+    networks:
+      - crm_net
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/crm_course
+    command: ["sh", "-c", "npx prisma db push --skip-generate && npx prisma db seed"]
+    depends_on:
+      db:
+        condition: service_healthy
+
+  backend:
+    image: deploy-backend:latest
+    pull_policy: never
+    build: *backend_build
+    networks:
+      - crm_net
+    command: ["node", "src/server.js"]
+    env_file:
+      - ../.env
+    environment:
+      # Одна БД в compose; env_file может задать *_ADMIN / *_MANAGER на localhost — Prisma тогда игнорирует DATABASE_URL.
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/crm_course
+      DATABASE_URL_ADMIN: postgresql://postgres:postgres@db:5432/crm_course
+      DATABASE_URL_MANAGER: postgresql://postgres:postgres@db:5432/crm_course
+      PORT: "4000"
+      HTTPS_ENABLED: "false"
+      HTTP_REDIRECT_TO_HTTPS: "false"
+      TRUST_PROXY: "true"
+      ENFORCE_HTTPS: "false"
+    volumes:
+      - ../uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+      db-bootstrap:
+        condition: service_completed_successfully
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://127.0.0.1:4000/api/health',(r)=>{let d='';r.on('data',(c)=>d+=c);r.on('end',()=>process.exit(r.statusCode===200?0:1));}).on('error',()=>process.exit(1));",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 45s
+
+  nginx:
+    image: deploy-nginx:latest
+    pull_policy: never
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.nginx
+    networks:
+      - crm_net
+    ports:
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+      - "0.0.0.0:8080:8080"
+    volumes:
+      - ../certs:/etc/nginx/certs:ro
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  pgdata:

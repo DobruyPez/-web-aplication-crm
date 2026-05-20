@@ -1,0 +1,20 @@
+{
+  "name": "crm-course-foundation",
+  "version": "1.0.0",
+  "description": "CRM course foundation with React + Express + Prisma (MVC)",
+  "main": "index.js",
+  "scripts": {
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:frontend": "npm --prefix frontend run build",
+    "start:backend": "npm --prefix backend run start",
+    "serve:backend": "node ./backend/src/server.js",
+    "certs": "npm --prefix backend run certs",
+    "certs:mkcert": "npm --prefix backend run certs:mkcert",
+    "mkcert:download": "npm --prefix backend run mkcert:download",
+    "prisma:generate": "npm --prefix backend run prisma:generate",
+    "prisma:generate:clean": "npm --prefix backend run prisma:generate:clean"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
