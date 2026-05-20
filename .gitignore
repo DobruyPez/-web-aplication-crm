@@ -88,8 +88,63 @@ Desktop.ini
 
 # --- Docker / deploy (локальные образы и тома) ---
 *.tar
+*.tar.gz
+*.tgz
 docker-compose.override.yml
 .deploy/
+
+# --- Архивы ---
+*.zip
+*.rar
+*.7z
+*.gz
+*.bz2
+*.xz
+*.iso
+*.cab
+
+# --- Офисные документы и PDF ---
+*.doc
+*.docx
+*.dot
+*.dotx
+*.xls
+*.xlsx
+*.xlsm
+*.ppt
+*.pptx
+*.odt
+*.ods
+*.odp
+*.rtf
+*.pdf
+
+# --- Аудио и видео ---
+*.mp3
+*.wav
+*.flac
+*.ogg
+*.oga
+*.m4a
+*.aac
+*.wma
+*.opus
+*.mp4
+*.avi
+*.mkv
+*.mov
+*.wmv
+*.webm
+*.mpeg
+*.mpg
+
+# --- Крупные растровые исходники (черновики, не ассеты проекта) ---
+*.psd
+*.ai
+*.eps
+*.raw
+*.heic
+*.heif
 
 # --- Прочее ---
 *.suo
