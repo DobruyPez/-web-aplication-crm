@@ -25,7 +25,7 @@ const Profile = () => {
     <section className="resource-section-card">
       <div className="resource-section-head">
         <h3>Личный кабинет</h3>
-        <p className="hint">Ваши данные профиля и Telegram для уведомлений.</p>
+        <p className="hint">Ваши данные профиля и Телеграм для уведомлений.</p>
       </div>
       <div className="resource-card-grid">
         <div className="resource-kv">
@@ -33,7 +33,7 @@ const Profile = () => {
           <strong>{user?.fullName || "—"}</strong>
         </div>
         <div className="resource-kv">
-          <span>Email</span>
+          <span>Электронная почта</span>
           <strong>{user?.email || "—"}</strong>
         </div>
         <div className="resource-kv">
@@ -45,7 +45,7 @@ const Profile = () => {
           <strong>{user?.phone || "—"}</strong>
         </div>
         <div className="resource-kv">
-          <span>Telegram</span>
+          <span>Телеграм</span>
           <strong>
             {user?.telegramLink ? (
               <a href={user.telegramLink} target="_blank" rel="noreferrer">
@@ -57,7 +57,7 @@ const Profile = () => {
           </strong>
         </div>
         <div className="resource-kv">
-          <span>Telegram Chat ID</span>
+          <span>ID чата Telegram</span>
           <strong>{user?.telegramChatId || "—"}</strong>
         </div>
       </div>

@@ -9,11 +9,18 @@ import DocumentUploadPage from "./pages/DocumentUploadPage";
 import Profile from "./pages/Profile";
 import CallCreatePage from "./pages/CallCreatePage";
 import CallRecordingAssignPage from "./pages/CallRecordingAssignPage";
+import ClientInvitePage from "./pages/ClientInvitePage";
+import VideoConferencePublicRedirect from "./pages/VideoConferencePublicRedirect";
+import VideoConferencePage from "./pages/VideoConferencePage";
+import VideoConferenceJoinPage from "./pages/VideoConferenceJoinPage";
 
 function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/client-invite/:token" element={<ClientInvitePage />} />
+      <Route path="/calls/join/:guestToken" element={<VideoConferenceJoinPage />} />
+      <Route path="/calls/video/:sessionId" element={<VideoConferencePublicRedirect />} />
       <Route element={<ProtectedRoute />}>
         <Route element={<Layout />}>
           <Route index element={<Dashboard />} />
@@ -23,6 +30,7 @@ function App() {
           <Route path="calls/create" element={<CallCreatePage />} />
           <Route path="calls" element={<ResourceFrame routeKey="calls" />} />
           <Route path="calls/assign-recording" element={<CallRecordingAssignPage />} />
+          <Route path="calls/video-host/:sessionId" element={<VideoConferencePage />} />
           <Route path="documents/upload" element={<DocumentUploadPage />} />
           <Route path="documents" element={<ResourceFrame routeKey="documents" />} />
           <Route path="profile" element={<Profile />} />

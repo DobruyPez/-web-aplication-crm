@@ -12,10 +12,9 @@ CREATE TABLE users (
 
 -- Клиенты
 CREATE TABLE clients (
-    id         SERIAL PRIMARY KEY,
-    name       VARCHAR(255) NOT NULL,
-    company    VARCHAR(255),
-    phone      VARCHAR(30),
+    id           SERIAL PRIMARY KEY,
+    name         VARCHAR(255) NOT NULL,
+    phone        VARCHAR(30),
     email      VARCHAR(255),
     address    TEXT,
     notes      TEXT,
@@ -24,10 +23,43 @@ CREATE TABLE clients (
     updated_at TIMESTAMP    NOT NULL DEFAULT now()
 );
 
+-- Контактные лица клиента (несколько человек с каналами связи)
+CREATE TABLE client_contact_persons (
+    id         SERIAL PRIMARY KEY,
+    client_id  INT          NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+    full_name  VARCHAR(255) NOT NULL,
+    role       VARCHAR(255),
+    sort_order INT          NOT NULL DEFAULT 0,
+    created_at TIMESTAMP    NOT NULL DEFAULT now(),
+    updated_at TIMESTAMP    NOT NULL DEFAULT now()
+);
+
+CREATE INDEX idx_client_contact_persons_client ON client_contact_persons(client_id);
+
+-- Каналы связи (телефон, почта, мессенджеры) у контактного лица
+CREATE TABLE client_contact_points (
+    id                SERIAL PRIMARY KEY,
+    client_id         INT          NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+    contact_person_id INT          REFERENCES client_contact_persons(id) ON DELETE CASCADE,
+    type         VARCHAR(20)  NOT NULL CHECK (type IN (
+        'mobile', 'landline', 'phone', 'fax', 'email', 'website',
+        'telegram', 'viber', 'whatsapp', 'skype', 'instagram', 'vk', 'ok', 'linkedin'
+    )),
+    value        VARCHAR(255) NOT NULL,
+    contact_name VARCHAR(255) NOT NULL,
+    sort_order   INT          NOT NULL DEFAULT 0,
+    created_at   TIMESTAMP    NOT NULL DEFAULT now(),
+    updated_at   TIMESTAMP    NOT NULL DEFAULT now()
+);
+
+CREATE INDEX idx_client_contact_points_client ON client_contact_points(client_id);
+CREATE INDEX idx_client_contact_points_person ON client_contact_points(contact_person_id);
+
 -- Сделки
 CREATE TABLE deals (
     id           SERIAL PRIMARY KEY,
     title        VARCHAR(255)   NOT NULL,
+    product_name VARCHAR(255)   NOT NULL,
     description  TEXT,
     amount       DECIMAL(12,2),
     stage        VARCHAR(50)    NOT NULL,
@@ -86,7 +118,7 @@ CREATE ROLE app_manager WITH LOGIN PASSWORD 'manager_secure_pass';
 
 -- Привилегии для app_admin
 GRANT CONNECT ON DATABASE crm_db TO app_admin;
-GRANT USAGE ON SCHEMA public TO app_admin;
+GRANT USAGE, CREATE ON SCHEMA public TO app_admin;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO app_admin;
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA public TO app_admin;
 

@@ -62,7 +62,7 @@ function DocumentUploadPage() {
       return;
     }
     if (list.length === 0) {
-      setErrorText("Выберите файл или перетащите его в область загрузки.");
+      setErrorText("Выберите один или несколько файлов или перетащите их в область загрузки.");
       return;
     }
     setUploading(true);
@@ -110,7 +110,7 @@ function DocumentUploadPage() {
     <div className="frame-page doc-upload-page">
       <header className="doc-upload-head">
         <div>
-          <h1>Управление документами</h1>
+          <h1>Загрузка документов</h1>
           <p className="hint">
             Файлы сохраняются в каталоге сервера uploads/docs. Для записей CRM на вкладке «Документы» можно выбрать только
             загруженные здесь файлы. Принимаются расширения: {allowedHint}.
@@ -125,8 +125,11 @@ function DocumentUploadPage() {
       {loading ? <p className="hint">Загрузка...</p> : null}
 
       <section className="doc-upload-add">
-        <h2>Загрузить файл</h2>
-        <p className="hint">Допускаются только файлы с расширениями {allowedHint} (без учёта регистра).</p>
+        <h2>Загрузить файлы</h2>
+        <p className="hint">
+          Допускаются только файлы с расширениями {allowedHint} (без учёта регистра). Можно выбрать или перетащить сразу
+          несколько файлов.
+        </p>
 
         <div
           className={`doc-upload-dropzone ${dragActive ? "active" : ""}`}
@@ -139,15 +142,16 @@ function DocumentUploadPage() {
           onDrop={onDrop}
           role="presentation"
         >
-          <p>{uploading ? "Загрузка…" : "Перетащите файл сюда или выберите с устройства"}</p>
+          <p>{uploading ? "Загрузка…" : "Перетащите файлы сюда или выберите с устройства"}</p>
           <label className="doc-upload-file-btn">
             <input
               type="file"
+              multiple
               accept={[...UPLOAD_MANAGEMENT_ALLOWED_EXTENSIONS, "application/pdf"].join(",")}
               disabled={uploading}
               onChange={onPickFiles}
             />
-            Выбрать файл
+            Выбрать файлы
           </label>
         </div>
       </section>

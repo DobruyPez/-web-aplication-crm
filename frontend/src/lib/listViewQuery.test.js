@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   buildCallsClientHistoryHref,
   buildDealsRiskHref,
+  buildDealsRiskHrefForManager,
   buildTasksBucketHref,
   parseListViewSearchParams,
 } from "./listViewQuery.js";
@@ -48,6 +49,17 @@ describe("buildTasksBucketHref / buildDealsRiskHref", () => {
 
   it("риск сделок", () => {
     expect(buildDealsRiskHref()).toBe("/deals?listRisk=1");
+  });
+
+  it("риск сделок менеджера", () => {
+    const href = buildDealsRiskHrefForManager(17);
+    expect(href).toContain("/deals?");
+    const params = new URLSearchParams(href.split("?")[1]);
+    expect(params.get("listRisk")).toBe("1");
+    expect(params.get("filterField")).toBe("managerId");
+    expect(params.get("recordId")).toBe("17");
+    const parsed = parseListViewSearchParams(`?${href.split("?")[1]}`, "deals");
+    expect(parsed.filterValue).toBe("17");
   });
 
   it("история звонков клиента", () => {

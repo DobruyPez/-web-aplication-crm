@@ -5,8 +5,8 @@
 #   cd ...\crm
 #   docker compose -f deploy/docker-compose.yml up -d
 #
-# Рядом с deploy/ должны быть:  .env  certs/  uploads/  (папку uploads создайте пустой при необходимости)
-# Для полного репозитория: при отсутствии .env в корне скопируйте backend/.env → .env в корне проекта.
+# Рядом с deploy/: backend/.env (основной конфиг), certs/, uploads/
+# backend/.env монтируется в контейнер как /app/.env (Telegram, JWT и т.д.).
 #
 # Образы deploy-* после `docker load` подхватываются без pull с Docker Hub (pull_policy: never).
 # Сборка из исходников: docker compose -f deploy/docker-compose.yml build
@@ -40,7 +40,7 @@ services:
       timeout: 5s
       retries: 5
 
-  # Схема + admin@crm.by (и менеджеры из prisma/seed.js) до старта API.
+  # Схема + seed: admin@crm.by / 1234, менеджеры, демо-клиенты/сделки/задачи (prisma/seed.js).
   db-bootstrap:
     image: deploy-backend:latest
     pull_policy: never
@@ -50,7 +50,11 @@ services:
       - crm_net
     environment:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/crm_course
-    command: ["sh", "-c", "npx prisma db push --skip-generate && npx prisma db seed"]
+    # Закомментируем прямой вызов bulk-скрипта, оставим только миграцию схемы
+    command: ["node", "scripts/docker-db-bootstrap.js"]
+    # Убираем volumes для uploads, т.к. не нужны для миграции
+    # volumes:
+    #   - ../uploads:/app/uploads
     depends_on:
       db:
         condition: service_healthy
@@ -63,9 +67,9 @@ services:
       - crm_net
     command: ["node", "src/server.js"]
     env_file:
-      - ../.env
+      - ../backend/.env
     environment:
-      # Одна БД в compose; env_file может задать *_ADMIN / *_MANAGER на localhost — Prisma тогда игнорирует DATABASE_URL.
+      # Поверх backend/.env: БД и HTTP внутри compose (не localhost из .env).
       DATABASE_URL: postgresql://postgres:postgres@db:5432/crm_course
       DATABASE_URL_ADMIN: postgresql://postgres:postgres@db:5432/crm_course
       DATABASE_URL_MANAGER: postgresql://postgres:postgres@db:5432/crm_course
@@ -74,13 +78,17 @@ services:
       HTTP_REDIRECT_TO_HTTPS: "false"
       TRUST_PROXY: "true"
       ENFORCE_HTTPS: "false"
+      # Один getUpdates на токен BotFather: в контейнере polling выкл., если локально уже npm run dev с TELEGRAM_POLLING_ENABLED=true.
+      # Нужен бот в Docker — остановите локальный backend и задайте TELEGRAM_POLLING_ENABLED=true здесь.
+      TELEGRAM_POLLING_ENABLED: "true"
     volumes:
+      - ../backend/.env:/app/.env:ro
       - ../uploads:/app/uploads
     depends_on:
       db:
         condition: service_healthy
-      db-bootstrap:
-        condition: service_completed_successfully
+      # db-bootstrap:
+      #   condition: service_completed_successfully
     healthcheck:
       test:
         [
@@ -105,7 +113,8 @@ services:
     ports:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"
-      - "0.0.0.0:8080:8080"
+      # 8080 на хосте часто занят (webdav, nginx-proxy) — LAN HTTP на 8088
+      - "0.0.0.0:8088:8080"
     volumes:
       - ../certs:/etc/nginx/certs:ro
     depends_on:

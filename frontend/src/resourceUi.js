@@ -19,7 +19,7 @@ export const getResourceForUi = (key, role) => {
     clone.fields = clone.fields.filter((f) => !hide.includes(f.name));
 
     if (key === "clients") clone.requiredFields = ["name"];
-    if (key === "deals") clone.requiredFields = ["title", "clientId"];
+    if (key === "deals") clone.requiredFields = ["productName", "title", "clientId"];
     if (key === "tasks") clone.requiredFields = ["title"];
     if (key === "calls") clone.requiredFields = ["clientId", "startedAt"];
     if (key === "documents") clone.requiredFields = ["clientId", "filename"];

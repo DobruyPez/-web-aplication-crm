@@ -1,4 +1,6 @@
 const express = require("express");
+const fs = require("fs");
+const path = require("path");
 const prisma = require("../config/prisma");
 const resources = require("../config/resources");
 const BaseRepository = require("../repositories/baseRepository");
@@ -13,8 +15,12 @@ const authRoutes = require("./authRoutes");
 const telegramRoutes = require("./telegramRoutes");
 const requireAdmin = require("../middlewares/requireAdmin");
 const uploadDocsRoutes = require("./uploadDocsRoutes");
+const videoSessionRoutes = require("./videoSessionRoutes");
+const clientInviteRoutes = require("./clientInviteRoutes");
 const DocumentService = require("../services/documentService");
+const ClientService = require("../services/clientService");
 const { dashboardOverview } = require("../controllers/dashboardController");
+const { createInviteLink } = require("../controllers/clientInviteController");
 
 const router = express.Router();
 
@@ -41,6 +47,9 @@ router.get("/", (_req, res) => {
 router.use("/auth", authRoutes);
 router.use("/telegram", telegramRoutes);
 router.use("/uploads", uploadDocsRoutes);
+router.use("/video-sessions", videoSessionRoutes);
+router.use("/client-invite", clientInviteRoutes);
+router.post("/clients/:id/invite-link", createInviteLink);
 router.get("/dashboard/overview", dashboardOverview);
 
 for (const resourceConfig of resources) {
@@ -60,6 +69,9 @@ for (const resourceConfig of resources) {
   if (resourceConfig.key === "documents") {
     ServiceClass = DocumentService;
   }
+  if (resourceConfig.key === "clients") {
+    ServiceClass = ClientService;
+  }
 
   const repository = new BaseRepository(prisma, resourceConfig.modelName);
   const service = new ServiceClass(repository, resourceConfig);
@@ -71,6 +83,28 @@ for (const resourceConfig of resources) {
 
 router.get("/health", (_req, res) => {
   res.json({ status: "ok" });
+});
+
+router.post("/debug-log", (req, res) => {
+  try {
+    const logDir = path.join(__dirname, "..", "..", "uploads", "debug");
+    fs.mkdirSync(logDir, { recursive: true });
+    const body = req.body || {};
+    if (body.source === "video-record-batch" && Array.isArray(body.entries)) {
+      const batchPath = path.join(
+        logDir,
+        `video-record-${body.sessionId || Date.now()}.json`,
+      );
+      fs.writeFileSync(batchPath, JSON.stringify(body.entries, null, 2), "utf8");
+    }
+    const logPath = path.join(logDir, "video-record.log");
+    const line = `${JSON.stringify({ ...body, timestamp: Date.now() })}\n`;
+    fs.appendFileSync(logPath, line, "utf8");
+    res.status(204).end();
+  } catch (err) {
+    console.error("[debug-log] write failed:", err.message, "cwd=", process.cwd());
+    res.status(500).json({ message: "debug log write failed" });
+  }
 });
 
 module.exports = router;

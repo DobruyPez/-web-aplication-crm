@@ -9,7 +9,7 @@ export const API_ORIGIN =
     ? ""
     : API_BASE_URL.replace(/\/api\/?$/, "") || "http://localhost:4000";
 
-/** Расширения для вкладки «Управление документами» (совпадают с backend allowedUploadDocExtensions). */
+/** Расширения для вкладки «Загрузка документов» (совпадают с backend allowedUploadDocExtensions). */
 export const UPLOAD_MANAGEMENT_ALLOWED_EXTENSIONS = [
   ".pdf",
   ".docs",
@@ -35,8 +35,8 @@ export const TASK_PRIORITIES = ["low", "medium", "high", "urgent"];
  */
 export const RESOURCE_SORT_FIELDS = {
   users: ["fullName", "email", "role", "phone", "createdAt"],
-  clients: ["name", "company", "email", "phone", "address", "notes", "managerId", "createdAt"],
-  deals: ["title", "amount", "stage", "closingDate", "clientId", "managerId", "createdAt"],
+  clients: ["name", "address", "notes", "managerId", "createdAt"],
+  deals: ["productName", "title", "amount", "stage", "closingDate", "clientId", "managerId", "createdAt"],
   tasks: ["title", "status", "priority", "dueDate", "clientId", "dealId", "authorId", "createdAt"],
   calls: ["startedAt", "endedAt", "duration", "status", "direction", "clientId", "callerId"],
   documents: ["filename", "fileSize", "uploadedAt", "clientId", "uploaderId"],
@@ -58,13 +58,10 @@ export const resources = [
   },
   {
     key: "clients",
-    label: "Clients",
+    label: "Клиенты",
     requiredFields: ["name", "managerId"],
     fields: [
       { name: "name", type: "string", required: true },
-      { name: "company", type: "string", required: false },
-      { name: "phone", type: "string", required: false },
-      { name: "email", type: "string", required: false },
       { name: "address", type: "string", required: false },
       { name: "notes", type: "string", required: false },
       { name: "managerId", type: "int", required: true },
@@ -72,9 +69,10 @@ export const resources = [
   },
   {
     key: "deals",
-    label: "Deals",
-    requiredFields: ["title", "clientId", "managerId"],
+    label: "Сделки",
+    requiredFields: ["productName", "title", "clientId", "managerId"],
     fields: [
+      { name: "productName", type: "string", required: true },
       { name: "title", type: "string", required: true },
       { name: "description", type: "string", required: false },
       { name: "amount", type: "decimal", required: false },
@@ -86,7 +84,7 @@ export const resources = [
   },
   {
     key: "tasks",
-    label: "Tasks",
+    label: "Задачи",
     requiredFields: ["title", "authorId"],
     fields: [
       { name: "title", type: "string", required: true },
@@ -101,7 +99,7 @@ export const resources = [
   },
   {
     key: "calls",
-    label: "Calls",
+    label: "Звонки",
     requiredFields: ["clientId", "startedAt", "callerId"],
     fields: [
       { name: "clientId", type: "int", required: true },
@@ -116,7 +114,7 @@ export const resources = [
   },
   {
     key: "documents",
-    label: "Documents",
+    label: "Документы",
     requiredFields: ["clientId", "filename"],
     fields: [
       { name: "clientId", type: "int", required: true },

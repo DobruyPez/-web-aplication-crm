@@ -1,30 +1,102 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { createItem, deleteItem, fetchList, fetchUploadedDocFiles, fetchUploadedVoiceFiles, updateItem } from "../api";
+import {
+  createClientInviteLink,
+  createItem,
+  deleteItem,
+  fetchList,
+  fetchUploadedDocFiles,
+  fetchUploadedVoiceFiles,
+  updateItem,
+} from "../api";
 import { useAuth } from "../authContext";
-import { API_ORIGIN, DEAL_STAGES, RESOURCE_SORT_FIELDS, TASK_PRIORITIES, TASK_STATUSES } from "../config";
+import { API_ORIGIN, DEAL_STAGES, TASK_PRIORITIES, TASK_STATUSES } from "../config";
+import {
+  getCallDirectionLabel,
+  getCallStatusLabel,
+  getDealStageLabel,
+  getEnumOptionLabel,
+  getTaskPriorityLabel,
+  getTaskStatusLabel,
+  getUserRoleLabel,
+} from "../lib/enumLabels";
 import { formatRef, sortLoadedRecords } from "../lib/loadedTableSort";
 import { DASHBOARD_DEEP_FILTER_FIELDS } from "../lib/dashboardDeepLink";
 import { groupCallsByDay } from "../lib/callHistoryGroups";
 import { buildCallsClientHistoryHref, parseListViewSearchParams } from "../lib/listViewQuery";
+import { buildClientInviteUrl } from "../lib/appUrl";
+import { resolveClientInviteAbsoluteUrl } from "../lib/clientInviteLink";
 import { deriveDealsPanelStateFromSearch } from "../lib/syncDealsFromUrl.js";
 import { dealMatchesDashboardRisk, taskMatchesDashboardBucket } from "../lib/managerTaskBuckets";
+import { formatDealAmount } from "../lib/formatDealAmount.js";
+import ClientContactPointsEditor from "./ClientContactPointsEditor.jsx";
+import ClientContactPointsCard from "./ClientContactPointsCard.jsx";
+import {
+  buildContactPersonsPayload,
+  getContactPointsSearchText,
+  normalizeContactPersonsForForm,
+  resolveContactPersonsForDisplay,
+  validateContactPersons,
+} from "../lib/clientContactPoints.js";
+import { formatClientOptionLabel, formatClientRef, getClientCardTitle } from "../lib/clientDisplay.js";
+import { getDealCardTitle } from "../lib/dealDisplay.js";
 
-/** Поля сортировки из URL для /deals — без ожидания загрузки items (sortableFields). */
-const DEALS_URL_SORT_FIELDS = new Set(["id", ...RESOURCE_SORT_FIELDS.deals]);
+const managerSelectOptions = (users) =>
+  (Array.isArray(users) ? users : [])
+    .filter((u) => {
+      const role = String(u?.role || "").trim().toLowerCase();
+      return role === "manager" || role === "admin";
+    })
+    .map((u) => ({
+      value: String(u.id),
+      label: u.fullName ? `${u.fullName} (ID ${u.id})` : `ID ${u.id}`,
+    }));
+import {
+  paginateResourceList,
+  RESOURCE_LIST_PAGE_SIZE,
+} from "../lib/resourceListPagination.js";
+
+/** Список всегда сортируется по id; в UI меняется только направление. */
+const LIST_SORT_FIELD = "id";
+
+function ResourceListPagination({ page, pageCount, rangeStart, rangeEnd, total, onPageChange }) {
+  if (total <= RESOURCE_LIST_PAGE_SIZE) {
+    return null;
+  }
+
+  return (
+    <nav className="resource-pagination" aria-label="Страницы списка">
+      <p className="resource-pagination-summary">
+        Показано {rangeStart}–{rangeEnd} из {total}
+      </p>
+      <div className="resource-pagination-controls">
+        <button type="button" className="secondary-btn" disabled={page <= 1} onClick={() => onPageChange(page - 1)}>
+          Назад
+        </button>
+        <span className="resource-pagination-page">
+          Страница {page} из {pageCount}
+        </span>
+        <button
+          type="button"
+          className="secondary-btn"
+          disabled={page >= pageCount}
+          onClick={() => onPageChange(page + 1)}
+        >
+          Вперёд
+        </button>
+      </div>
+    </nav>
+  );
+}
 
 /** Начальное состояние блока «Фильтрация» при F5: до useLayoutEffect первый кадр уже совпадает с query. */
 function initialDealsPanelFiltersFromSearch(search, resourceFields) {
   const d = deriveDealsPanelStateFromSearch(search, resourceFields);
-  const sortField = d.sortField && DEALS_URL_SORT_FIELDS.has(d.sortField) ? d.sortField : "id";
-  const sortDirection = d.sortDirection === "asc" ? "asc" : "desc";
   return {
-    searchText: d.searchText,
     filterField: d.filterField,
     filterValue: d.filterValue,
     quickFilter: d.quickFilter,
-    sortField,
-    sortDirection,
+    sortDirection: d.sortDirection === "asc" ? "asc" : "desc",
   };
 }
 
@@ -96,7 +168,7 @@ const CALL_DIRECTIONS = ["out", "in"];
 const CALL_STATUSES = ["completed", "missed", "failed"];
 const RESOURCE_PRIMARY_FIELD = {
   clients: "name",
-  deals: "title",
+  deals: "productName",
   tasks: "title",
   calls: "id",
   documents: "filename",
@@ -105,23 +177,24 @@ const RESOURCE_PRIMARY_FIELD = {
 const FIELD_LABELS = {
   id: "ID",
   fullName: "ФИО",
-  email: "Email",
+  email: "Электронная почта",
   password: "Пароль",
   role: "Роль",
   phone: "Телефон",
-  telegramLink: "Telegram ссылка",
-  telegramChatId: "Telegram Chat ID",
-  name: "Имя",
-  company: "Компания",
+  telegramLink: "Ссылка Telegram",
+  telegramChatId: "ID чата Telegram",
+  name: "Название компании",
+  productName: "Предмет сделки",
   address: "Адрес",
   notes: "Заметки",
   managerId: "Менеджер",
-  title: "Название",
+  title: "Название сделки",
   description: "Описание",
   amount: "Сумма",
   stage: "Этап",
   closingDate: "Дата закрытия",
   clientId: "Клиент",
+  documentIds: "Документы",
   callerId: "Оператор",
   direction: "Направление",
   status: "Статус",
@@ -136,7 +209,7 @@ const FIELD_LABELS = {
   filename: "Файл",
   filePath: "Путь",
   fileSize: "Размер",
-  mimeType: "MIME-тип",
+  mimeType: "Тип файла",
   uploadedAt: "Загружен",
   uploaderId: "Загрузил",
   createdAt: "Создан",
@@ -164,13 +237,6 @@ const formatDateTimeLike = (value) => {
   }).format(parsed);
 };
 
-const formatMoney = (value) => {
-  if (value === null || value === undefined || value === "") return "—";
-  const parsed = Number(value);
-  if (Number.isNaN(parsed)) return String(value);
-  return new Intl.NumberFormat("ru-RU", { style: "currency", currency: "RUB", maximumFractionDigits: 0 }).format(parsed);
-};
-
 const prettify = (value) =>
   String(value)
     .replaceAll("_", " ")
@@ -183,10 +249,6 @@ const getCardRows = (resourceKey, item, lookups = {}) => {
 
   if (resourceKey === "clients") {
     return [
-      ["Имя", item.name || "—"],
-      ["Компания", item.company || "—"],
-      ["Телефон", item.phone || "—"],
-      ["Email", item.email || "—"],
       ["Адрес", item.address || "—"],
       ["Менеджер", formatRef(item.managerId, usersMap, "fullName")],
       ["Заметки", item.notes || "—"],
@@ -194,12 +256,36 @@ const getCardRows = (resourceKey, item, lookups = {}) => {
   }
 
   if (resourceKey === "deals") {
+    const docs = Array.isArray(item.documents) ? item.documents : [];
+    const documentsCell = docs.length ? (
+      <ul className="deal-documents-list">
+        {docs.map((doc) => {
+          const href = doc.filePath ? encodeURI(`${API_ORIGIN}${doc.filePath}`) : null;
+          const label = doc.filename || `Документ #${doc.id}`;
+          return (
+            <li key={doc.id}>
+              {href ? (
+                <a href={href} target="_blank" rel="noreferrer">
+                  {label}
+                </a>
+              ) : (
+                label
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    ) : (
+      "—"
+    );
     return [
-      ["Название", item.title || "—"],
-      ["Этап", prettify(item.stage || "new")],
-      ["Сумма", formatMoney(item.amount)],
+      ["Предмет сделки", item.productName || "—"],
+      ["Название сделки", item.title || "—"],
+      ["Этап", getDealStageLabel(item.stage || "new")],
+      ["Сумма", formatDealAmount(item.amount)],
       ["Дата закрытия", formatDateLike(item.closingDate)],
-      ["Клиент", formatRef(item.clientId, clientsMap, "name")],
+      ["Клиент", formatClientRef(item.clientId, clientsMap)],
+      ["Документы", documentsCell],
       ["Менеджер", formatRef(item.managerId, usersMap, "fullName")],
       ["Описание", item.description || "—"],
     ];
@@ -208,11 +294,11 @@ const getCardRows = (resourceKey, item, lookups = {}) => {
   if (resourceKey === "tasks") {
     return [
       ["Название", item.title || "—"],
-      ["Статус", prettify(item.status || "new")],
-      ["Приоритет", prettify(item.priority || "medium")],
+      ["Статус", getTaskStatusLabel(item.status || "new")],
+      ["Приоритет", getTaskPriorityLabel(item.priority || "medium")],
       ["Срок", formatDateTimeLike(item.dueDate)],
       ["Автор", formatRef(item.authorId, usersMap, "fullName")],
-      ["Клиент", formatRef(item.clientId, clientsMap, "name")],
+      ["Клиент", formatClientRef(item.clientId, clientsMap)],
       ["Сделка", formatRef(item.dealId, dealsMap, "title")],
       ["Описание", item.description || "—"],
     ];
@@ -220,7 +306,8 @@ const getCardRows = (resourceKey, item, lookups = {}) => {
 
   if (resourceKey === "documents") {
     const href = item.filePath ? encodeURI(`${API_ORIGIN}${item.filePath}`) : null;
-    const clientLabel = item.client?.name || formatRef(item.clientId, clientsMap, "name");
+    const clientLabel =
+      (item.client && formatClientOptionLabel(item.client)) || formatClientRef(item.clientId, clientsMap);
     const uploaderLabel = item.uploader?.fullName || formatRef(item.uploaderId, usersMap, "fullName");
     return [
       ["Файл", item.filename || "—"],
@@ -245,24 +332,33 @@ const getCardRows = (resourceKey, item, lookups = {}) => {
 
   if (resourceKey === "calls") {
     const href = item.recordingUrl ? encodeURI(`${API_ORIGIN}${item.recordingUrl}`) : null;
-    const clientLabel = item.client?.name || formatRef(item.clientId, clientsMap, "name");
+    const clientLabel =
+      (item.client && formatClientOptionLabel(item.client)) || formatClientRef(item.clientId, clientsMap);
     const callerLabel = item.caller?.fullName || formatRef(item.callerId, usersMap, "fullName");
     return [
       ["Клиент", clientLabel],
       ["Оператор", callerLabel],
-      ["Направление", item.direction || "—"],
-      ["Статус", item.status || "—"],
+      ["Направление", item.direction ? getCallDirectionLabel(item.direction) : "—"],
+      ["Статус", item.status ? getCallStatusLabel(item.status) : "—"],
       ["Длительность", item.duration ?? "—"],
       ["Начало", formatDateTimeLike(item.startedAt)],
       ["Завершение", formatDateTimeLike(item.endedAt)],
       [
-        "Голосовая",
+        "Запись",
         href ? (
-          <audio controls className="call-audio-table" src={href}>
-            <a href={href} target="_blank" rel="noreferrer">
-              открыть запись
-            </a>
-          </audio>
+          String(item.recordingUrl || "").toLowerCase().endsWith(".webm") ? (
+            <video controls className="call-audio-table" src={href}>
+              <a href={href} target="_blank" rel="noreferrer">
+                Открыть запись
+              </a>
+            </video>
+          ) : (
+            <audio controls className="call-audio-table" src={href}>
+              <a href={href} target="_blank" rel="noreferrer">
+                Открыть запись
+              </a>
+            </audio>
+          )
         ) : (
           "—"
         ),
@@ -273,20 +369,20 @@ const getCardRows = (resourceKey, item, lookups = {}) => {
   if (resourceKey === "users") {
     return [
       ["ФИО", item.fullName || "—"],
-      ["Email", item.email || "—"],
-      ["Роль", prettify(item.role || "manager")],
+      ["Электронная почта", item.email || "—"],
+      ["Роль", getUserRoleLabel(item.role || "manager")],
       ["Телефон", item.phone || "—"],
       [
-        "Telegram",
+        "Телеграм",
         item.telegramLink ? (
           <a href={item.telegramLink} target="_blank" rel="noreferrer">
-            профиль
+            Профиль
           </a>
         ) : (
           "—"
         ),
       ],
-      ["Telegram Chat ID", item.telegramChatId || "—"],
+      ["ID чата Telegram", item.telegramChatId || "—"],
       ["Создан", formatDateTimeLike(item.createdAt)],
     ];
   }
@@ -301,11 +397,9 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
   const locationRef = useRef(location);
   locationRef.current = location;
   const [items, setItems] = useState([]);
-  const [searchText, setSearchText] = useState(() => dealsPanelMountSeed(resource, location)?.searchText ?? "");
   const [filterField, setFilterField] = useState(() => dealsPanelMountSeed(resource, location)?.filterField ?? "all");
   const [filterValue, setFilterValue] = useState(() => dealsPanelMountSeed(resource, location)?.filterValue ?? "");
   const [quickFilter, setQuickFilter] = useState(() => dealsPanelMountSeed(resource, location)?.quickFilter ?? "all");
-  const [sortField, setSortField] = useState(() => dealsPanelMountSeed(resource, location)?.sortField ?? "id");
   const [sortDirection, setSortDirection] = useState(
     () => dealsPanelMountSeed(resource, location)?.sortDirection ?? "desc",
   );
@@ -315,9 +409,13 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
   const [editingId, setEditingId] = useState(null);
   const [uploadedDocsMeta, setUploadedDocsMeta] = useState([]);
   const [uploadedVoiceMeta, setUploadedVoiceMeta] = useState([]);
+  const [inviteStatus, setInviteStatus] = useState({ type: "idle", text: "" });
+  const [clientInviteLinks, setClientInviteLinks] = useState({});
   const [clientsList, setClientsList] = useState([]);
   const [usersList, setUsersList] = useState([]);
   const [dealsList, setDealsList] = useState([]);
+  const [documentsList, setDocumentsList] = useState([]);
+  const [listPage, setListPage] = useState(1);
 
   const clientsById = useMemo(() => Object.fromEntries(clientsList.map((c) => [c.id, c])), [clientsList]);
   const usersById = useMemo(() => Object.fromEntries(usersList.map((u) => [u.id, u])), [usersList]);
@@ -332,28 +430,34 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
   const lookupOptionsByField = useMemo(() => {
     const options = {};
 
+    const managers = managerSelectOptions(usersList);
+
+    if (resource.key === "clients" || resource.key === "deals") {
+      options.managerId = managers;
+    }
+
     if (resource.key === "deals") {
       options.clientId = clientsList.map((client) => ({
         value: String(client.id),
-        label: client.name || `ID ${client.id}`,
+        label: formatClientOptionLabel(client),
       }));
     }
 
     if (resource.key === "tasks") {
       options.clientId = clientsList.map((client) => ({
         value: String(client.id),
-        label: client.name || `ID ${client.id}`,
+        label: formatClientOptionLabel(client),
       }));
       options.dealId = dealsList.map((deal) => ({
         value: String(deal.id),
-        label: deal.title || `Сделка #${deal.id}`,
+        label: getDealCardTitle(deal),
       }));
     }
 
     if (resource.key === "calls") {
       options.clientId = clientsList.map((client) => ({
         value: String(client.id),
-        label: client.name || `ID ${client.id}`,
+        label: formatClientOptionLabel(client),
       }));
       options.callerId = usersList.map((u) => ({
         value: String(u.id),
@@ -372,41 +476,21 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
   const dateMinValue = useMemo(() => datetimeMinValue.slice(0, 10), [datetimeMinValue]);
 
   const fields = useMemo(() => {
+    const hideClientKeys = new Set(["company"]);
+    const stripHidden = (list) =>
+      resource.key === "clients" ? list.filter((key) => !hideClientKeys.has(key)) : list;
+
     if (Array.isArray(resource.fields) && resource.fields.length > 0) {
-      return resource.fields.map((field) => field.name);
+      return stripHidden(resource.fields.map((field) => field.name));
     }
     if (items.length > 0 && resource.requiredFields.length > 0) {
-      return Object.keys(items[0]).filter((key) => resource.requiredFields.includes(key));
+      return stripHidden(
+        Object.keys(items[0]).filter((key) => resource.requiredFields.includes(key)),
+      );
     }
-    return resource.requiredFields;
-  }, [items, resource.fields, resource.requiredFields]);
+    return stripHidden(resource.requiredFields);
+  }, [items, resource.fields, resource.requiredFields, resource.key]);
   const filterableFields = useMemo(() => ["all", "id", ...fields], [fields]);
-
-  const itemKeysSet = useMemo(() => {
-    const s = new Set(fields);
-    if (items.length > 0 && items[0] && typeof items[0] === "object") {
-      Object.keys(items[0]).forEach((k) => s.add(k));
-    }
-    return s;
-  }, [fields, items]);
-
-  const sortableFields = useMemo(() => {
-    const preferred = RESOURCE_SORT_FIELDS[resource.key];
-    if (!Array.isArray(preferred) || preferred.length === 0) {
-      return ["id", ...fields];
-    }
-    const tail = preferred.filter((name) => itemKeysSet.has(name));
-    return ["id", ...tail];
-  }, [resource.key, fields, itemKeysSet]);
-
-  /* Для сделок порядок и поле сортировки задаются из URL (applyDealsListFromUrl); этот эффект иначе затирал sortField из query после загрузки items. */
-  useEffect(() => {
-    if (resource.key === "deals") {
-      return;
-    }
-    const allowed = new Set(sortableFields);
-    setSortField((prev) => (allowed.has(prev) ? prev : "id"));
-  }, [resource.key, sortableFields.join("|")]);
 
   const fieldMetaMap = useMemo(() => {
     if (!Array.isArray(resource.fields)) {
@@ -435,15 +519,17 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
       const needUsers =
         isAdmin && ["clients", "deals", "tasks", "documents", "calls"].includes(resource.key);
       const needDeals = ["tasks"].includes(resource.key);
+      const needDocumentsList = resource.key === "deals";
       const needUploadMeta = resource.key === "documents";
-      const needVoiceMeta = resource.key === "calls";
+      const needVoiceMeta = resource.key === "calls" && isAdmin;
 
-      const [meta, voiceMeta, clientRows, userRows, dealRows] = await Promise.all([
+      const [meta, voiceMeta, clientRows, userRows, dealRows, documentRows] = await Promise.all([
         needUploadMeta ? fetchUploadedDocFiles() : Promise.resolve([]),
         needVoiceMeta ? fetchUploadedVoiceFiles() : Promise.resolve([]),
         needClients ? fetchList("clients") : Promise.resolve([]),
         needUsers ? fetchList("users").catch(() => []) : Promise.resolve([]),
         needDeals ? fetchList("deals") : Promise.resolve([]),
+        needDocumentsList ? fetchList("documents") : Promise.resolve([]),
       ]);
 
       setUploadedDocsMeta(meta);
@@ -451,6 +537,7 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
       setClientsList(clientRows);
       setUsersList(userRows);
       setDealsList(dealRows);
+      setDocumentsList(documentRows);
     } catch (error) {
       setStatus({ type: "error", text: error.message });
     } finally {
@@ -466,20 +553,13 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
     }
     const search = locationRef.current.search;
     const d = deriveDealsPanelStateFromSearch(search, resource.fields);
-    setSearchText(d.searchText);
     setFilterField(d.filterField);
     setFilterValue(d.filterValue);
     setQuickFilter(d.quickFilter);
     const sig = `${resource.key}|${search}`;
     const urlBundleChanged = lastUrlSigRef.current !== sig;
     lastUrlSigRef.current = sig;
-    if (d.sortField && DEALS_URL_SORT_FIELDS.has(d.sortField)) {
-      setSortField(d.sortField);
-      setSortDirection(d.sortDirection === "asc" ? "asc" : "desc");
-    } else if (urlBundleChanged && !d.sortField) {
-      setSortField("id");
-      setSortDirection("desc");
-    }
+    setSortDirection(d.sortDirection === "asc" ? "asc" : "desc");
   };
   applyDealsListFromUrlRef.current = applyDealsListFromUrl;
 
@@ -494,7 +574,11 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
 
   useEffect(() => {
     setEditingId(null);
-    setFormData({ ...defaults });
+    const initial = { ...defaults };
+    if (resource.key === "clients") {
+      initial.contactPersons = normalizeContactPersonsForForm([]);
+    }
+    setFormData(initial);
     reload();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- смена ресурса / defaults
   }, [resource.key, defaults]);
@@ -513,7 +597,6 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
       ff = "all";
       fv = "";
     }
-    setSearchText(params.searchText);
     setFilterField(ff);
     setFilterValue(fv);
     setQuickFilter(params.quickFilter);
@@ -522,21 +605,30 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
     const urlBundleChanged = lastUrlSigRef.current !== sig;
     lastUrlSigRef.current = sig;
 
-    if (params.sortField && sortableFields.includes(params.sortField)) {
-      setSortField(params.sortField);
-      setSortDirection(params.sortDirection === "asc" ? "asc" : "desc");
-    } else if (resource.key === "calls" && ff === "clientId" && fv) {
-      setSortField("startedAt");
-      setSortDirection("desc");
-    } else if (urlBundleChanged && !params.sortField) {
-      setSortField(resource.key === "calls" ? "startedAt" : "id");
+    if (params.sortDirection === "asc" || params.sortDirection === "desc") {
+      setSortDirection(params.sortDirection);
+    } else if (urlBundleChanged) {
       setSortDirection("desc");
     }
-  }, [resource.key, location.search, fieldNamesKey, sortableFields.join("|")]);
+  }, [resource.key, location.search, fieldNamesKey]);
 
   const onChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => {
+      const next = { ...prev, [field]: value };
+      if (resource.key === "deals" && field === "clientId") {
+        next.documentIds = [];
+      }
+      return next;
+    });
   };
+
+  const clientDocumentsForDeal = useMemo(() => {
+    if (resource.key !== "deals" || !formData.clientId) {
+      return [];
+    }
+    const clientId = String(formData.clientId);
+    return documentsList.filter((doc) => String(doc.clientId) === clientId);
+  }, [documentsList, formData.clientId, resource.key]);
 
   const applyCallRecordingMeta = async (recordingPath, startedAtOverride) => {
     if (!recordingPath) {
@@ -576,7 +668,7 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
   const validate = () => {
     for (const required of resource.requiredFields) {
       if (formData[required] === undefined || formData[required] === null || formData[required] === "") {
-        return `Поле "${required}" обязательно`;
+        return `Поле «${getFieldLabel(required)}» обязательно`;
       }
     }
 
@@ -587,43 +679,50 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
         if ((meta?.type === "date" || meta?.type === "datetime") && formData[field]) {
           const parsed = new Date(formData[field]);
           if (!Number.isNaN(parsed.getTime()) && parsed.getTime() < Date.now()) {
-            return `Поле "${field}" не может быть раньше текущей даты и времени`;
+            return `Поле «${getFieldLabel(field)}» не может быть раньше текущей даты и времени`;
           }
         }
       }
     }
 
+    if (resource.key === "clients") {
+      const contactErr = validateContactPersons(formData.contactPersons);
+      if (contactErr) {
+        return contactErr;
+      }
+    }
+
     if (resource.key === "deals") {
       if (formData.title && String(formData.title).trim().length < 3) {
-        return 'Поле "title" должно содержать минимум 3 символа';
+        return `Поле "${getFieldLabel("title")}" должно содержать минимум 3 символа`;
       }
       if (formData.amount !== undefined && formData.amount !== null && formData.amount !== "") {
         const amount = Number(formData.amount);
         if (Number.isNaN(amount) || amount < 0) {
-          return 'Поле "amount" должно быть числом >= 0';
+          return `Поле "${getFieldLabel("amount")}" должно быть числом ≥ 0`;
         }
       }
       if (formData.stage && !DEAL_STAGES.includes(normalizeEnum(formData.stage))) {
-        return `Поле "stage" должно быть одним из: ${DEAL_STAGES.join(", ")}`;
+        return `Поле "${getFieldLabel("stage")}" должно быть одним из допустимых этапов`;
       }
     }
 
     if (resource.key === "tasks") {
       if (formData.title && String(formData.title).trim().length < 3) {
-        return 'Поле "title" должно содержать минимум 3 символа';
+        return `Поле "${getFieldLabel("title")}" должно содержать минимум 3 символа`;
       }
       if (formData.status && !TASK_STATUSES.includes(normalizeEnum(formData.status))) {
-        return `Поле "status" должно быть одним из: ${TASK_STATUSES.join(", ")}`;
+        return `Поле "${getFieldLabel("status")}" должно быть одним из допустимых статусов`;
       }
       if (formData.priority && !TASK_PRIORITIES.includes(normalizeEnum(formData.priority))) {
-        return `Поле "priority" должно быть одним из: ${TASK_PRIORITIES.join(", ")}`;
+        return `Поле "${getFieldLabel("priority")}" должно быть одним из допустимых приоритетов`;
       }
     }
 
     if (resource.key === "documents") {
       const fn = formData.filename ? String(formData.filename).trim() : "";
       if (fn && !uploadedDocsMeta.some((f) => f.filename === fn)) {
-        return "Выберите файл из списка загруженных на сервере (вкладка «Управление документами»).";
+        return "Выберите файл из списка загруженных на сервере (вкладка «Загрузка документов»).";
       }
     }
 
@@ -631,7 +730,7 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
       const requiredCallFields = ["clientId", "callerId", "direction", "status", "startedAt"];
       for (const requiredField of requiredCallFields) {
         if (formData[requiredField] === undefined || formData[requiredField] === null || formData[requiredField] === "") {
-          return `Поле "${requiredField}" обязательно`;
+          return `Поле «${getFieldLabel(requiredField)}» обязательно`;
         }
       }
       const rp = formData.recordingUrl ? String(formData.recordingUrl).trim() : "";
@@ -642,7 +741,7 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
         return "Выберите голосовую запись из списка загруженных на сервере.";
       }
       if (formData.direction && !CALL_DIRECTIONS.includes(normalizeEnum(formData.direction))) {
-        return `Поле "direction" должно быть одним из: ${CALL_DIRECTIONS.join(", ")}`;
+        return `Поле "${getFieldLabel("direction")}" должно быть одним из допустимых направлений`;
       }
       if (formData.status && !CALL_STATUSES.includes(normalizeEnum(formData.status))) {
         return `Поле "status" должно быть одним из: ${CALL_STATUSES.join(", ")}`;
@@ -650,30 +749,30 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
       if (formData.duration !== undefined && formData.duration !== null && formData.duration !== "") {
         const duration = Number(formData.duration);
         if (Number.isNaN(duration) || duration < 0) {
-          return 'Поле "duration" должно быть числом >= 0';
+          return `Поле "${getFieldLabel("duration")}" должно быть числом ≥ 0`;
         }
       }
       if (formData.startedAt) {
         const startedAt = new Date(formData.startedAt);
         if (Number.isNaN(startedAt.getTime())) {
-          return 'Поле "startedAt" содержит некорректную дату/время';
+          return `Поле "${getFieldLabel("startedAt")}" содержит некорректную дату/время`;
         }
         if (startedAt.getTime() < Date.now()) {
-          return 'Поле "startedAt" не может быть раньше текущих даты и времени';
+          return `Поле "${getFieldLabel("startedAt")}" не может быть раньше текущих даты и времени`;
         }
       }
       if (formData.endedAt) {
         const endedAt = new Date(formData.endedAt);
         if (Number.isNaN(endedAt.getTime())) {
-          return 'Поле "endedAt" содержит некорректную дату/время';
+          return `Поле "${getFieldLabel("endedAt")}" содержит некорректную дату/время`;
         }
         if (endedAt.getTime() < Date.now()) {
-          return 'Поле "endedAt" не может быть раньше текущих даты и времени';
+          return `Поле "${getFieldLabel("endedAt")}" не может быть раньше текущих даты и времени`;
         }
         if (formData.startedAt) {
           const startedAt = new Date(formData.startedAt);
           if (!Number.isNaN(startedAt.getTime()) && endedAt.getTime() < startedAt.getTime()) {
-            return 'Поле "endedAt" не может быть раньше "startedAt"';
+            return `Поле "${getFieldLabel("endedAt")}" не может быть раньше «${getFieldLabel("startedAt")}»`;
           }
         }
       }
@@ -704,7 +803,17 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
       }
     }
 
-    return { ...defaults, ...payload };
+    const result = { ...defaults, ...payload };
+    if (resource.key === "deals") {
+      const ids = Array.isArray(merged.documentIds) ? merged.documentIds : [];
+      result.documentIds = ids
+        .map((value) => Number.parseInt(String(value), 10))
+        .filter((id) => Number.isFinite(id) && id > 0);
+    }
+    if (resource.key === "clients") {
+      result.contactPersons = buildContactPersonsPayload(merged.contactPersons);
+    }
+    return result;
   };
 
   const handleSubmit = async (event) => {
@@ -747,6 +856,14 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
     if (editingId) {
       const existing = items.find((item) => item.id === editingId);
       payload = { ...(existing || {}), ...payload };
+      if (resource.key === "deals") {
+        delete payload.documents;
+      }
+      if (resource.key === "clients") {
+        delete payload.contactPersons;
+        delete payload.contactPoints;
+        payload.contactPersons = buildContactPersonsPayload(formData.contactPersons);
+      }
     }
 
     setStatus({ type: "idle", text: "" });
@@ -759,7 +876,11 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
         setStatus({ type: "success", text: "Запись создана" });
       }
       setEditingId(null);
-      setFormData({ ...defaults });
+      const initial = { ...defaults };
+      if (resource.key === "clients") {
+        initial.contactPersons = normalizeContactPersonsForForm([]);
+      }
+      setFormData(initial);
       await reload();
     } catch (error) {
       setStatus({ type: "error", text: error.message });
@@ -785,6 +906,12 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
     if (resource.key === "users") {
       next.password = "";
     }
+    if (resource.key === "deals") {
+      next.documentIds = Array.isArray(item.documents) ? item.documents.map((doc) => String(doc.id)) : [];
+    }
+    if (resource.key === "clients") {
+      next.contactPersons = normalizeContactPersonsForForm(resolveContactPersonsForDisplay(item));
+    }
     setFormData(next);
     setEditingId(item.id);
     setStatus({ type: "idle", text: "" });
@@ -792,7 +919,11 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
 
   const cancelEdit = () => {
     setEditingId(null);
-    setFormData({ ...defaults });
+    const initial = { ...defaults };
+    if (resource.key === "clients") {
+      initial.contactPersons = normalizeContactPersonsForForm([]);
+    }
+    setFormData(initial);
     setStatus({ type: "idle", text: "" });
   };
 
@@ -820,8 +951,8 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
       return [];
     }
     return [
-      { value: "admin", label: "Admin", field: "role" },
-      { value: "manager", label: "Manager", field: "role" },
+      { value: "admin", label: "Администратор", field: "role" },
+      { value: "manager", label: "Менеджер", field: "role" },
     ];
   }, [showStatusQuickFilters]);
   const activeQuickFilterMeta = useMemo(
@@ -839,28 +970,23 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
   ]);
 
   const filteredItems = useMemo(() => {
-    const q = searchText.trim().toLowerCase();
     const ff = filterField;
     const fvTrim = filterValue.trim();
     const fv = fvTrim.toLowerCase();
 
     return items.filter((item) => {
-      const searchHaystack = [
-        ...Object.values(item || {}).map((v) => String(v ?? "")),
-        ...getCardRows(resource.key, item, { clientsById, usersById: usersByIdWithCurrent, dealsById }).map(([, value]) =>
-          typeof value === "string" || typeof value === "number" ? String(value) : "",
-        ),
-      ]
-        .join(" ")
-        .toLowerCase();
-      const passSearch = q ? searchHaystack.includes(q) : true;
-
       let passFieldFilter = true;
       if (fv) {
         if (ff === "all") {
-          passFieldFilter = Object.values(item || {})
-            .map((v) => String(v ?? "").toLowerCase())
+          const scalarMatch = Object.entries(item || {})
+            .filter(([key]) => !(resource.key === "clients" && key === "company"))
+            .map(([, v]) => String(v ?? "").toLowerCase())
             .some((v) => v.includes(fv));
+          const contactsMatch =
+            resource.key === "clients"
+              ? getContactPointsSearchText(item).toLowerCase().includes(fv)
+              : false;
+          passFieldFilter = scalarMatch || contactsMatch;
         } else {
           const raw = item?.[ff];
           const idLike = ff === "id" || (typeof ff === "string" && ff.endsWith("Id"));
@@ -887,10 +1013,9 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
       const passListRisk =
         resource.key !== "deals" || listRisk !== "1" ? true : dealMatchesDashboardRisk(item);
 
-      return passSearch && passFieldFilter && passQuickFilter && passListBucket && passListRisk;
+      return passFieldFilter && passQuickFilter && passListBucket && passListRisk;
     });
   }, [
-    searchText,
     filterField,
     filterValue,
     items,
@@ -905,32 +1030,70 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
   const sortedItems = useMemo(
     () =>
       sortLoadedRecords(filteredItems, {
-        sortField,
+        sortField: LIST_SORT_FIELD,
         sortDirection,
         fieldMetaMap,
         clientsById,
         dealsById,
         usersByIdWithCurrent,
       }),
-    [filteredItems, sortField, sortDirection, fieldMetaMap, clientsById, dealsById, usersByIdWithCurrent],
+    [filteredItems, sortDirection, fieldMetaMap, clientsById, dealsById, usersByIdWithCurrent],
   );
+
+  useEffect(() => {
+    setListPage(1);
+  }, [filterField, filterValue, quickFilter, sortDirection, resource.key, listBucket, listRisk]);
+
+  const listPagination = useMemo(
+    () => paginateResourceList(sortedItems, listPage),
+    [sortedItems, listPage],
+  );
+  const paginatedItems = listPagination.items;
 
   const callsClientFilterActive =
     resource.key === "calls" && filterField === "clientId" && String(filterValue || "").trim() !== "";
-  const callsClientFilterName = callsClientFilterActive ? formatRef(filterValue, clientsById, "name") : null;
+  const callsClientFilterName = callsClientFilterActive
+    ? formatClientRef(filterValue, clientsById)
+    : null;
   const callGroups = useMemo(
-    () => (callsClientFilterActive ? groupCallsByDay(sortedItems) : []),
-    [callsClientFilterActive, sortedItems],
+    () => (callsClientFilterActive ? groupCallsByDay(paginatedItems) : []),
+    [callsClientFilterActive, paginatedItems],
   );
+
+  const generateClientInviteLink = async (clientId) => {
+    setInviteStatus({ type: "idle", text: "" });
+    try {
+      const { absoluteUrl, url, token } = await createClientInviteLink(clientId);
+      const full = resolveClientInviteAbsoluteUrl(absoluteUrl || url || buildClientInviteUrl(token));
+      setClientInviteLinks((prev) => ({ ...prev, [clientId]: full }));
+      setInviteStatus({
+        type: "success",
+        text: `Ссылка для клиента #${clientId} создана. Отправьте её клиенту — он увидит ту же страницу приглашения.`,
+      });
+      return full;
+    } catch (error) {
+      setInviteStatus({ type: "error", text: error.message });
+      return null;
+    }
+  };
 
   const renderResourceCard = (item) => {
     const isProtectedAdmin =
       resource.key === "users" && String(item.role || "").trim().toLowerCase() === "admin";
     return (
-      <article key={item.id} className="resource-card">
+      <article
+        key={item.id}
+        className={`resource-card${resource.key === "clients" ? " resource-card--client" : ""}`}
+      >
         <header className="resource-card-header">
           <div className="resource-card-title">
-            <h3>{item?.[RESOURCE_PRIMARY_FIELD[resource.key]] || `Запись #${item.id}`}</h3>
+            <h3>
+              {resource.key === "clients"
+                ? getClientCardTitle(item)
+                : resource.key === "deals"
+                  ? getDealCardTitle(item)
+                  : item?.[RESOURCE_PRIMARY_FIELD[resource.key]] || `Запись #${item.id}`}
+            </h3>
             <p>ID: {item.id}</p>
           </div>
         </header>
@@ -944,6 +1107,16 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
             ),
           )}
         </div>
+        {resource.key === "clients" ? <ClientContactPointsCard client={item} /> : null}
+        {resource.key === "clients" && !isAdmin && clientInviteLinks[item.id] ? (
+          <label className="field client-invite-field" style={{ margin: "0 0 12px" }}>
+            <span>Ссылка приглашения (страница для клиента)</span>
+            <input type="text" readOnly value={clientInviteLinks[item.id]} />
+            <p className="hint" style={{ margin: 0 }}>
+              Клиент откроет ссылку и пришлёт вам ту же ссылку обратно — вставьте её при входящем видеозвонке.
+            </p>
+          </label>
+        ) : null}
         {showRowActions ? (
           <footer className="resource-card-actions">
             {isProtectedAdmin ? (
@@ -953,13 +1126,23 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
             ) : (
               <>
                 {resource.key === "clients" && !isAdmin ? (
-                  <Link
-                    to={buildCallsClientHistoryHref(item.id)}
-                    className="client-call-history-btn"
-                    title="Открыть записи звонков по этому клиенту"
-                  >
-                    История звонков
-                  </Link>
+                  <>
+                    <Link
+                      to={buildCallsClientHistoryHref(item.id)}
+                      className="client-call-history-btn"
+                      title="Открыть записи звонков по этому клиенту"
+                    >
+                      История звонков
+                    </Link>
+                    <button
+                      type="button"
+                      className="secondary-btn"
+                      title="Создать страницу приглашения для клиента"
+                      onClick={() => generateClientInviteLink(item.id)}
+                    >
+                      Ссылка для клиента
+                    </button>
+                  </>
                 ) : null}
                 <button type="button" className="create-primary-btn" onClick={() => startEdit(item)}>
                   Изменить
@@ -983,6 +1166,7 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
         </button>
       </div>
 
+      {!(resource.key === "calls" && !isAdmin) ? (
       <div className="resource-section-card">
         <div className="resource-section-head">
           <h3>{editingId ? `Редактирование #${editingId}` : "Создание записи"}</h3>
@@ -1007,7 +1191,7 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
                   <option value="">Выберите клиента</option>
                   {clientsList.map((c) => (
                     <option key={c.id} value={c.id}>
-                      {c.name}
+                      {formatClientOptionLabel(c)}
                     </option>
                   ))}
                 </select>
@@ -1065,8 +1249,76 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
             );
           }
 
+          if (resource.key === "deals" && field === "amount") {
+            return (
+              <label key={field} className="field">
+                <span>{getFieldLabel(field)} (Br)</span>
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  placeholder="Например: 15000"
+                  value={toInputValue(formData.amount)}
+                  onChange={(event) => onChange("amount", event.target.value)}
+                />
+              </label>
+            );
+          }
+
+          if (resource.key === "deals" && field === "clientId") {
+            const clientOptions = lookupOptionsByField.clientId || [];
+            const selectedDocIds = Array.isArray(formData.documentIds) ? formData.documentIds : [];
+            return (
+              <div key="deals-client-documents" className="form-full-width">
+                <label className="field">
+                  <span>{getFieldLabel("clientId")}</span>
+                  <select
+                    value={toInputValue(formData.clientId)}
+                    onChange={(event) => onChange("clientId", event.target.value)}
+                  >
+                    <option value="">Выберите</option>
+                    {clientOptions.map((option) => (
+                      <option key={`clientId-${option.value}`} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className="field">
+                  <span>{getFieldLabel("documentIds")}</span>
+                  <select
+                    multiple
+                    disabled={!formData.clientId}
+                    value={selectedDocIds}
+                    onChange={(event) =>
+                      onChange(
+                        "documentIds",
+                        Array.from(event.target.selectedOptions, (option) => option.value),
+                      )
+                    }
+                  >
+                    {clientDocumentsForDeal.map((doc) => (
+                      <option key={doc.id} value={String(doc.id)}>
+                        {doc.filename || `Документ #${doc.id}`}
+                      </option>
+                    ))}
+                  </select>
+                  {!formData.clientId ? (
+                    <p className="hint">Сначала выберите клиента.</p>
+                  ) : clientDocumentsForDeal.length === 0 ? (
+                    <p className="hint">
+                      Нет документов для этого клиента. Загрузите на вкладке «Загрузка документов».
+                    </p>
+                  ) : (
+                    <p className="hint">Удерживайте Ctrl (или Cmd) для выбора нескольких документов.</p>
+                  )}
+                </label>
+              </div>
+            );
+          }
+
           const fkOptions = lookupOptionsByField[field];
-          if (Array.isArray(fkOptions) && fkOptions.length > 0 && (!isAdmin || resource.key === "calls")) {
+          if (Array.isArray(fkOptions) && fkOptions.length > 0) {
             return (
               <label key={field} className="field">
                 <span>{getFieldLabel(field)}</span>
@@ -1090,18 +1342,29 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
                   <option value="">Выберите</option>
                   {fieldMetaMap[field].options.map((option) => (
                     <option key={option} value={option}>
-                      {prettify(option)}
+                      {getEnumOptionLabel(resource.key, field, option)}
                     </option>
                   ))}
                 </select>
               ) : (
                 <input
                   type={
-                    fieldMetaMap[field]?.type === "date"
-                      ? "date"
-                      : fieldMetaMap[field]?.type === "datetime"
-                        ? "datetime-local"
-                        : "text"
+                    resource.key === "clients" && field === "email"
+                      ? "email"
+                      : resource.key === "clients" && field === "phone"
+                        ? "tel"
+                        : fieldMetaMap[field]?.type === "date"
+                          ? "date"
+                          : fieldMetaMap[field]?.type === "datetime"
+                            ? "datetime-local"
+                            : "text"
+                  }
+                  placeholder={
+                    resource.key === "clients" && field === "phone"
+                      ? "+375291234567 или 80291234567"
+                      : resource.key === "clients" && field === "email"
+                        ? "name@example.com"
+                        : undefined
                   }
                   min={
                     resource.key === "calls"
@@ -1130,6 +1393,12 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
             </label>
           );
           })}
+          {resource.key === "clients" ? (
+            <ClientContactPointsEditor
+              value={formData.contactPersons}
+              onChange={(contactPersons) => onChange("contactPersons", contactPersons)}
+            />
+          ) : null}
           <div className="form-actions">
             <button type="submit" className={!editingId ? "create-primary-btn" : ""}>
               {editingId ? "Сохранить" : "Создать"}
@@ -1142,29 +1411,24 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
           </div>
           {resource.key === "documents" ? (
             <p className="hint form-full-width">
-              Список формируется из каталога uploads/docs (вкладка «Управление документами»). Новые файлы — PDF и документы
+              Список формируется из каталога uploads/docs (вкладка «Загрузка документов»). Новые файлы — PDF и документы
               Word (см. список расширений на той вкладке).
             </p>
           ) : null}
         </form>
       </div>
+      ) : null}
 
       {status.text ? <p className={status.type === "error" ? "status error" : "status success"}>{status.text}</p> : null}
+      {inviteStatus.text ? (
+        <p className={inviteStatus.type === "error" ? "hint error" : "hint"}>{inviteStatus.text}</p>
+      ) : null}
 
       <div className="resource-section-card resource-filters">
         <div className="resource-section-head">
           <h3>Фильтрация</h3>
-          <p className="hint">Отберите записи по поисковому запросу или конкретному полю.</p>
+          <p className="hint">Выберите поле и введите значение для отбора записей.</p>
         </div>
-        <label className="field">
-          <span>Поиск</span>
-          <input
-            type="text"
-            placeholder="Поиск по карточкам..."
-            value={searchText}
-            onChange={(event) => setSearchText(event.target.value)}
-          />
-        </label>
         <label className="field">
           <span>Поле фильтра</span>
           <select
@@ -1186,25 +1450,17 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
           <input
             type="text"
             placeholder={
-              filterField === "all" ? "Например: ivan, done, +7..." : `Введите значение для ${getFieldLabel(filterField)}`
+              filterField === "all"
+                ? "Например: иван, выполнена, +375..."
+                : `Введите значение для ${getFieldLabel(filterField)}`
             }
             value={filterValue}
             onChange={(event) => setFilterValue(event.target.value)}
           />
         </label>
-        <label className="field">
-          <span>Сортировка по</span>
-          <select value={sortField} onChange={(event) => setSortField(event.target.value)}>
-            {sortableFields.map((field) => (
-              <option key={`sort-field-${field}`} value={field}>
-                {getFieldLabel(field)}
-              </option>
-            ))}
-          </select>
-        </label>
         <div className="field sort-direction-field">
           <span>Порядок</span>
-          <div className="sort-direction-row" role="group" aria-label="Порядок сортировки">
+          <div className="sort-direction-row" role="group" aria-label="Порядок сортировки по ID">
             <button
               type="button"
               className={`sort-direction-chip ${sortDirection === "desc" ? "active" : ""}`}
@@ -1248,12 +1504,11 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
           <button
             type="button"
             onClick={() => {
-              setSearchText("");
               setFilterField("all");
               setFilterValue("");
               setQuickFilter("all");
-              setSortField("id");
               setSortDirection("desc");
+              setListPage(1);
               navigate({ pathname: location.pathname, search: "" }, { replace: true });
             }}
           >
@@ -1264,8 +1519,18 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
 
       <div className="resource-list-head">
         <h3>Список записей</h3>
-        <span className="status-badge">{sortedItems.length}</span>
+        <span className="status-badge" title="Записей после фильтров">
+          {sortedItems.length}
+        </span>
       </div>
+      <ResourceListPagination
+        page={listPagination.page}
+        pageCount={listPagination.pageCount}
+        rangeStart={listPagination.rangeStart}
+        rangeEnd={listPagination.rangeEnd}
+        total={listPagination.total}
+        onPageChange={setListPage}
+      />
       {callsClientFilterActive && callsClientFilterName ? (
         <p className="hint calls-client-filter-banner">
           История звонков клиента: <strong>{callsClientFilterName}</strong>
@@ -1285,13 +1550,23 @@ const ResourcePanel = ({ resource, defaults = {} }) => {
         </div>
       ) : (
         <div className="resource-cards">
-          {sortedItems.map((item) => renderResourceCard(item))}
+          {paginatedItems.map((item) => renderResourceCard(item))}
           {items.length === 0 && !loading ? <p className="hint">Нет данных</p> : null}
           {items.length > 0 && sortedItems.length === 0 && !loading ? (
             <p className="hint">По фильтрам совпадений нет</p>
           ) : null}
         </div>
       )}
+      {sortedItems.length > RESOURCE_LIST_PAGE_SIZE ? (
+        <ResourceListPagination
+          page={listPagination.page}
+          pageCount={listPagination.pageCount}
+          rangeStart={listPagination.rangeStart}
+          rangeEnd={listPagination.rangeEnd}
+          total={listPagination.total}
+          onPageChange={setListPage}
+        />
+      ) : null}
     </section>
   );
 };

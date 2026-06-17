@@ -1,5 +1,27 @@
 import { API_BASE_URL, UPLOAD_MANAGEMENT_ALLOWED_EXTENSIONS, UPLOAD_MANAGEMENT_ALLOWED_VOICE_EXTENSIONS } from "./config";
 
+/** Без JWT — публичная страница клиента по guestToken. */
+const publicApiHeaders = (json = true) => {
+  const headers = {};
+  if (json) {
+    headers["Content-Type"] = "application/json";
+  }
+  return headers;
+};
+
+/** Bearer только если пользователь залогинен — для публичных join/invite. */
+const optionalAuthHeaders = (json = true) => {
+  const token = localStorage.getItem("crm_auth_token");
+  const headers = {};
+  if (json) {
+    headers["Content-Type"] = "application/json";
+  }
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  return headers;
+};
+
 export const assertAllowedManagementUploadName = (fileName, allowedExtList = UPLOAD_MANAGEMENT_ALLOWED_EXTENSIONS) => {
   const lower = String(fileName || "").toLowerCase();
   const ok = allowedExtList.some((ext) => lower.endsWith(ext.toLowerCase()));
@@ -43,9 +65,9 @@ const authHeaders = () => {
 const toErrorMessage = async (response) => {
   try {
     const payload = await response.json();
-    return payload.message || "Request failed";
+    return payload.message || "Запрос не выполнен";
   } catch (_error) {
-    return "Request failed";
+    return "Запрос не выполнен";
   }
 };
 
@@ -199,6 +221,114 @@ export const deleteUploadedVoiceFileFromServer = async (filename) => {
   const response = await fetch(`${API_BASE_URL}/uploads/voice${q}`, {
     method: "DELETE",
     headers: authHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(await toErrorMessage(response));
+  }
+  return response.json();
+};
+
+export const fetchClientInvitePublic = async (token) => {
+  const response = await fetch(`${API_BASE_URL}/client-invite/${encodeURIComponent(token)}`);
+  if (!response.ok) {
+    throw new Error(await toErrorMessage(response));
+  }
+  return response.json();
+};
+
+export const createClientInviteLink = async (clientId) => {
+  const response = await fetch(`${API_BASE_URL}/clients/${clientId}/invite-link`, {
+    method: "POST",
+    headers: authHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(await toErrorMessage(response));
+  }
+  return response.json();
+};
+
+export const createVideoSession = async (payload) => {
+  const response = await fetch(`${API_BASE_URL}/video-sessions`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(payload),
+  });
+  if (!response.ok) {
+    throw new Error(await toErrorMessage(response));
+  }
+  return response.json();
+};
+
+export const fetchVideoSession = async (sessionId) => {
+  const response = await fetch(`${API_BASE_URL}/video-sessions/${sessionId}`, {
+    headers: authHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(await toErrorMessage(response));
+  }
+  return response.json();
+};
+
+export const fetchVideoJoinMeta = async (guestToken) => {
+  const response = await fetch(`${API_BASE_URL}/video-sessions/join/${encodeURIComponent(guestToken)}`, {
+    headers: publicApiHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(await toErrorMessage(response));
+  }
+  return response.json();
+};
+
+export const registerVideoJoin = async (guestToken, peerId) => {
+  const response = await fetch(`${API_BASE_URL}/video-sessions/join/${encodeURIComponent(guestToken)}`, {
+    method: "POST",
+    headers: optionalAuthHeaders(),
+    body: JSON.stringify({ peerId }),
+  });
+  if (!response.ok) {
+    throw new Error(await toErrorMessage(response));
+  }
+  return response.json();
+};
+
+export const fetchVideoPublicHint = async (sessionId) => {
+  const response = await fetch(`${API_BASE_URL}/video-sessions/${sessionId}/public-hint`);
+  if (!response.ok) {
+    throw new Error(await toErrorMessage(response));
+  }
+  return response.json();
+};
+
+export const startVideoFromClientInvite = async (token) => {
+  const response = await fetch(`${API_BASE_URL}/client-invite/${encodeURIComponent(token)}/start-video`, {
+    method: "POST",
+    headers: optionalAuthHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(await toErrorMessage(response));
+  }
+  return response.json();
+};
+
+export const endVideoSession = async (sessionId) => {
+  const response = await fetch(`${API_BASE_URL}/video-sessions/${sessionId}/end`, {
+    method: "POST",
+    headers: authHeaders(),
+  });
+  if (!response.ok) {
+    throw new Error(await toErrorMessage(response));
+  }
+  return response.json();
+};
+
+export const uploadVideoSessionRecording = async (sessionId, blob) => {
+  const body = new FormData();
+  const name = `session-${sessionId}-${Date.now()}.webm`;
+  body.append("file", blob, name);
+  const response = await fetch(`${API_BASE_URL}/video-sessions/${sessionId}/recording`, {
+    method: "POST",
+    headers: authHeadersMultipart(),
+    body,
   });
   if (!response.ok) {
     throw new Error(await toErrorMessage(response));

@@ -1,0 +1,25 @@
+﻿№;Функция web-приложения;Описание тестирования (действие);Ожидаемый результат;Итог тестирования;Дата;Исполнитель
+1;Регистрация (отключена);POST /api/auth/register с fullName, email, password в JSON.;Ответ 403, сообщение о запрете регистрации.;Успешно.;;
+2;Подтверждение регистрации (отключено);POST /api/auth/verify-register с произвольным телом JSON.;Ответ 403.;Успешно.;;
+3;Публичное приглашение клиента;POST /api/clients/{id}/invite-link (менеджер), затем GET /api/client-invite/{token} без Authorization.;Ответ 200, поля clientName, managerName, canonicalUrl.;Успешно.;;
+4;Аутентификация менеджера;POST /api/auth/login: email manager1@crm.by, password 1234 (или user_2@test.crm.local после seed).;Ответ 200, поля token и user.role=manager.;Успешно.;;
+5;Аутентификация администратора;POST /api/auth/login: admin@crm.by / 1234 (или user_1@test.crm.local).;Ответ 200, user.role=admin.;Успешно.;;
+6;Получение списка клиентов;GET /api/clients с JWT менеджера или заголовками x-user-role/x-user-id.;Массив клиентов только своего managerId.;Успешно.;;
+7;Получение карточки клиента;GET /api/clients/{id} с правами менеджера-владельца.;Ответ 200, объект клиента.;Успешно.;;
+8;Создание клиента;POST /api/clients с name, phone, email.;Ответ 201, managerId подставлен автоматически.;Успешно.;;
+9;Создание сделки;POST /api/deals с title, clientId, stage.;Ответ 201, объект сделки.;Успешно.;;
+10;Создание задачи CRM;POST /api/tasks с title, status, priority, dueDate.;Ответ 201, объект задачи.;Успешно.;;
+11;Сводка панели управления (менеджер);GET /api/dashboard/overview от менеджера.;role=manager, metrics, alerts.;Успешно.;;
+12;Сводка панели управления (администратор);GET /api/dashboard/overview от admin.;role=admin, managerHealth.;Успешно.;;
+13;Получение списка звонков;GET /api/calls менеджером.;Массив звонков по своим клиентам.;Успешно.;;
+14;Создание видеосессии;POST /api/video-sessions с clientId (менеджер).;Ответ 201, sessionId, guestToken, joinUrl.;Успешно.;;
+15;Метаданные входа гостя в видеозвонок;GET /api/video-sessions/join/{guestToken} без JWT.;Ответ 200, подсказка для join.;Успешно.;;
+16;Список пользователей (администратор);"GET /api/users с admin; менеджер — 403.";Массив пользователей без password.;Успешно.;;
+17;Создание менеджера;POST /api/users с fullName, email, password (admin).;Ответ 201, role=manager.;Успешно.;;
+18;Удаление задачи;DELETE /api/tasks/{id}.;Ответ 200, запись удалена.;Успешно.;;
+19;Ссылка приглашения клиента;POST /api/clients/{id}/invite-link (менеджер).;Ответ 201, token, url, expiresAt.;Успешно.;;
+20;Создание звонка (администратор);"POST /api/calls от admin с recordingUrl; менеджер — 403.";"201 или 400 при отсутствии файла; менеджер — 403.";Успешно.;;
+21;Загрузка аудиозаписи;POST /api/uploads/voice multipart (admin).;Файл в uploads/voice.;Успешно.;;
+22;Привязка записи к звонку;PUT /api/calls/{id} с recordingUrl (admin).;Обновлённый звонок.;Успешно.;;
+23;Профиль текущего пользователя;GET /api/auth/me с JWT.;fullName, email, role без password.;Успешно.;;
+24;Проверка работоспособности API;GET /api/health.;"{""status"":""ok""}.";Успешно.;;

@@ -1,0 +1,4 @@
+@echo off
+set ANTHROPIC_BASE_URL=http://localhost:8082
+set ANTHROPIC_AUTH_TOKEN=freecc
+claude %*

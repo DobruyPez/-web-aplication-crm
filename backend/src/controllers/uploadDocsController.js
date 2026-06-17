@@ -206,8 +206,19 @@ const deleteUploadedDoc = async (req, res, next) => {
   }
 };
 
-const listUploadedVoice = async (_req, res, next) => {
+const forbidManagerVoice = (req, res) => {
+  if (req.auth?.role === "MANAGER") {
+    res.status(403).json({ message: "Менеджеру недоступно управление голосовыми файлами." });
+    return true;
+  }
+  return false;
+};
+
+const listUploadedVoice = async (req, res, next) => {
   try {
+    if (forbidManagerVoice(req, res)) {
+      return;
+    }
     ensureVoiceDir();
     const index = readVoiceIndex();
     const namesOnDisk = fs
@@ -239,6 +250,9 @@ const listUploadedVoice = async (_req, res, next) => {
 
 const uploadVoice = async (req, res, next) => {
   try {
+    if (forbidManagerVoice(req, res)) {
+      return;
+    }
     if (!req.file) {
       return res.status(400).json({ message: "Файл не получен." });
     }
@@ -272,6 +286,9 @@ const uploadVoice = async (req, res, next) => {
 
 const deleteUploadedVoice = async (req, res, next) => {
   try {
+    if (forbidManagerVoice(req, res)) {
+      return;
+    }
     const raw = req.query.filename;
     if (raw === undefined || raw === null || String(raw).trim() === "") {
       return res.status(400).json({ message: "Укажите параметр filename." });

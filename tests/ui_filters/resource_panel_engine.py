@@ -66,7 +66,6 @@ def _card_row_string_parts(
         parts.extend(
             [
                 str(item.get("name") or ""),
-                str(item.get("company") or ""),
                 str(item.get("phone") or ""),
                 str(item.get("email") or ""),
                 str(item.get("address") or ""),
@@ -75,14 +74,20 @@ def _card_row_string_parts(
             ]
         )
     elif resource_key == "deals":
+        doc_names = []
+        for doc in item.get("documents") or []:
+            if isinstance(doc, dict):
+                doc_names.append(str(doc.get("filename") or doc.get("id") or ""))
         parts.extend(
             [
+                str(item.get("productName") or ""),
                 str(item.get("title") or ""),
                 prettify(item.get("stage") or "new"),
                 money(item.get("amount")),
                 str(item.get("closingDate") or ""),
                 format_ref(item.get("clientId"), clients_by_id, "name"),
                 format_ref(item.get("managerId"), users_by_id, "fullName"),
+                " ".join(doc_names),
                 str(item.get("description") or ""),
             ]
         )

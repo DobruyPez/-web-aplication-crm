@@ -1,3 +1,6 @@
+import { formatClientOptionLabel } from "./clientDisplay.js";
+import { getDealCardTitle } from "./dealDisplay.js";
+
 /**
  * Единая клиентская сортировка загруженных таблиц (CRM resource lists).
  * Используется всеми экранами с фильтрами/списками записей.
@@ -101,10 +104,18 @@ export function compareRawForSortField(a, b, sortField, ctx) {
   }
 
   if (sortField === "clientId") {
-    return compareFkLabels(left, right, clientsById, "name");
+    const label = (id) => {
+      const entity = clientsById?.[id] ?? clientsById?.[Number.parseInt(String(id), 10)];
+      return entity ? formatClientOptionLabel(entity) : String(id ?? "");
+    };
+    return label(left).localeCompare(label(right), "ru", { numeric: true, sensitivity: "base" });
   }
   if (sortField === "dealId") {
-    return compareFkLabels(left, right, dealsById, "title");
+    const label = (id) => {
+      const entity = dealsById?.[id] ?? dealsById?.[Number.parseInt(String(id), 10)];
+      return entity ? getDealCardTitle(entity) : String(id ?? "");
+    };
+    return label(left).localeCompare(label(right), "ru", { numeric: true, sensitivity: "base" });
   }
   if (sortField === "managerId" || sortField === "authorId" || sortField === "callerId" || sortField === "uploaderId") {
     return compareFkLabels(left, right, usersByIdWithCurrent, "fullName");

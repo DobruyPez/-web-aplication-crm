@@ -12,8 +12,8 @@
 /** Допустимые поля фильтра по ресурсу (для валидации GET). */
 export const DASHBOARD_DEEP_FILTER_FIELDS = {
   tasks: new Set(["id", "title", "authorId", "clientId", "dealId", "status", "priority", "description"]),
-  deals: new Set(["id", "title", "clientId", "managerId", "stage", "amount", "description"]),
-  clients: new Set(["id", "name", "company", "email", "phone", "address", "managerId"]),
+  deals: new Set(["id", "productName", "title", "clientId", "managerId", "stage", "amount", "description"]),
+  clients: new Set(["id", "name", "email", "phone", "address", "managerId"]),
   documents: new Set(["id", "filename", "clientId", "uploaderId", "mimeType"]),
   users: new Set(["id", "fullName", "email", "role", "phone"]),
   calls: new Set(["id", "clientId", "callerId", "status", "direction"]),

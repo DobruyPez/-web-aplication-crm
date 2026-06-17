@@ -18,6 +18,9 @@ function safeAppReturnTo(raw) {
   }
   const pathOnly = decoded.split(/[?#]/)[0];
   if (pathOnly === "/login") return null;
+  if (pathOnly.startsWith("/calls/join/") || pathOnly.startsWith("/client-invite/")) {
+    return pathOnly;
+  }
   return decoded;
 }
 
@@ -50,7 +53,7 @@ const Login = () => {
     <div className="auth-page">
       <div className="auth-layout">
         <aside className="auth-side">
-          <p className="dashboard-kicker">CRM Workspace</p>
+          <p className="dashboard-kicker">Рабочая область CRM</p>
           <h2>Управляйте клиентами, сделками и задачами в одном окне.</h2>
           <p>Единая панель для менеджера и администратора с прозрачной операционной картиной.</p>
         </aside>
@@ -59,7 +62,7 @@ const Login = () => {
           <p className="hint">Доступ по учётным данным, которые выдал администратор.</p>
           {error ? <p className="hint error">{error}</p> : null}
           <label className="field">
-            <span>Email</span>
+            <span>Электронная почта</span>
             <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" autoComplete="username" />
           </label>
           <label className="field">

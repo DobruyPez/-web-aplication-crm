@@ -1,7 +1,8 @@
 # Конфигурация для тестов
 BASE_URL = "http://localhost:3000"
 
-# ID тестовых пользователей (должны существовать в БД)
+# ID тестовых пользователей (должны существовать в БД после tests/seed_test_data.sql)
+# Админ: user_1@test.crm.local / 1234 (id = 1)
 ADMIN_ID = 1
 MANAGER_IVANOV_ID = 2
 MANAGER_PETROVA_ID = 3

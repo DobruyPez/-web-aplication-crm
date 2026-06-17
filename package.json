@@ -13,7 +13,16 @@
     "certs:mkcert": "npm --prefix backend run certs:mkcert",
     "mkcert:download": "npm --prefix backend run mkcert:download",
     "prisma:generate": "npm --prefix backend run prisma:generate",
-    "prisma:generate:clean": "npm --prefix backend run prisma:generate:clean"
+    "prisma:generate:clean": "npm --prefix backend run prisma:generate:clean",
+    "test": "npm --prefix frontend test -- --run",
+    "test:recording": "npm --prefix frontend test -- --run src/lib/domRegionRecorder.test.js",
+    "test:video:unit": "pytest tests/test_video_recording_unit.py -q",
+    "test:video:frontend": "npm --prefix frontend test -- --run src/lib/domRegionRecorder.test.js",
+    "test:video:api": "pytest tests/test_video_sessions_api.py tests/test_client_invite.py tests/test_video_upload_recording.py -q",
+    "test:functional": "pytest tests/test_functional_table_4_1.py -v",
+    "test:docker:seed": "pytest tests/test_docker_seed_api.py -s -k verify",
+    "test:docker:seed:api": "pytest tests/test_docker_seed_api.py -s -k seed_docker_demo",
+    "test:workbooks": "python tests/generate_test_workbooks.py"
   },
   "dependencies": {},
   "devDependencies": {}

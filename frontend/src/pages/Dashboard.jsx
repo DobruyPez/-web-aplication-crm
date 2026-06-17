@@ -2,9 +2,20 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchDashboardOverview } from "../api";
 import { useAuth } from "../authContext";
+import {
+  formatDisplayLabel,
+  getAlertSeverityLabel,
+  getCallDirectionLabel,
+  getCallStatusLabel,
+  getDealStageLabel,
+  getLogLevelLabel,
+  getTaskPriorityLabel,
+  getTaskStatusLabel,
+} from "../lib/enumLabels";
 import { API_ORIGIN } from "../config";
 import { buildDashboardResourceHref } from "../lib/dashboardDeepLink";
-import { buildDealsRiskHref, buildTasksBucketHref } from "../lib/listViewQuery";
+import { formatClientOptionLabel } from "../lib/clientDisplay.js";
+import { buildDealsRiskHref, buildDealsRiskHrefForManager, buildTasksBucketHref } from "../lib/listViewQuery";
 
 const recordingHref = (recordingUrl) =>
   recordingUrl ? encodeURI(`${API_ORIGIN}${recordingUrl}`) : null;
@@ -37,11 +48,6 @@ const formatMoney = (amount) => {
     numeric,
   );
 };
-
-const prettifyLabel = (value) =>
-  String(value || "")
-    .replaceAll("_", " ")
-    .replace(/^\w/, (ch) => ch.toUpperCase());
 
 const TASK_BUCKET_KEYS = ["overdue", "today", "week"];
 
@@ -109,7 +115,7 @@ function Dashboard() {
   const serverLogs = overview?.serverLogs || [];
   const quickActions = isAdmin
     ? [
-        { to: buildTasksBucketHref("overdue"), label: "Проверить задачи", desc: "Просрочки, блокеры и контроль SLA" },
+        { to: buildTasksBucketHref("overdue"), label: "Проверить задачи", desc: "Просрочки, блокеры и контроль сроков" },
         { to: buildDealsRiskHref(), label: "Открыть сделки", desc: "Риски, этапы и план закрытий" },
         { to: "/users", label: "Команда", desc: "Пользователи и роли" },
         { to: "/documents", label: "Документы", desc: "Связанные файлы по клиентам" },
@@ -125,7 +131,7 @@ function Dashboard() {
     <div className="dashboard-page dashboard-modern">
       <header className="dashboard-hero">
         <div>
-          <p className="dashboard-kicker">CRM Workspace</p>
+          <p className="dashboard-kicker">Рабочая область CRM</p>
           <h1>{isAdmin ? "Контроль системы" : "Рабочая панель менеджера"}</h1>
           <p className="dashboard-subtitle">
             {isAdmin
@@ -173,7 +179,7 @@ function Dashboard() {
               <article key={`${item.category}-${idx}`} className="cell card-row">
                 <div>
                   <strong>{item.title}</strong>
-                  <p>{prettifyLabel(item.severity)}</p>
+                  <p>{getAlertSeverityLabel(item.severity)}</p>
                 </div>
                 {item.actionUrl ? (
                   <Link to={item.actionUrl} className="status-badge dashboard-alert-action">
@@ -239,10 +245,10 @@ function Dashboard() {
                           <p>{task.description || "Без описания"}</p>
                           <p className="dashboard-task-meta">
                             Срок: {task.dueDate ? formatDate(task.dueDate) : "не задан"} · Приоритет:{" "}
-                            {prettifyLabel(task.priority || "medium")}
+                            {getTaskPriorityLabel(task.priority || "medium")}
                           </p>
                         </div>
-                        <span className="status-badge">{prettifyLabel(task.status || "new")}</span>
+                        <span className="status-badge">{getTaskStatusLabel(task.status || "new")}</span>
                       </article>
                     ))}
                     {(managerTaskBuckets[managerTaskBucketFilter] || []).length === 0 ? (
@@ -270,10 +276,13 @@ function Dashboard() {
                           {deal.title}
                         </Link>
                       </h3>
-                      <span className="status-badge">{prettifyLabel(deal.stage || "new")}</span>
+                      <span className="status-badge">{getDealStageLabel(deal.stage || "new")}</span>
                     </div>
                     <div className="cell-grid">
-                      <div className="cell">Клиент: {deal.client?.name || `ID ${deal.clientId}`}</div>
+                      <div className="cell">
+                        Клиент:{" "}
+                        {deal.client ? formatClientOptionLabel(deal.client) : `ID ${deal.clientId}`}
+                      </div>
                       <div className="cell">Сумма: {formatMoney(deal.amount)}</div>
                       <div className="cell">Закрытие: {formatDate(deal.closingDate)}</div>
                     </div>
@@ -298,12 +307,14 @@ function Dashboard() {
                       <div>
                         <strong>
                           <Link to={buildDashboardResourceHref("/calls", { recordId: call.id, filterField: "id" })}>
-                            {call.client?.name || `Клиент #${call.clientId}`}
+                            {call.client
+                              ? formatClientOptionLabel(call.client)
+                              : `Клиент #${call.clientId}`}
                           </Link>
                         </strong>
                         <p>
-                          {formatDateTime(call.startedAt)} · {prettifyLabel(call.direction || "out")} ·{" "}
-                          {prettifyLabel(call.status || "completed")}
+                          {formatDateTime(call.startedAt)} · {getCallDirectionLabel(call.direction || "out")} ·{" "}
+                          {getCallStatusLabel(call.status || "completed")}
                         </p>
                         <p className="dashboard-task-meta">
                           Оператор: {call.caller?.fullName || `ID ${call.callerId}`}
@@ -347,7 +358,8 @@ function Dashboard() {
                           </Link>
                         </strong>
                         <p>
-                          Клиент: {doc.client?.name || `ID ${doc.clientId}`} · Загрузил:{" "}
+                          Клиент:{" "}
+                          {doc.client ? formatClientOptionLabel(doc.client) : `ID ${doc.clientId}`} · Загрузил:{" "}
                           {doc.uploader?.fullName || `ID ${doc.uploaderId}`}
                         </p>
                         <p className="dashboard-task-meta">Загружен: {formatDateTime(doc.uploadedAt)}</p>
@@ -366,8 +378,14 @@ function Dashboard() {
         ) : (
           <section className="panel panel-wide">
             <h2>Командное здоровье</h2>
+            <p className="hint" style={{ margin: "0 0 12px" }}>
+              Показаны только менеджеры с проблемами: просроченные задачи, рисковые сделки (закрытие в 7 дней) или
+              пропущенные звонки за неделю. Сейчас: {managerHealth.length}.
+            </p>
             <div className="panel-box modern-box">
-              {managerHealth.length === 0 ? <div className="cell cell-muted">Нет данных по менеджерам.</div> : null}
+              {managerHealth.length === 0 ? (
+                <div className="cell cell-muted">Нет менеджеров с активными рисками — блок пуст.</div>
+              ) : null}
               <div className="cell-grid">
                 {managerHealth.map((m) => (
                   <div key={m.managerId} className="cell">
@@ -376,11 +394,39 @@ function Dashboard() {
                         {m.managerName}
                       </Link>
                     </strong>
-                    <p>Просрочки: {m.overdueTasks}</p>
-                    <p>
-                      Риски сделок: {m.riskyDeals}{" "}
-                      <Link to={buildDealsRiskHref()}>(таблица)</Link>
-                    </p>
+                    {m.overdueTasks > 0 ? (
+                      <p>
+                        Просрочки: {m.overdueTasks}{" "}
+                        <Link
+                          to={buildDashboardResourceHref("/tasks", {
+                            recordId: m.managerId,
+                            filterField: "authorId",
+                            extra: { listBucket: "overdue" },
+                          })}
+                        >
+                          (таблица)
+                        </Link>
+                      </p>
+                    ) : null}
+                    {m.riskyDeals > 0 ? (
+                      <p>
+                        Риски сделок: {m.riskyDeals}{" "}
+                        <Link to={buildDealsRiskHrefForManager(m.managerId)}>(таблица)</Link>
+                      </p>
+                    ) : null}
+                    {m.missedCalls > 0 ? (
+                      <p>
+                        Пропущенные звонки (7 дн.): {m.missedCalls}{" "}
+                        <Link
+                          to={buildDashboardResourceHref("/calls/create", {
+                            recordId: m.managerId,
+                            filterField: "callerId",
+                          })}
+                        >
+                          (таблица)
+                        </Link>
+                      </p>
+                    ) : null}
                   </div>
                 ))}
               </div>
@@ -398,11 +444,11 @@ function Dashboard() {
                   <div className="dashboard-log-main">
                     <strong>{log.message}</strong>
                     <p>
-                      Источник: {prettifyLabel(log.source || "system")} · Время: {formatDateTime(log.createdAt)}
+                      Источник: {formatDisplayLabel(log.source || "system")} · Время: {formatDateTime(log.createdAt)}
                     </p>
                   </div>
                   <div className="dashboard-log-level">
-                    <span className="status-badge dashboard-log-severity">{prettifyLabel(log.level || "info")}</span>
+                    <span className="status-badge dashboard-log-severity">{getLogLevelLabel(log.level || "info")}</span>
                   </div>
                   <div className="dashboard-log-link">
                     {log.actionUrl ? (

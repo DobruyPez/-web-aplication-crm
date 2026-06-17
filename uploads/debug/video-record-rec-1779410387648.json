@@ -1,0 +1,2263 @@
+[
+  {
+    "t": "2026-05-22T00:38:27.527Z",
+    "phase": "env",
+    "message": "browser context",
+    "data": {
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "cookieEnabled": true,
+      "sessionStorageOk": true,
+      "href": "https://localhost/calls/video-host/f5013a0d-7c88-4f7a-a1e0-4a1a5ebcf700",
+      "isIncognitoHint": "В инкогнито guest-вкладка нормальна; запись ведёт только вкладка менеджера. На одном ПК обе вкладки часто делят одну камеру."
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.375Z",
+    "phase": "webrtc",
+    "message": "ontrack",
+    "data": {
+      "kind": "audio",
+      "id": "8838c11d-675b-4fd8-ad05-d1252893e229",
+      "state": "live",
+      "isManager": true
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.375Z",
+    "phase": "webrtc",
+    "message": "ontrack",
+    "data": {
+      "kind": "video",
+      "id": "6f69b3da-92b7-49b1-b1c1-1022fdc10857",
+      "state": "live",
+      "isManager": true
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.378Z",
+    "phase": "hook",
+    "message": "startRecordingIfReady",
+    "data": {
+      "participantCount": 2,
+      "local": {
+        "label": "local",
+        "present": true,
+        "video": [
+          {
+            "id": "f338ef9c-f826-438a-8fdb-1d80f017d964",
+            "state": "live",
+            "enabled": true,
+            "muted": false,
+            "label": "DV20 USB CAMERA (4c4a:4a55)"
+          }
+        ],
+        "audio": 1
+      },
+      "remote": {
+        "label": "remote",
+        "present": true,
+        "video": [
+          {
+            "id": "6f69b3da-92b7-49b1-b1c1-1022fdc10857",
+            "state": "live",
+            "enabled": true,
+            "muted": true,
+            "label": "6f69b3da-92b7-49b1-b1c1-1022fdc10857"
+          }
+        ],
+        "audio": 1
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.379Z",
+    "phase": "wait",
+    "message": "waitForRecordingTracks started",
+    "data": {
+      "local": {
+        "label": "local",
+        "present": true,
+        "video": [
+          {
+            "id": "f338ef9c-f826-438a-8fdb-1d80f017d964",
+            "state": "live",
+            "enabled": true,
+            "muted": false,
+            "label": "DV20 USB CAMERA (4c4a:4a55)"
+          }
+        ],
+        "audio": 1
+      },
+      "remote": {
+        "label": "remote",
+        "present": true,
+        "video": [
+          {
+            "id": "6f69b3da-92b7-49b1-b1c1-1022fdc10857",
+            "state": "live",
+            "enabled": true,
+            "muted": true,
+            "label": "6f69b3da-92b7-49b1-b1c1-1022fdc10857"
+          }
+        ],
+        "audio": 1
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.380Z",
+    "phase": "local",
+    "message": "MediaStreamTrackProcessor started",
+    "data": {
+      "trackId": "f338ef9c-f826-438a-8fdb-1d80f017d964"
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.380Z",
+    "phase": "local",
+    "message": "bound track for recording",
+    "data": {
+      "trackId": "f338ef9c-f826-438a-8fdb-1d80f017d964",
+      "paintMethod": "track-processor",
+      "stream": {
+        "label": "local",
+        "present": true,
+        "video": [
+          {
+            "id": "f338ef9c-f826-438a-8fdb-1d80f017d964",
+            "state": "live",
+            "enabled": true,
+            "muted": false,
+            "label": "DV20 USB CAMERA (4c4a:4a55)"
+          }
+        ],
+        "audio": 1
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.380Z",
+    "phase": "remote",
+    "message": "MediaStreamTrackProcessor started",
+    "data": {
+      "trackId": "6f69b3da-92b7-49b1-b1c1-1022fdc10857"
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.380Z",
+    "phase": "remote",
+    "message": "bound track for recording",
+    "data": {
+      "trackId": "6f69b3da-92b7-49b1-b1c1-1022fdc10857",
+      "paintMethod": "track-processor",
+      "stream": {
+        "label": "remote",
+        "present": true,
+        "video": [
+          {
+            "id": "6f69b3da-92b7-49b1-b1c1-1022fdc10857",
+            "state": "live",
+            "enabled": true,
+            "muted": true,
+            "label": "6f69b3da-92b7-49b1-b1c1-1022fdc10857"
+          }
+        ],
+        "audio": 1
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.381Z",
+    "phase": "local",
+    "message": "dedicated record video created",
+    "data": {
+      "trackId": "f338ef9c-f826-438a-8fdb-1d80f017d964",
+      "trackState": "live",
+      "cloneOk": true,
+      "ownsTracks": true
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.430Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 1,
+      "paintSuccess": 1,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        57,
+        45,
+        47
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.431Z",
+    "phase": "remote",
+    "message": "dedicated record video created",
+    "data": {
+      "trackId": "6f69b3da-92b7-49b1-b1c1-1022fdc10857",
+      "trackState": "live",
+      "cloneOk": true,
+      "ownsTracks": true
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.507Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 1,
+      "paintSuccess": 1,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        75,
+        56,
+        54
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.508Z",
+    "phase": "wait",
+    "message": "tracks ready for recording",
+    "data": {
+      "localTrackId": "f338ef9c-f826-438a-8fdb-1d80f017d964",
+      "remoteTrackId": "6f69b3da-92b7-49b1-b1c1-1022fdc10857",
+      "localStats": {
+        "paintAttempts": 1,
+        "paintSuccess": 1,
+        "lastPaintAt": 1779410319428,
+        "paintMethod": "dedicated-video-fallback"
+      },
+      "remoteStats": {
+        "paintAttempts": 1,
+        "paintSuccess": 1,
+        "lastPaintAt": 1779410319470,
+        "paintMethod": "dedicated-video-fallback"
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.509Z",
+    "phase": "start",
+    "message": "recorder started",
+    "data": {
+      "size": {
+        "width": 1546,
+        "height": 720,
+        "slotWidth": 773,
+        "dpr": 1.100000023841858
+      },
+      "mimeType": "video/webm;codecs=vp8,opus",
+      "painter": "dedicated-track-video",
+      "local": {
+        "label": "local",
+        "present": true,
+        "video": [
+          {
+            "id": "f338ef9c-f826-438a-8fdb-1d80f017d964",
+            "state": "live",
+            "enabled": true,
+            "muted": false,
+            "label": "DV20 USB CAMERA (4c4a:4a55)"
+          }
+        ],
+        "audio": 1
+      },
+      "remote": {
+        "label": "remote",
+        "present": true,
+        "video": [
+          {
+            "id": "6f69b3da-92b7-49b1-b1c1-1022fdc10857",
+            "state": "live",
+            "enabled": true,
+            "muted": false,
+            "label": "6f69b3da-92b7-49b1-b1c1-1022fdc10857"
+          }
+        ],
+        "audio": 1
+      },
+      "remoteUiVideo": {
+        "videoWidth": 640,
+        "videoHeight": 480,
+        "readyState": 4,
+        "sameStreamAsRecord": true
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.510Z",
+    "phase": "local",
+    "message": "MediaStreamTrackProcessor started",
+    "data": {
+      "trackId": "f338ef9c-f826-438a-8fdb-1d80f017d964"
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.510Z",
+    "phase": "local",
+    "message": "bound track for recording",
+    "data": {
+      "trackId": "f338ef9c-f826-438a-8fdb-1d80f017d964",
+      "paintMethod": "track-processor",
+      "stream": {
+        "label": "local",
+        "present": true,
+        "video": [
+          {
+            "id": "f338ef9c-f826-438a-8fdb-1d80f017d964",
+            "state": "live",
+            "enabled": true,
+            "muted": false,
+            "label": "DV20 USB CAMERA (4c4a:4a55)"
+          }
+        ],
+        "audio": 1
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.510Z",
+    "phase": "hook",
+    "message": "recording active",
+    "data": {
+      "status": "recording"
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.511Z",
+    "phase": "local",
+    "message": "dedicated record video created",
+    "data": {
+      "trackId": "f338ef9c-f826-438a-8fdb-1d80f017d964",
+      "trackState": "live",
+      "cloneOk": true,
+      "ownsTracks": true
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.553Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 1,
+      "paintSuccess": 1,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        59,
+        53,
+        56
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.553Z",
+    "phase": "remote",
+    "message": "MediaStreamTrackProcessor started",
+    "data": {
+      "trackId": "6f69b3da-92b7-49b1-b1c1-1022fdc10857"
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.554Z",
+    "phase": "remote",
+    "message": "bound track for recording",
+    "data": {
+      "trackId": "6f69b3da-92b7-49b1-b1c1-1022fdc10857",
+      "paintMethod": "track-processor",
+      "stream": {
+        "label": "remote",
+        "present": true,
+        "video": [
+          {
+            "id": "6f69b3da-92b7-49b1-b1c1-1022fdc10857",
+            "state": "live",
+            "enabled": true,
+            "muted": false,
+            "label": "6f69b3da-92b7-49b1-b1c1-1022fdc10857"
+          }
+        ],
+        "audio": 1
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.554Z",
+    "phase": "remote",
+    "message": "dedicated record video created",
+    "data": {
+      "trackId": "6f69b3da-92b7-49b1-b1c1-1022fdc10857",
+      "trackState": "live",
+      "cloneOk": true,
+      "ownsTracks": true
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:39.557Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": false,
+      "paintMethod": "track-processor",
+      "paintAttempts": 2,
+      "paintSuccess": 0,
+      "videoWidth": 0,
+      "videoHeight": 0,
+      "readyState": 0,
+      "paused": false,
+      "centerRgb": null
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:41.480Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 50,
+      "localLastPaint": 1779410321470,
+      "remoteLastPaint": 1779410321471,
+      "localCenter": [
+        90,
+        70,
+        68
+      ],
+      "remoteCenter": [
+        93,
+        71,
+        65
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:41.554Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 52,
+      "paintSuccess": 52,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        89,
+        69,
+        60
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:41.597Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 53,
+      "paintSuccess": 52,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        87,
+        67,
+        61
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:43.480Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 100,
+      "localLastPaint": 1779410323471,
+      "remoteLastPaint": 1779410323472,
+      "localCenter": [
+        105,
+        76,
+        79
+      ],
+      "remoteCenter": [
+        101,
+        78,
+        79
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:43.563Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 102,
+      "paintSuccess": 102,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        104,
+        81,
+        77
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:43.597Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 103,
+      "paintSuccess": 102,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        104,
+        78,
+        76
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:45.487Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 150,
+      "localLastPaint": 1779410325477,
+      "remoteLastPaint": 1779410325477,
+      "localCenter": [
+        94,
+        70,
+        70
+      ],
+      "remoteCenter": [
+        95,
+        70,
+        67
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:45.595Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 153,
+      "paintSuccess": 153,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        95,
+        73,
+        72
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:45.602Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 153,
+      "paintSuccess": 152,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        92,
+        72,
+        68
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:47.481Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 200,
+      "localLastPaint": 1779410327472,
+      "remoteLastPaint": 1779410327472,
+      "localCenter": [
+        86,
+        65,
+        61
+      ],
+      "remoteCenter": [
+        87,
+        63,
+        61
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:47.634Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 204,
+      "paintSuccess": 204,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        89,
+        65,
+        64
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:47.639Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 204,
+      "paintSuccess": 203,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        91,
+        65,
+        67
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:49.479Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 250,
+      "localLastPaint": 1779410329471,
+      "remoteLastPaint": 1779410329471,
+      "localCenter": [
+        65,
+        45,
+        48
+      ],
+      "remoteCenter": [
+        65,
+        48,
+        50
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:49.674Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 255,
+      "paintSuccess": 255,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        49,
+        40,
+        49
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:49.679Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 255,
+      "paintSuccess": 254,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        46,
+        41,
+        44
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:51.479Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 300,
+      "localLastPaint": 1779410331470,
+      "remoteLastPaint": 1779410331471,
+      "localCenter": [
+        109,
+        74,
+        72
+      ],
+      "remoteCenter": [
+        109,
+        76,
+        65
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:51.675Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 305,
+      "paintSuccess": 305,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        108,
+        74,
+        76
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:51.680Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 305,
+      "paintSuccess": 304,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        107,
+        74,
+        66
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:53.479Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 350,
+      "localLastPaint": 1779410333471,
+      "remoteLastPaint": 1779410333471,
+      "localCenter": [
+        92,
+        67,
+        68
+      ],
+      "remoteCenter": [
+        94,
+        64,
+        62
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:53.714Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 356,
+      "paintSuccess": 356,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        94,
+        68,
+        60
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:53.720Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 356,
+      "paintSuccess": 355,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        94,
+        66,
+        63
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:55.478Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 400,
+      "localLastPaint": 1779410335471,
+      "remoteLastPaint": 1779410335471,
+      "localCenter": [
+        150,
+        150,
+        143
+      ],
+      "remoteCenter": [
+        141,
+        134,
+        132
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:55.715Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 406,
+      "paintSuccess": 406,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        179,
+        172,
+        169
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:55.720Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 406,
+      "paintSuccess": 405,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        170,
+        166,
+        167
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:57.479Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 450,
+      "localLastPaint": 1779410337471,
+      "remoteLastPaint": 1779410337472,
+      "localCenter": [
+        181,
+        179,
+        176
+      ],
+      "remoteCenter": [
+        188,
+        175,
+        177
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:57.754Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 457,
+      "paintSuccess": 457,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        177,
+        173,
+        168
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:57.758Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 457,
+      "paintSuccess": 456,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        179,
+        175,
+        170
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:59.479Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 500,
+      "localLastPaint": 1779410339472,
+      "remoteLastPaint": 1779410339472,
+      "localCenter": [
+        94,
+        86,
+        90
+      ],
+      "remoteCenter": [
+        69,
+        63,
+        65
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:59.756Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 507,
+      "paintSuccess": 507,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        47,
+        45,
+        48
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:38:59.761Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 507,
+      "paintSuccess": 506,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        123,
+        116,
+        114
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:02.181Z",
+    "phase": "stop",
+    "message": "recorder stopping",
+    "data": {
+      "frameCount": 538,
+      "chunks": 21,
+      "totalBytes": 5667959,
+      "localStats": {
+        "paintAttempts": 538,
+        "paintSuccess": 538,
+        "lastPaintAt": 1779410340991,
+        "paintMethod": "dedicated-video-fallback"
+      },
+      "remoteStats": {
+        "paintAttempts": 538,
+        "paintSuccess": 537,
+        "lastPaintAt": 1779410340992,
+        "paintMethod": "dedicated-video-fallback"
+      },
+      "localCenter": [
+        72,
+        62,
+        58
+      ],
+      "remoteCenter": [
+        61,
+        46,
+        43
+      ],
+      "remoteEmpty": false,
+      "hint": "remoteEmpty=true → в файле справа будет чёрный фон"
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:02.187Z",
+    "phase": "stop",
+    "message": "blob ready",
+    "data": {
+      "blobSize": 5696741,
+      "downloadLogs": "в консоли: downloadVideoRecordLogs()"
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:02.254Z",
+    "phase": "stop",
+    "message": "logs flushed to server",
+    "data": {
+      "ok": true,
+      "pathHint": "backend/uploads/debug/video-record-*.json"
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.759Z",
+    "phase": "webrtc",
+    "message": "ontrack",
+    "data": {
+      "kind": "audio",
+      "id": "8a4eb75e-c0f5-4f79-a186-c907eb9eba6c",
+      "state": "live",
+      "isManager": true
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.759Z",
+    "phase": "webrtc",
+    "message": "ontrack",
+    "data": {
+      "kind": "video",
+      "id": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39",
+      "state": "live",
+      "isManager": true
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.762Z",
+    "phase": "hook",
+    "message": "startRecordingIfReady",
+    "data": {
+      "participantCount": 2,
+      "local": {
+        "label": "local",
+        "present": true,
+        "video": [
+          {
+            "id": "e73e9ecc-080c-46f4-a55d-cb4788f475d8",
+            "state": "live",
+            "enabled": true,
+            "muted": false,
+            "label": "DV20 USB CAMERA (4c4a:4a55)"
+          }
+        ],
+        "audio": 1
+      },
+      "remote": {
+        "label": "remote",
+        "present": true,
+        "video": [
+          {
+            "id": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39",
+            "state": "live",
+            "enabled": true,
+            "muted": true,
+            "label": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39"
+          }
+        ],
+        "audio": 1
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.763Z",
+    "phase": "wait",
+    "message": "waitForRecordingTracks started",
+    "data": {
+      "local": {
+        "label": "local",
+        "present": true,
+        "video": [
+          {
+            "id": "e73e9ecc-080c-46f4-a55d-cb4788f475d8",
+            "state": "live",
+            "enabled": true,
+            "muted": false,
+            "label": "DV20 USB CAMERA (4c4a:4a55)"
+          }
+        ],
+        "audio": 1
+      },
+      "remote": {
+        "label": "remote",
+        "present": true,
+        "video": [
+          {
+            "id": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39",
+            "state": "live",
+            "enabled": true,
+            "muted": true,
+            "label": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39"
+          }
+        ],
+        "audio": 1
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.763Z",
+    "phase": "local",
+    "message": "MediaStreamTrackProcessor started",
+    "data": {
+      "trackId": "e73e9ecc-080c-46f4-a55d-cb4788f475d8"
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.764Z",
+    "phase": "local",
+    "message": "bound track for recording",
+    "data": {
+      "trackId": "e73e9ecc-080c-46f4-a55d-cb4788f475d8",
+      "paintMethod": "track-processor",
+      "stream": {
+        "label": "local",
+        "present": true,
+        "video": [
+          {
+            "id": "e73e9ecc-080c-46f4-a55d-cb4788f475d8",
+            "state": "live",
+            "enabled": true,
+            "muted": false,
+            "label": "DV20 USB CAMERA (4c4a:4a55)"
+          }
+        ],
+        "audio": 1
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.764Z",
+    "phase": "remote",
+    "message": "MediaStreamTrackProcessor started",
+    "data": {
+      "trackId": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39"
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.764Z",
+    "phase": "remote",
+    "message": "bound track for recording",
+    "data": {
+      "trackId": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39",
+      "paintMethod": "track-processor",
+      "stream": {
+        "label": "remote",
+        "present": true,
+        "video": [
+          {
+            "id": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39",
+            "state": "live",
+            "enabled": true,
+            "muted": true,
+            "label": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39"
+          }
+        ],
+        "audio": 1
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.765Z",
+    "phase": "local",
+    "message": "dedicated record video created",
+    "data": {
+      "trackId": "e73e9ecc-080c-46f4-a55d-cb4788f475d8",
+      "trackState": "live",
+      "cloneOk": true,
+      "ownsTracks": true
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.776Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 1,
+      "paintSuccess": 1,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        124,
+        97,
+        89
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.777Z",
+    "phase": "remote",
+    "message": "dedicated record video created",
+    "data": {
+      "trackId": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39",
+      "trackState": "live",
+      "cloneOk": true,
+      "ownsTracks": true
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.849Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 1,
+      "paintSuccess": 1,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        121,
+        95,
+        92
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.849Z",
+    "phase": "wait",
+    "message": "tracks ready for recording",
+    "data": {
+      "localTrackId": "e73e9ecc-080c-46f4-a55d-cb4788f475d8",
+      "remoteTrackId": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39",
+      "localStats": {
+        "paintAttempts": 1,
+        "paintSuccess": 1,
+        "lastPaintAt": 1779410360773,
+        "paintMethod": "dedicated-video-fallback"
+      },
+      "remoteStats": {
+        "paintAttempts": 1,
+        "paintSuccess": 1,
+        "lastPaintAt": 1779410360847,
+        "paintMethod": "dedicated-video-fallback"
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.851Z",
+    "phase": "start",
+    "message": "recorder started",
+    "data": {
+      "size": {
+        "width": 1546,
+        "height": 720,
+        "slotWidth": 773,
+        "dpr": 1.100000023841858
+      },
+      "mimeType": "video/webm;codecs=vp8,opus",
+      "painter": "dedicated-track-video",
+      "local": {
+        "label": "local",
+        "present": true,
+        "video": [
+          {
+            "id": "e73e9ecc-080c-46f4-a55d-cb4788f475d8",
+            "state": "live",
+            "enabled": true,
+            "muted": false,
+            "label": "DV20 USB CAMERA (4c4a:4a55)"
+          }
+        ],
+        "audio": 1
+      },
+      "remote": {
+        "label": "remote",
+        "present": true,
+        "video": [
+          {
+            "id": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39",
+            "state": "live",
+            "enabled": true,
+            "muted": false,
+            "label": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39"
+          }
+        ],
+        "audio": 1
+      },
+      "remoteUiVideo": {
+        "videoWidth": 640,
+        "videoHeight": 480,
+        "readyState": 4,
+        "sameStreamAsRecord": true
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.851Z",
+    "phase": "local",
+    "message": "MediaStreamTrackProcessor started",
+    "data": {
+      "trackId": "e73e9ecc-080c-46f4-a55d-cb4788f475d8"
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.852Z",
+    "phase": "local",
+    "message": "bound track for recording",
+    "data": {
+      "trackId": "e73e9ecc-080c-46f4-a55d-cb4788f475d8",
+      "paintMethod": "track-processor",
+      "stream": {
+        "label": "local",
+        "present": true,
+        "video": [
+          {
+            "id": "e73e9ecc-080c-46f4-a55d-cb4788f475d8",
+            "state": "live",
+            "enabled": true,
+            "muted": false,
+            "label": "DV20 USB CAMERA (4c4a:4a55)"
+          }
+        ],
+        "audio": 1
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.853Z",
+    "phase": "hook",
+    "message": "recording active",
+    "data": {
+      "status": "recording"
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.853Z",
+    "phase": "local",
+    "message": "dedicated record video created",
+    "data": {
+      "trackId": "e73e9ecc-080c-46f4-a55d-cb4788f475d8",
+      "trackState": "live",
+      "cloneOk": true,
+      "ownsTracks": true
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.888Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 1,
+      "paintSuccess": 1,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        128,
+        97,
+        96
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.889Z",
+    "phase": "remote",
+    "message": "MediaStreamTrackProcessor started",
+    "data": {
+      "trackId": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39"
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.889Z",
+    "phase": "remote",
+    "message": "bound track for recording",
+    "data": {
+      "trackId": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39",
+      "paintMethod": "track-processor",
+      "stream": {
+        "label": "remote",
+        "present": true,
+        "video": [
+          {
+            "id": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39",
+            "state": "live",
+            "enabled": true,
+            "muted": false,
+            "label": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39"
+          }
+        ],
+        "audio": 1
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.890Z",
+    "phase": "remote",
+    "message": "dedicated record video created",
+    "data": {
+      "trackId": "b9556621-6c6c-4af8-a1c4-b9d7d2e6cf39",
+      "trackState": "live",
+      "cloneOk": true,
+      "ownsTracks": true
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:20.893Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": false,
+      "paintMethod": "track-processor",
+      "paintAttempts": 2,
+      "paintSuccess": 0,
+      "videoWidth": 0,
+      "videoHeight": 0,
+      "readyState": 0,
+      "paused": false,
+      "centerRgb": null
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:22.821Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 50,
+      "localLastPaint": 1779410362813,
+      "remoteLastPaint": 1779410362814,
+      "localCenter": [
+        124,
+        97,
+        87
+      ],
+      "remoteCenter": [
+        123,
+        97,
+        91
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:22.898Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 52,
+      "paintSuccess": 52,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        130,
+        96,
+        90
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:22.903Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 52,
+      "paintSuccess": 51,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        127,
+        96,
+        89
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:24.828Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 100,
+      "localLastPaint": 1779410364815,
+      "remoteLastPaint": 1779410364815,
+      "localCenter": [
+        126,
+        97,
+        97
+      ],
+      "remoteCenter": [
+        127,
+        99,
+        94
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:24.937Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 103,
+      "paintSuccess": 103,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        124,
+        98,
+        94
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:24.942Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 103,
+      "paintSuccess": 102,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        127,
+        97,
+        94
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:26.822Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 150,
+      "localLastPaint": 1779410366813,
+      "remoteLastPaint": 1779410366814,
+      "localCenter": [
+        128,
+        97,
+        96
+      ],
+      "remoteCenter": [
+        126,
+        98,
+        96
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:26.977Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 154,
+      "paintSuccess": 154,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        127,
+        97,
+        94
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:26.982Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 154,
+      "paintSuccess": 153,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        126,
+        96,
+        97
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:28.821Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 200,
+      "localLastPaint": 1779410368813,
+      "remoteLastPaint": 1779410368813,
+      "localCenter": [
+        124,
+        95,
+        95
+      ],
+      "remoteCenter": [
+        0,
+        0,
+        0
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:29.017Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 205,
+      "paintSuccess": 205,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        119,
+        92,
+        92
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:29.022Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 205,
+      "paintSuccess": 204,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:30.821Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 250,
+      "localLastPaint": 1779410370813,
+      "remoteLastPaint": 1779410370814,
+      "localCenter": [
+        119,
+        94,
+        93
+      ],
+      "remoteCenter": [
+        0,
+        0,
+        0
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:31.020Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 255,
+      "paintSuccess": 255,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        122,
+        94,
+        89
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:31.025Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 255,
+      "paintSuccess": 254,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:32.820Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 300,
+      "localLastPaint": 1779410372813,
+      "remoteLastPaint": 1779410372813,
+      "localCenter": [
+        124,
+        97,
+        95
+      ],
+      "remoteCenter": [
+        125,
+        97,
+        94
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:33.056Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 306,
+      "paintSuccess": 306,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        123,
+        97,
+        94
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:33.061Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 306,
+      "paintSuccess": 305,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        127,
+        98,
+        93
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:34.826Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 350,
+      "localLastPaint": 1779410374813,
+      "remoteLastPaint": 1779410374813,
+      "localCenter": [
+        124,
+        98,
+        91
+      ],
+      "remoteCenter": [
+        0,
+        0,
+        0
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:35.057Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 356,
+      "paintSuccess": 356,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        126,
+        94,
+        90
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:35.061Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 356,
+      "paintSuccess": 355,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:36.825Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 400,
+      "localLastPaint": 1779410376817,
+      "remoteLastPaint": 1779410376817,
+      "localCenter": [
+        123,
+        99,
+        88
+      ],
+      "remoteCenter": [
+        0,
+        0,
+        0
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:37.097Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 407,
+      "paintSuccess": 407,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        126,
+        99,
+        93
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:37.102Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 407,
+      "paintSuccess": 406,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:38.820Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 450,
+      "localLastPaint": 1779410378813,
+      "remoteLastPaint": 1779410378813,
+      "localCenter": [
+        129,
+        102,
+        98
+      ],
+      "remoteCenter": [
+        0,
+        0,
+        0
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:39.137Z",
+    "phase": "local",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 458,
+      "paintSuccess": 458,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        129,
+        102,
+        97
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:39.143Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 458,
+      "paintSuccess": 457,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:40.822Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 500,
+      "localLastPaint": 1779410379334,
+      "remoteLastPaint": 1779410380814,
+      "localCenter": [
+        30,
+        41,
+        59
+      ],
+      "remoteCenter": [
+        0,
+        0,
+        0
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:41.178Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 509,
+      "paintSuccess": 508,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:42.173Z",
+    "phase": "local",
+    "message": "no live video track",
+    "data": {
+      "stream": {
+        "label": "local",
+        "present": true,
+        "video": [
+          {
+            "id": "e73e9ecc-080c-46f4-a55d-cb4788f475d8",
+            "state": "live",
+            "enabled": false,
+            "muted": false,
+            "label": "DV20 USB CAMERA (4c4a:4a55)"
+          }
+        ],
+        "audio": 1
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:42.818Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 550,
+      "localLastPaint": 1779410379334,
+      "remoteLastPaint": 1779410382814,
+      "localCenter": [
+        30,
+        41,
+        59
+      ],
+      "remoteCenter": [
+        0,
+        0,
+        0
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:43.218Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 560,
+      "paintSuccess": 559,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:44.825Z",
+    "phase": "compose",
+    "message": "frame composed",
+    "data": {
+      "frameCount": 600,
+      "localLastPaint": 1779410379334,
+      "remoteLastPaint": 1779410384813,
+      "localCenter": [
+        30,
+        41,
+        59
+      ],
+      "remoteCenter": [
+        0,
+        0,
+        0
+      ],
+      "remoteEmpty": false
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:45.213Z",
+    "phase": "local",
+    "message": "no live video track",
+    "data": {
+      "stream": {
+        "label": "local",
+        "present": true,
+        "video": [
+          {
+            "id": "e73e9ecc-080c-46f4-a55d-cb4788f475d8",
+            "state": "live",
+            "enabled": false,
+            "muted": false,
+            "label": "DV20 USB CAMERA (4c4a:4a55)"
+          }
+        ],
+        "audio": 1
+      }
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:45.257Z",
+    "phase": "remote",
+    "message": "paint tick",
+    "data": {
+      "painted": true,
+      "paintMethod": "dedicated-video-fallback",
+      "paintAttempts": 611,
+      "paintSuccess": 610,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "readyState": 4,
+      "paused": false,
+      "centerRgb": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:47.642Z",
+    "phase": "stop",
+    "message": "recorder stopping",
+    "data": {
+      "frameCount": 644,
+      "chunks": 25,
+      "totalBytes": 4946146,
+      "localStats": {
+        "paintAttempts": 463,
+        "paintSuccess": 463,
+        "lastPaintAt": 1779410379334,
+        "paintMethod": "dedicated-video-fallback"
+      },
+      "remoteStats": {
+        "paintAttempts": 644,
+        "paintSuccess": 643,
+        "lastPaintAt": 1779410386573,
+        "paintMethod": "dedicated-video-fallback"
+      },
+      "localCenter": [
+        30,
+        41,
+        59
+      ],
+      "remoteCenter": [
+        0,
+        0,
+        0
+      ],
+      "remoteEmpty": false,
+      "hint": "remoteEmpty=true → в файле справа будет чёрный фон"
+    }
+  },
+  {
+    "t": "2026-05-22T00:39:47.647Z",
+    "phase": "stop",
+    "message": "blob ready",
+    "data": {
+      "blobSize": 4950078,
+      "downloadLogs": "в консоли: downloadVideoRecordLogs()"
+    }
+  }
+]

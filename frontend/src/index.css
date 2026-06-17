@@ -471,6 +471,219 @@ a.status-badge.dashboard-alert-action:focus-visible {
   grid-column: 1 / -1;
 }
 
+.client-contact-points-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  background: #f8faff;
+}
+
+.client-contact-points-head span {
+  font-weight: 600;
+}
+
+.client-contact-point-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  gap: 8px;
+  align-items: end;
+}
+
+.client-contact-point-remove {
+  margin-bottom: 2px;
+}
+
+.client-contact-points-card {
+  margin-top: 4px;
+  padding: 12px 14px;
+  border: 1px solid #c8d4f8;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #f3f6ff 0%, #eef2fc 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  container-type: inline-size;
+  container-name: contact-card;
+}
+
+.client-contact-points-card-title {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #4a5a8a;
+}
+
+.client-contacts-persons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.client-contact-person-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.client-contact-person-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+}
+
+.client-contact-person-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a2548;
+}
+
+.client-contact-person-role {
+  font-size: 12px;
+  color: #6e79a3;
+}
+
+.client-contact-person-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid #dde4f8;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.client-contact-person-form-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.client-contact-person-form-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+@media (max-width: 900px) {
+  .client-contact-person-form-fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+.client-contact-points-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.client-contact-point-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid #dde4f8;
+  border-radius: 10px;
+  background: #fff;
+  min-width: 0;
+}
+
+.client-contact-point-item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  min-width: 0;
+}
+
+.client-contact-point-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #e8edff;
+  color: #3d4f82;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.client-contact-point-person {
+  font-size: 12px;
+  color: #6e79a3;
+  line-height: 1.35;
+  min-width: 0;
+  margin-top: -4px;
+}
+
+.client-contact-point-item-value {
+  width: 100%;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #1a2548;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.client-contact-point-item-value a {
+  color: #2f5fd4;
+  text-decoration: none;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.client-contact-point-item-value a:hover {
+  text-decoration: underline;
+}
+
+/* Горизонтальная раскладка только если сам блок контактов достаточно широк */
+@container contact-card (min-width: 560px) {
+  .client-contact-point-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 16px;
+    row-gap: 4px;
+    align-items: start;
+  }
+
+  .client-contact-point-item-meta {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .client-contact-point-person {
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: 0;
+  }
+
+  .client-contact-point-item-value {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    text-align: right;
+    width: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .client-contact-point-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 .row-actions {
   display: flex;
   flex-direction: column;
@@ -584,11 +797,58 @@ pre {
   word-break: break-word;
 }
 
+.resource-pagination {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: 1px solid #dde5fb;
+  border-radius: 12px;
+  background: #f8faff;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+}
+
+.resource-pagination-summary {
+  margin: 0;
+  font-size: 13px;
+  color: #6e79a3;
+}
+
+.resource-pagination-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.resource-pagination-page {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a2548;
+  min-width: 7rem;
+  text-align: center;
+}
+
 .resource-cards {
   margin-top: 12px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+
+@media (max-width: 1280px) {
+  .resource-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 960px) {
+  .resource-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .resource-filters {
@@ -625,19 +885,44 @@ pre {
   border-radius: 14px;
   background: #fff;
   padding: 12px;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+}
+
+.resource-card-header,
+.resource-card-grid,
+.resource-card-actions {
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.resource-card--client .client-contact-points-card {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.resource-card--client .client-contacts-persons {
+  flex: 1 1 auto;
 }
 
 .resource-card-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .resource-card-header h3 {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .resource-card-grid {
@@ -674,6 +959,19 @@ pre {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  align-items: center;
+  width: 100%;
+  margin-top: auto;
+}
+
+.resource-card-actions button,
+.resource-card-actions .create-primary-btn {
+  min-height: 36px;
+  max-height: 36px;
+  padding-top: 0;
+  padding-bottom: 0;
+  box-sizing: border-box;
+  line-height: 1.2;
 }
 
 .resource-card-actions .create-primary-btn {
@@ -1199,6 +1497,10 @@ h6 {
 
 .resource-card-title h3 {
   margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
 .resource-card-title p {
@@ -1490,7 +1792,7 @@ h6 {
   color: var(--text-muted);
 }
 
-.auth-card {
+.auth-layout .auth-card {
   width: 100%;
   border: 0;
   box-shadow: none;
@@ -1498,17 +1800,17 @@ h6 {
   padding: 24px;
 }
 
-.auth-card h1 {
+.auth-layout .auth-card h1 {
   margin: 0;
   font-size: 28px;
   line-height: 1.1;
 }
 
-.auth-card .field + .field {
+.auth-layout .auth-card .field + .field {
   margin-top: 4px;
 }
 
-.auth-card button[type="submit"] {
+.auth-layout .auth-card button[type="submit"] {
   margin-top: 6px;
   background: linear-gradient(135deg, #1d4ed8, #2563eb);
   border-color: transparent;
@@ -1516,7 +1818,7 @@ h6 {
   font-weight: 600;
 }
 
-.auth-card button[type="submit"]:hover {
+.auth-layout .auth-card button[type="submit"]:hover {
   filter: brightness(1.04);
 }
 
@@ -1569,8 +1871,11 @@ h6 {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   }
 
+}
+
+@media (max-width: 640px) {
   .resource-cards {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1604,6 +1909,284 @@ h6 {
   .call-audio-table {
     width: 100%;
   }
+
+  .video-conf-grid,
+  .video-conf-grid-duo {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Video conference & client invite --- */
+.video-conf-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.video-conf-modal-panel {
+  width: 100%;
+  max-width: 560px;
+  margin: 0;
+}
+
+.video-conf-setup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.video-conf-setup-block h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.video-conf-setup-divider {
+  text-align: center;
+  margin: 12px 0;
+}
+
+.video-conf-invite-ok {
+  color: var(--brand, #2f6fed);
+}
+
+.form-actions-inline {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.video-conf-incoming-block {
+  margin-bottom: 16px;
+}
+
+.video-conf-mode-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.video-conf-page {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.video-conf-room {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.video-conf-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.video-conf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.video-conf-grid-duo {
+  grid-template-columns: 1fr 1fr;
+  max-width: 100%;
+}
+
+.video-conf-tile-duo {
+  min-height: 200px;
+}
+
+.video-conf-tile-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  font-size: 14px;
+  background: #0f172a;
+}
+
+.video-conf-tile {
+  position: relative;
+  border-radius: 14px;
+  background: #0f172a;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+}
+
+.video-conf-tile video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-conf-tile-label {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  background: rgba(15, 23, 42, 0.72);
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.video-conf-guest-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.video-conf-guest-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.video-conf-guest-row .field.input {
+  flex: 1;
+  min-width: 200px;
+}
+
+.video-conf-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.video-conf-control-btn {
+  border: 1px solid var(--border-soft);
+  background: #fff;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.video-conf-control-btn:hover {
+  border-color: #93c5fd;
+}
+
+.video-conf-join-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  width: min(480px, calc(100vw - 32px));
+  max-width: 480px;
+  min-width: 0;
+  margin: 0 auto;
+  padding: 20px 22px 22px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.video-conf-join-card h2 {
+  margin: 0;
+  font-size: clamp(1.2rem, 4vw, 1.45rem);
+  line-height: 1.2;
+}
+
+.video-conf-join-card .hint {
+  margin: 0;
+  min-width: 0;
+}
+
+.video-conf-join-link {
+  display: block;
+  font-size: 12px;
+  line-height: 1.45;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+  color: var(--text-muted);
+}
+
+.video-conf-join-preview {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  border-radius: 14px;
+  background: #0f172a;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  margin: 0;
+}
+
+.video-conf-join-card .create-primary-btn {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 4px 0 0;
+  padding: 12px 16px;
+  align-self: stretch;
+  flex-shrink: 0;
+}
+
+.video-conf-join-page {
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.client-invite-page .client-invite-card {
+  max-width: 520px;
+}
+
+.client-invite-title {
+  font-family: var(--font-heading);
+  margin: 0 0 12px;
+}
+
+.client-invite-field input {
+  width: 100%;
+}
+
+.client-invite-actions {
+  margin-top: 12px;
+}
+
+.client-invite-actions + .client-invite-actions {
+  margin-top: 16px;
+}
+
+.call-audio-table video {
+  width: 220px;
+  max-width: 100%;
+}
+
+.deal-documents-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  list-style: disc;
+}
+
+.deal-documents-list li {
+  margin: 4px 0;
+  font-size: 13px;
+}
+
+.deal-documents-list a {
+  color: var(--brand);
+}
+
+.field select[multiple] {
+  min-height: 96px;
 }
 
 @media (max-width: 520px) {

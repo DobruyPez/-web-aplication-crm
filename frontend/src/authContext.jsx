@@ -43,6 +43,7 @@ export const AuthProvider = ({ children }) => {
     };
   }, [token, logout]);
 
+  const role = user?.role?.toLowerCase?.() ?? null;
   const value = useMemo(
     () => ({
       token,
@@ -50,9 +51,12 @@ export const AuthProvider = ({ children }) => {
       setUser,
       login,
       logout,
-      isAdmin: user?.role?.toLowerCase?.() === "admin",
+      role,
+      isAdmin: role === "admin",
+      isManager: role === "manager",
+      authReady: Boolean(token && user),
     }),
-    [token, user, login, logout],
+    [token, user, role, login, logout],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

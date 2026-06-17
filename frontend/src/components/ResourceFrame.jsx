@@ -33,7 +33,7 @@ const ResourceFrame = ({ routeKey }) => {
         : null;
     return {
       ...base,
-      ...(routeKey === "deals" ? { managerId: user.id } : {}),
+      ...(routeKey === "deals" ? { managerId: user.id, documentIds: [] } : {}),
       ...(routeKey === "tasks" ? { authorId: user.id } : {}),
       ...(routeKey === "calls" ? { callerId: user.id } : {}),
       ...(routeKey === "documents" ? { uploaderId: user.id } : {}),

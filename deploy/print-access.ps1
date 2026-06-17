@@ -28,7 +28,7 @@ $ip = Get-PrimaryIPv4
 Write-Host ""
 Write-Host "CRM (Docker): доступ по сети с этого компьютера / сервера" -ForegroundColor Cyan
 Write-Host "  HTTP (удобно с телефона в Wi‑Fi, без предупреждения сертификата):"
-Write-Host "    http://${ip}:8080/" -ForegroundColor Green
+Write-Host "    http://${ip}:8088/" -ForegroundColor Green
 Write-Host "  HTTPS (редирект с порта 80; на других устройствах сертификат mkcert не доверен):"
 Write-Host "    https://${ip}/" -ForegroundColor Yellow
 Write-Host ""

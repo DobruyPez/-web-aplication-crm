@@ -1,0 +1,107 @@
+PS B:\Course\Project> @'
+>> {
+>>   "LOG_LEVEL": "info",
+>>   "Providers": [{
+>>     "name": "openrouter",
+>>     "api_base_url": "https://openrouter.ai/api/v1",
+>>     "transformer": {
+>>       "use": ["openrouter"]
+>>     }
+>>   }],
+>>   "Router": {
+>>     "default": "openrouter,openrouter/qwen/qwen-2-7b-instruct:free"
+>>   }
+>> }
+>> '@ | Out-File -FilePath "$env:USERPROFILE\.claude-code-router\config.json" -Encoding UTF8 -Force
+PS B:\Course\Project> ccr start
+Loaded JSON config from: C:\Users\PC_Nagibanka_Xx\.claude-code-router\config.json
+PS B:\Course\Project> @'
+>> {
+>>   "LOG_LEVEL": "info",
+>>   "API_TIMEOUT_MS": 1200000,
+>>   "Providers": [{
+>>     "name": "openrouter",
+>>     "api_base_url": "https://openrouter.ai/api/v1",
+>>     "api_key": "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",
+>>     "models": [
+>>       "nvidia/nemotron-3-super-120b-a12b:free",
+>>       "google/gemma-4-26b-a4b-it:free",
+>>       "microsoft/phi-4-mini-instruct:free"
+>>     ],
+>>     "transformer": {
+>>     }
+>>   }],
+>>   "Router": {
+>>     "default": "openrouter,nvidia/nemotron-3-super-120b-a12b:free"
+>>   }
+>> }
+>> '@ | Out-File -FilePath "$env:USERPROFILE\.claude-code-router\config.json" -Encoding UTF8 -Force
+PS B:\Course\Project> ccr start
+Loaded JSON config from: C:\Users\PC_Nagibanka_Xx\.claude-code-router\config.json
+PS B:\Course\Project> ccr start
+Loaded JSON config from: C:\Users\PC_Nagibanka_Xx\.claude-code-router\config.json
+PS B:\Course\Project> @'       
+>> {                        
+>>   "LOG_LEVEL": "info",                             
+>>   "API_TIMEOUT_MS": 1200000,                                                               
+>>   "Providers": [{        
+>>     "name": "openrouter",                          
+>>     "api_base_url": "https://openrouter.ai/api/v1",                                        
+>>     "api_key": "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",
+>>     "models": [            
+>>       "nvidia/nemotron-3-super-120b-a12b:free",
+>>       "google/gemma-4-26b-a4b-it:free",
+>>       "microsoft/phi-4-mini-instruct:free"
+>>     ],                                                             
+>>     "transformer": {
+>>       "use": ["openrouter"]                                       
+>>     }                                                                                           
+>>   }],
+>>   "Router": {                                                                                   
+>>     "default": "openrouter,openrouter/google/gemma-4-26b-a4b-it:free"             
+>>   }
+>> }
+>> '@ | Out-File -FilePath "$env:USERPROFILE\.claude-code-router\config.json" -Encoding UTF8 -Force
+PS B:\Course\Project> ccr start
+Loaded JSON config from: C:\Users\PC_Nagibanka_Xx\.claude-code-router\config.json
+PS B:\Course\Project> ccr start
+Loaded JSON config from: C:\Users\PC_Nagibanka_Xx\.claude-code-router\config.json
+PS B:\Course\Project> ccr start
+Loaded JSON config from: C:\Users\PC_Nagibanka_Xx\.claude-code-router\config.json
+PS B:\Course\Project> claude                          
+╭─── Claude Code v2.1.162 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮│                                               │ What's new                                                                                                                            ││                 Welcome back!                 │ `claude agents --json` now includes `waitingFor` showing what a waiting session is blocked on (e.g. permission prompt)                ││                                               │ `--tools`: explicitly listing Grep/Glob now provides the dedicated search tools on native builds with embedded search (previously th… ││                    ▐▛███▜▌                    │ `/effort` now confirms when your chosen level will persist as the default for new sessions                                            ││                   ▝▜█████▛▘                   │ /release-notes for more                                                                                                               ││                     ▘▘ ▝▝                     │                                                                                                                                       ││                                               │                                                                                                                                       ││   Opus 4.8 (1M context) · API Usage Billing   │                                                                                                                                       ││               B:\Course\Project               │                                                                                                                                       │╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯                                                                        
+❯ /model 
+  ⎿  Kept model as Opus 4.8 (1M context) (default)
+❯ hello                                                                                                                                                                                  
+  ⎿  Not logged in · Please run /login
+✻ Cooked for 0s
+                                                                                      
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────                                                                                                                                                             Not logged in · Run /login
+                                                                                                                                                                       ● high · /effort
+
+Resume this session with:
+claude --resume d77dddf2-6c2f-4c27-b296-e1f99ee3fcef
+PS B:\Course\Project> $env:ANTHROPIC_BASE_URL = "http://localhost:8082" 
+PS B:\Course\Project> $env:ANTHROPIC_AUTH_TOKEN = "freecc"
+PS B:\Course\Project> claude                                            
+ ▐▛███▜▌   Claude Code v2.1.162
+▝▜█████▛▘  Opus 4.8 (1M context) · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+
+❯ /model 
+  ⎿  Kept model as Opus 4.8 (1M context) (default)
+❯ hello                                                                                                                                                                                  
+
+● API Error: 422 {"detail":[{"type":"literal_error","loc":["body","messages",1,"role"],"msg":"Input should be 'user' or 'assistant'","input":"system","ctx":{"expected":"'user'   or 'assistant'"}}]}
+
+✻ Brewed for 0s
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────                                                                                                                                                                       ● high · /effort
+
+Resume this session with:
+claude --resume 64be9ceb-24ba-4d94-8e9b-e1651aec1938
+PS B:\Course\Project> claude --version
+2.1.162 (Claude Code)
+PS B:\Course\Project> 

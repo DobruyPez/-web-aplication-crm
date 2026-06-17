@@ -117,6 +117,22 @@ class CallsService extends BaseService {
   }
 
   async create(payload, auth) {
+    if (auth.role === "MANAGER") {
+      const err = new Error(
+        "Менеджер не может создавать звонки вручную. Используйте видеоконференцию.",
+      );
+      err.statusCode = 403;
+      throw err;
+    }
+
+    const data = this.normalizePayload(payload, auth);
+    this.assertRecordingOnDisk(data.recordingUrl);
+
+    return this.repository.create(data);
+  }
+
+  /** Создание звонка после завершения видеосессии (только для внутреннего вызова). */
+  async createFromVideoSession(payload, auth) {
     const data = this.normalizePayload(payload, auth);
     this.assertRecordingOnDisk(data.recordingUrl);
 

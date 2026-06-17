@@ -1,4 +1,4 @@
-import { parseDashboardRecordQuery } from "./dashboardDeepLink.js";
+import { buildDashboardResourceHref, parseDashboardRecordQuery } from "./dashboardDeepLink.js";
 
 const USER_ROLE_QUICK_FILTERS = ["admin", "manager"];
 
@@ -80,6 +80,18 @@ export function buildTasksBucketHref(bucket) {
 
 export function buildDealsRiskHref() {
   return "/deals?listRisk=1";
+}
+
+/** Рисковые сделки одного менеджера (дашборд «Командное здоровье»). */
+export function buildDealsRiskHrefForManager(managerId) {
+  if (managerId == null || managerId === "") {
+    return buildDealsRiskHref();
+  }
+  return buildDashboardResourceHref("/deals", {
+    recordId: managerId,
+    filterField: "managerId",
+    extra: { listRisk: "1" },
+  });
 }
 
 /** Ссылка на «Записи звонков» с фильтром по клиенту и сортировкой по дате (новые сверху). */

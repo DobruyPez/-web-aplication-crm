@@ -154,16 +154,16 @@ class TestResourcePanelFieldAndSearch:
         assert all(str(x.get("id", "")).find(needle) >= 0 for x in filtered)
         assert any(x.get("id") == cid for x in filtered)
 
-    def test_search_finds_company_substring(self, session):
+    def test_search_finds_client_company_substring(self, session):
         items = _get_json(session, "/api/clients", HEADERS_ADMIN)
         if not items:
             pytest.skip("Нет клиентов в БД")
-        sample = next((x for x in items if x.get("company")), None)
+        sample = next((x for x in items if x.get("name")), None)
         if not sample:
-            pytest.skip("Нет поля company")
-        fragment = str(sample["company"])[:5].lower()
+            pytest.skip("Нет поля name (компания)")
+        fragment = str(sample["name"])[:5].lower()
         if len(fragment) < 2:
-            pytest.skip("company слишком короткий")
+            pytest.skip("name слишком короткий")
 
         clients = _by_id(items)
         users = _by_id(_get_json(session, "/api/users", HEADERS_ADMIN))
@@ -284,8 +284,7 @@ class TestFilterPerformance:
             rows.append(
                 {
                     "id": i,
-                    "name": f"Клиент {i}",
-                    "company": f"Компания {i % 50}",
+                    "name": f"Компания {i % 50}",
                     "phone": f"+100000{i:06d}",
                     "email": f"c{i}@t.test",
                     "address": f"ул. {i}",

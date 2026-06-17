@@ -14,7 +14,13 @@
     "prisma:generate:clean": "node scripts/rm-prisma-engine-cache.js && prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:seed": "prisma db seed",
-    "db:test-data": "prisma db execute --file ../tests/seed_test_data.sql --schema prisma/schema.prisma"
+    "db:test-data": "node scripts/run-test-data-seed.js",
+    "seed:bulk": "node scripts/seed-bulk-load.js --clear",
+    "seed:demo": "node scripts/seed-bulk-load.js --clear",
+    "seed:bulk:password": "node scripts/reset-bulk-passwords.js",
+    "seed:demo:password": "node scripts/reset-bulk-passwords.js",
+    "test:video:api": "npm run test:video:api --prefix ..",
+    "test:video:unit": "npm run test:video:unit --prefix .."
   },
   "prisma": {
     "seed": "node prisma/seed.js"
@@ -31,7 +37,8 @@
     "express": "^5.2.1",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
-    "multer": "^2.1.1"
+    "multer": "^2.1.1",
+    "ws": "^8.20.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.14",

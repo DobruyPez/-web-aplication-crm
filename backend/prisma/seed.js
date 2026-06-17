@@ -2,15 +2,20 @@
  * Начальные данные для пустой БД (Docker / локально после db push).
  * Админ: admin@crm.by / 1234
  * Менеджеры: manager1@crm.by, manager2@crm.by / 1234
+ * Демо: клиенты, сделки, задачи, звонки, документы (см. seedDemoData.js).
  *
- * Переменные окружения (в т.ч. DATABASE_URL) задаёт `prisma db seed` / Docker — без dotenv, чтобы не затирать compose.
+ * Отключить демо: CRM_SEED_DEMO_DATA=false
+ *
+ * Переменные окружения задаёт `prisma db seed` / Docker — без dotenv.
  */
 const { PrismaClient } = require("@prisma/client");
 const { hashPassword } = require("../src/utils/authPassword");
+const { seedDemoData } = require("./seedDemoData");
 
 const prisma = new PrismaClient();
 
 const PASSWORD_PLAIN = "1234";
+const SEED_DEMO_ENABLED = String(process.env.CRM_SEED_DEMO_DATA ?? "true").toLowerCase() !== "false";
 
 const ADMIN = {
   email: "admin@crm.by",
@@ -56,6 +61,12 @@ async function main() {
   await ensureUser({ ...ADMIN });
   for (const m of MANAGERS) {
     await ensureUser({ ...m, role: "manager" });
+  }
+
+  if (SEED_DEMO_ENABLED) {
+    await seedDemoData(prisma);
+  } else {
+    console.log("Seed: демо-данные отключены (CRM_SEED_DEMO_DATA=false).");
   }
 }
 

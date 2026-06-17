@@ -17,7 +17,7 @@ module.exports = [
     key: "deals",
     modelName: "deal",
     label: "Deal",
-    requiredFields: ["title", "clientId"],
+    requiredFields: ["productName", "title", "clientId"],
     managerScopeField: "managerId",
   },
   {

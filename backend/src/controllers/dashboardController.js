@@ -135,9 +135,12 @@ const buildAdminOverview = async () => {
   const weekAgo = new Date(now.getTime() - 7 * DAY_MS);
   const weekAhead = new Date(now.getTime() + 7 * DAY_MS);
 
-  const [users, overdueTasks, riskyDeals, recentCalls, recentDocs, totals] = await Promise.all([
+  const managerRoleWhere = { OR: [{ role: "manager" }, { role: "MANAGER" }] };
+
+  const [users, overdueTasks, riskyDeals, recentCalls, recentDocs, totals, overdueByAuthor, riskyByManager, missedByCaller] =
+    await Promise.all([
     prisma.user.findMany({
-      where: { OR: [{ role: "manager" }, { role: "MANAGER" }] },
+      where: managerRoleWhere,
       orderBy: { fullName: "asc" },
       select: { id: true, fullName: true, email: true },
     }),
@@ -176,21 +179,55 @@ const buildAdminOverview = async () => {
       prisma.call.count(),
       prisma.document.count(),
     ]),
+    prisma.task.groupBy({
+      by: ["authorId"],
+      where: { dueDate: { lt: now }, status: { not: "done" } },
+      _count: { _all: true },
+    }),
+    prisma.deal.groupBy({
+      by: ["managerId"],
+      where: {
+        closingDate: { lte: weekAhead },
+        stage: { notIn: ["won", "lost"] },
+      },
+      _count: { _all: true },
+    }),
+    prisma.call.groupBy({
+      by: ["callerId"],
+      where: { startedAt: { gte: weekAgo }, status: "missed" },
+      _count: { _all: true },
+    }),
   ]);
 
-  const managerHealth = users.map((manager) => {
-    const managerOverdue = overdueTasks.filter((t) => t.author?.id === manager.id).length;
-    const managerDealsRisk = riskyDeals.filter((d) => d.manager?.id === manager.id).length;
-    const managerCalls7d = recentCalls.filter((c) => c.caller?.id === manager.id).length;
-    return {
+  const countByKey = (groups, key) => {
+    const map = new Map();
+    for (const row of groups) {
+      const id = row[key];
+      if (id != null) {
+        map.set(id, row._count._all);
+      }
+    }
+    return map;
+  };
+
+  const overdueCount = countByKey(overdueByAuthor, "authorId");
+  const riskCount = countByKey(riskyByManager, "managerId");
+  const missedCount = countByKey(missedByCaller, "callerId");
+
+  const managerHealth = users
+    .map((manager) => ({
       managerId: manager.id,
       managerName: manager.fullName,
       managerEmail: manager.email,
-      overdueTasks: managerOverdue,
-      riskyDeals: managerDealsRisk,
-      calls7d: managerCalls7d,
-    };
-  });
+      overdueTasks: overdueCount.get(manager.id) || 0,
+      riskyDeals: riskCount.get(manager.id) || 0,
+      missedCalls: missedCount.get(manager.id) || 0,
+    }))
+    .filter((m) => m.overdueTasks > 0 || m.riskyDeals > 0 || m.missedCalls > 0)
+    .sort((a, b) => {
+      const weight = (m) => m.overdueTasks * 100 + m.riskyDeals * 10 + m.missedCalls;
+      return weight(b) - weight(a) || a.managerId - b.managerId;
+    });
 
   const alerts = [
     ...overdueTasks.slice(0, 10).map((t) => ({
@@ -265,7 +302,7 @@ const buildAdminOverview = async () => {
       overdueTasks: overdueTasks.length,
       riskyDeals: riskyDeals.length,
     },
-    managerHealth: managerHealth.sort((a, b) => b.overdueTasks - a.overdueTasks).slice(0, 20),
+    managerHealth: managerHealth.sort((a, b) => b.overdueTasks - a.overdueTasks || a.managerId - b.managerId),
     overdueTasks: overdueTasks.slice(0, 10),
     riskyDeals: riskyDeals.slice(0, 10),
     recentCalls: recentCalls.slice(0, 10),

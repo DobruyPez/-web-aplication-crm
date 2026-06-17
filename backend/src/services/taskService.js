@@ -1,5 +1,5 @@
 const BaseService = require("./baseService");
-const { TASK_PRIORITIES, TASK_STATUSES, normalizeEnum } = require("../config/workflowStandards");
+const { TASK_PRIORITIES, TASK_STATUSES, taskPriorityLabelsList, normalizeEnum } = require("../config/workflowStandards");
 const { notifyTaskCreated, notifyOverdueTask } = require("./telegramNotificationService");
 
 class TaskService extends BaseService {
@@ -39,7 +39,7 @@ class TaskService extends BaseService {
       payload.priority !== "" &&
       !TASK_PRIORITIES.includes(payload.priority)
     ) {
-      const err = new Error(`Недопустимый priority. Разрешено: ${TASK_PRIORITIES.join(", ")}.`);
+      const err = new Error(`Недопустимый приоритет. Разрешено: ${taskPriorityLabelsList()}.`);
       err.statusCode = 400;
       throw err;
     }

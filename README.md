@@ -55,6 +55,31 @@ npm run dev:frontend
 - API: `http://localhost:4000` (или `https://localhost:4443`, если включен HTTPS в `backend/.env`)
 - Frontend (Vite): `http://localhost:5173`
 
+## Docker (демо-данные в БД)
+
+После `docker compose -f deploy/docker-compose.yml up -d --build` сервис `db-bootstrap` выполняет `prisma db seed`:
+
+- **admin@crm.by** / **1234**
+- **manager1@crm.by**, **manager2@crm.by** / **1234**
+- демо-клиенты, сделки (в т.ч. «рисковые»), задачи, звонки, документы
+
+Отключить демо при seed: `CRM_SEED_DEMO_DATA=false` в `.env`. Проверка: `npm run test:docker:seed`.
+
+### Telegram в Docker
+
+Настройки бота — в **`backend/.env`** (тот же файл, что для `npm run dev`). Compose монтирует его в контейнер и передаёт через `env_file`.
+
+```env
+TELEGRAM_BOT_TOKEN=...   # от @BotFather
+TELEGRAM_POLLING_ENABLED=true
+```
+
+После изменения: `docker compose -f deploy/docker-compose.yml up -d --build --force-recreate backend`.
+
+В логах: `[env] загружено переменных...`, `[telegram] config: token=да`, `[telegram-polling] started`.
+
+Привязка `/start`: в CRM у менеджера **Telegram** = `https://t.me/ВАШ_USERNAME`, в боте — `/start`.
+
 ## Полезные команды
 
 ```bash

@@ -18,7 +18,7 @@ fi
 
 echo ""
 echo "CRM (Docker): доступ по сети"
-echo "  HTTP (LAN без TLS):  http://${ip}:8080/"
+echo "  HTTP (LAN без TLS):  http://${ip}:8088/"
 echo "  HTTPS:               https://${ip}/"
 echo ""
 echo "Compose: $HERE/docker-compose.yml"

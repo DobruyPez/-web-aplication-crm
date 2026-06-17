@@ -29,6 +29,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install pytest requests
 
+      - name: Set up Node for frontend unit tests
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install frontend deps and run recording unit tests
+        run: |
+          npm ci --prefix frontend
+          npm test --prefix frontend -- --run src/lib/domRegionRecorder.test.js
+
       - name: Run lab 11 + unit tests (no live server)
         run: |
-          pytest tests/test_ci_cd_lab11.py tests/tests_server.py -q --tb=short
+          pytest tests/test_ci_cd_lab11.py tests/tests_server.py \
+            tests/test_video_recording_unit.py \
+            tests/test_video_sessions_api.py tests/test_client_invite.py \
+            tests/test_calls_manager_restrictions.py tests/test_video_upload_recording.py -q --tb=short

@@ -38,12 +38,26 @@ def test_user_data():
 def test_client_data():
     """Тестовые данные для создания клиента"""
     return {
-        "name": f"Тестовый клиент {datetime.now().timestamp()}",
-        "company": "Тестовая компания",
-        "phone": "+375290000000",
-        "email": "test@test.by",
+        "name": "ООО Тестовая компания",
         "address": "Минск, ул. Тестовая 1",
-        "notes": "Создано автотестом"
+        "notes": "Создано автотестом",
+        "contactPoints": [
+            {
+                "type": "mobile",
+                "value": "+375290000000",
+                "contactName": "Иван Петров",
+            },
+            {
+                "type": "email",
+                "value": "test@test.by",
+                "contactName": "Иван Петров",
+            },
+            {
+                "type": "fax",
+                "value": "+375291111111",
+                "contactName": "Бухгалтерия",
+            },
+        ],
     }
 
 @pytest.fixture
@@ -247,6 +261,8 @@ class TestAdminClients:
         assert response.status_code == 201
         created = response.json()
         assert created["name"] == test_client_data["name"]
+        assert isinstance(created.get("contactPoints"), list)
+        assert len(created["contactPoints"]) == 3
         
         TestAdminClients.created_client_id = created["id"]
         print(f"✅ Админ создал клиента: ID:{created['id']} {created['name']}")
@@ -258,12 +274,21 @@ class TestAdminClients:
         
         update_data = {
             "name": "Обновлённый админом клиент",
-            "company": "Обновлённая компания",
-            "phone": "+375299999999",
-            "email": "updated@admin.by",
             "address": "Обновлённый адрес",
             "notes": "Обновлено автотестом",
-            "managerId": MANAGER_PETROVA_ID
+            "managerId": MANAGER_PETROVA_ID,
+            "contactPoints": [
+                {
+                    "type": "mobile",
+                    "value": "+375299999999",
+                    "contactName": "Новый контакт",
+                },
+                {
+                    "type": "email",
+                    "value": "updated@admin.by",
+                    "contactName": "Новый контакт",
+                },
+            ],
         }
         
         response = session.put(
@@ -389,12 +414,21 @@ class TestManagerClients:
             pytest.skip("Нет созданного клиента для обновления")
         
         update_data = {
-            "name": "Обновлённый менеджером клиент",
-            "company": "Моя обновлённая компания",
-            "phone": "+375298888888",
-            "email": "myupdated@manager.by",
+            "name": "Моя обновлённая компания",
             "address": "Мой новый адрес",
-            "notes": "Обновлено менеджером"
+            "notes": "Обновлено менеджером",
+            "contactPoints": [
+                {
+                    "type": "mobile",
+                    "value": "+375298888888",
+                    "contactName": "Менеджерский контакт",
+                },
+                {
+                    "type": "email",
+                    "value": "myupdated@manager.by",
+                    "contactName": "Менеджерский контакт",
+                },
+            ],
         }
         
         response = session.put(
@@ -427,7 +461,7 @@ class TestManagerClients:
         other_client_id = petrova_clients[0]["id"]
         response = session.put(
             f"{base_url}/api/clients/{other_client_id}",
-            json={"name": "Взлом", "company": "Хак"},
+            json={"name": "Взлом"},
             headers=HEADERS_MANAGER_IVANOV,
             timeout=TIMEOUT
         )

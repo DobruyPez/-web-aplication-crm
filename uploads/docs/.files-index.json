@@ -1,0 +1,85 @@
+{
+  "files": [
+    {
+      "filename": "Лабораторная_работа_ТРWП_02_NGINX.docx",
+      "filePath": "/uploads/docs/Лабораторная_работа_ТРWП_02_NGINX.docx",
+      "fileSize": 16466,
+      "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "uploadedAt": "2026-06-04T14:46:57.890Z",
+      "clientId": null,
+      "uploadedByUserId": 2
+    },
+    {
+      "filename": "ПРБДИП_06.doc",
+      "filePath": "/uploads/docs/ПРБДИП_06.doc",
+      "fileSize": 109568,
+      "mimeType": "application/msword",
+      "uploadedAt": "2026-05-22T08:37:54.064Z",
+      "clientId": null,
+      "uploadedByUserId": 3
+    },
+    {
+      "filename": "ПРБДИП_07.doc",
+      "filePath": "/uploads/docs/ПРБДИП_07.doc",
+      "fileSize": 75264,
+      "mimeType": "application/msword",
+      "uploadedAt": "2026-05-22T00:41:40.816Z",
+      "clientId": null,
+      "uploadedByUserId": 2
+    },
+    {
+      "filename": "ПРБДИП_09_1.doc",
+      "filePath": "/uploads/docs/ПРБДИП_09_1.doc",
+      "fileSize": 48640,
+      "mimeType": "application/msword",
+      "uploadedAt": "2026-05-22T10:53:52.738Z",
+      "clientId": null,
+      "uploadedByUserId": 1
+    },
+    {
+      "filename": "ПРБДИП_09.doc",
+      "filePath": "/uploads/docs/ПРБДИП_09.doc",
+      "fileSize": 48640,
+      "mimeType": "application/msword",
+      "uploadedAt": "2026-05-22T00:41:34.970Z",
+      "clientId": null,
+      "uploadedByUserId": 2
+    },
+    {
+      "filename": "ПРБДИП_10.doc",
+      "filePath": "/uploads/docs/ПРБДИП_10.doc",
+      "fileSize": 351744,
+      "mimeType": "application/msword",
+      "uploadedAt": "2026-05-22T08:37:56.703Z",
+      "clientId": null,
+      "uploadedByUserId": 3
+    },
+    {
+      "filename": "ПРБДИП_11.doc",
+      "filePath": "/uploads/docs/ПРБДИП_11.doc",
+      "fileSize": 66048,
+      "mimeType": "application/msword",
+      "uploadedAt": "2026-05-22T00:41:38.225Z",
+      "clientId": null,
+      "uploadedByUserId": 2
+    },
+    {
+      "filename": "ПРБДИП_12.doc",
+      "filePath": "/uploads/docs/ПРБДИП_12.doc",
+      "fileSize": 56320,
+      "mimeType": "application/msword",
+      "uploadedAt": "2026-05-22T10:53:47.826Z",
+      "clientId": null,
+      "uploadedByUserId": 1
+    },
+    {
+      "filename": "ПРБДИП_13.doc",
+      "filePath": "/uploads/docs/ПРБДИП_13.doc",
+      "fileSize": 64512,
+      "mimeType": "application/msword",
+      "uploadedAt": "2026-05-22T10:53:37.062Z",
+      "clientId": null,
+      "uploadedByUserId": 1
+    }
+  ]
+}

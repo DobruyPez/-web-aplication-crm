@@ -1,0 +1,844 @@
+PS B:\Course\Project> claude                                                  
+ ▐▛███▜▌   Claude Code v2.1.153
+▝▜█████▛▘  deepseek-chat · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+
+  Opus 4.7 xhigh is now available! · /model to switch
+
+
+ ▐▛███▜▌   Claude Code v2.1.153
+ ▐▛███▜▌   Claude Code v2.1.153
+▝▜█████▛▘  deepseek-chat · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+
+  Opus 4.7 xhigh is now available! · /model to switch
+
+❯ hello                                                                                                                                                                                                   
+
+✢ Hyperspacing… (2m 53s)
+  ⎿  Tip: Use /btw to ask a quick side question without interrupting Claude's current work
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────                                                                                                                                                 ✗ Auto-update failed · Try /doctor or npm i -g @anthropic
+
+Resume this session with:
+claude --resume 46839839-333e-4f56-ae18-b4bd8eca4be9
+PS B:\Course\Project> npm install -g @anthropic-ai/claude-code@2.1.153 --force
+npm warn using --force Recommended protections disabled.
+
+changed 2 packages in 1s
+PS B:\Course\Project> 
+PS B:\Course\Project> $env:ANTHROPIC_BASE_URL = "https://api.deepseek.com/v1" 
+PS B:\Course\Project> $env:ANTHROPIC_AUTH_TOKEN = "freecc"                    
+PS B:\Course\Project> $env:ANTHROPIC_MODEL = "deepseek-chat"                  
+PS B:\Course\Project> claude
+▝▜█████▛▘  deepseek-chat · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+
+  Opus 4.7 xhigh is now available! · /model to switch
+
+
+❯ hello                                                                                                                                                                                                   
+  ⎿  Please run /login · API Error: 401 Authentication Fails, Your api key: ****eecc is invalid
+
+✻ Cogitated for 3m 3s
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Resume this session with:
+claude --resume 214df874-3756-4fbb-9ee6-d5dd5eac7947
+PS B:\Course\Project> $env:ANTHROPIC_AUTH_TOKEN = "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"  
+PS B:\Course\Project> claude
+╭─── Claude Code v2.1.162 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+│                                       │ What's new
+│             Welcome back!             │ `claude agents --json` now includes `waitingFor` showing what a waiting session is blocked on (e.g. permission prompt)
+│                                       │ `--tools`: explicitly listing Grep/Glob now provides the dedicated search tools on native builds with embedded search (previously these names were silently igno
+│                ▐▛███▜▌                │ `/effort` now confirms when your chosen level will persist as the default for new sessions
+│               ▝▜█████▛▘               │ /release-notes for more
+│           B:\Course\Project           │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+❯ hello                                                                                                                                                                                                   
+  ⎿  Retrying in 32s · attempt 7/10
+
+✽ Baking… (47s)
+  ⎿  Tip: Use /btw to ask a quick side question without interrupting Claude's current work
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Resume this session with:
+claude --resume 222f70ea-7ae4-4c39-a678-f047b8f274c7
+PS B:\Course\Project> $env:ANTHROPIC_AUTH_TOKEN = "freecc"                                                                     
+PS B:\Course\Project> $env:ANTHROPIC_MODEL = "open_router/deepseek/deepseek-chat"                                              
+PS B:\Course\Project> claude
+ ▐▛███▜▌   Claude Code v2.1.162
+▝▜█████▛▘  open_router/deepseek/deepseek-chat · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+
+
+❯ hello                                                                                                                                                                                                   
+  ⎿  401 Authentication Fails, Your api key: ****eecc is invalid
+     Retrying in 23s · attempt 10/10
+
+✢ Forming… (2m 42s)
+  ⎿  Tip: Use /btw to ask a quick side question without interrupting Claude's current work
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Resume this session with:
+claude --resume a4110579-7d60-414d-b70b-010e6591a77b
+PS B:\Course\Project> 
+ *  History restored 
+
+PS B:\Course\Project> $env:ANTHROPIC_BASE_URL = "http://localhost:8082"
+PS B:\Course\Project> $env:ANTHROPIC_AUTH_TOKEN = "freecc"
+ ▐▛███▜▌   Claude Code v2.1.162
+▝▜█████▛▘  open_router/deepseek/deepseek-chat · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project❯ hello                                                                                                                                                                                                   
+
+● API Error: 422 {"detail":[{"type":"literal_error","loc":["body","messages",1,"role"],"msg":"Input should be 'user' or 'assistant'","input":"system","ctx":{"expected":"'user' or 'assistant'"}}]}
+                                
+✻ Cooked for 0s
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Resume this session with:
+claude --resume 1a9155ca-0885-41f6-94fb-17e693ed5f58
+PS B:\Course\Project> 
+PS B:\Course\Project> npm install -g @anthropic-ai/claude-code@2.1.153 --force
+npm warn using --force Recommended protections disabled.
+
+changed 2 packages in 2s
+PS B:\Course\Project> $env:ANTHROPIC_BASE_URL = "http://localhost:8082"
+PS B:\Course\Project> $env:ANTHROPIC_AUTH_TOKEN = "freecc"
+PS B:\Course\Project> $env:ANTHROPIC_MODEL = "open_router/deepseek/deepseek-chat"
+PS B:\Course\Project> claude
+ ▐▛███▜▌   Claude Code v2.1.153
+▝▜█████▛▘  open_router/deepseek/deepseek-chat · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+
+  Opus 4.7 xhigh is now available! · /model to switch
+
+❯ hello                                                                                                                                                                                                   
+ ▐▛███▜▌   Claude Code v2.1.153
+▝▜█████▛▘  open_router/deepseek/deepseek-chat · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+
+
+❯ hello                                                                                                                                                                                                   
+  ⎿  API Error: API returned an empty or malformed response (HTTP 200) — check for a proxy or gateway intercepting the request
+
+✻ Cogitated for 3s
+
+❯ /model 
+  ⎿  Kept model as open_router/deepseek/deepseek-chat
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────                                                                                                                                                 ✗ Auto-update failed · Try /doctor or npm i -g @anthropic
+                                                                                                                                                                                                         ●
+
+Resume this session with:
+claude --resume 7cee62de-cd61-4210-93b5-854ec7f2f46f
+PS B:\Course\Project> $env:ANTHROPIC_MODEL = "open_router/qwen/qwen-2-7b-instruct:free"
+PS B:\Course\Project> claude
+╭─── Claude Code v2.1.162 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────│                                                    │ What's new│                    Welcome back!                   │ `claude agents --json` now includes `waitingFor` showing what a waiting session is blocked on (e.g. permission prompt)│                                                    │ `--tools`: explicitly listing Grep/Glob now provides the dedicated search tools on native builds with embedded search (previously these names were│                       ▐▛███▜▌                      │ `/effort` now confirms when your chosen level will persist as the default for new sessions│                      ▝▜█████▛▘                     │ /release-notes for more│                                                    ││ open_router/qwen/qwen-2-7b-in… · API Usage Billing ││                 B:\Course\Project                  │
+
+● API Error: 422 {"detail":[{"type":"literal_error","loc":["body","messages",1,"role"],"msg":"Input should be 'user' or 'assistant'","input":"system","ctx":{"expected":"'user' or 'assistant'"}}]}                                
+✻ Cogitated for 0s
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Resume this session with:
+claude --resume 85ab913c-0187-46ff-bf02-424915708fa0
+PS B:\Course\Project> npm install -g @anthropic-ai/claude-code@2.1.153 --force         
+npm warn using --force Recommended protections disabled.
+
+changed 2 packages in 1s
+PS B:\Course\Project> $env:ANTHROPIC_MODEL = "open_router/qwen/qwen-2-7b-instruct:free"
+PS B:\Course\Project> $env:ANTHROPIC_AUTH_TOKEN = "freecc"
+PS B:\Course\Project> $env:ANTHROPIC_MODEL = "open_router/deepseek/deepseek-chat
+>> "
+PS B:\Course\Project> claude
+
+❯ hello                                                                                                                                                                                                   
+  ⎿  API Error: API returned an empty or malformed response (HTTP 200) — check for a proxy or gateway intercepting the request
+
+✻ Sautéed for 4s
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ exit 
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Resume this session with:
+claude --resume f087a198-7332-471a-af8c-fc9faed8125d
+PS B:\Course\Project> Remove-Item Env:ANTHROPIC_*
+PS B:\Course\Project> $env:ANTHROPIC_BASE_URL = "https://api.deepseek.com/v1"
+PS B:\Course\Project> $env:ANTHROPIC_BASE_URL = "http://localhost:8082"
+PS B:\Course\Project> $env:ANTHROPIC_AUTH_TOKEN = "freecc"
+PS B:\Course\Project> $env:ANTHROPIC_MODEL = "open_router/anthropic/claude-sonnet-4"
+PS B:\Course\Project> claude
+╭─── Claude Code v2.1.162 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+│                                  │ What's new
+│           Welcome back!          │ `claude agents --json` now includes `waitingFor` showing what a waiting session is blocked on (e.g. permission prompt)
+│                                  │ `--tools`: explicitly listing Grep/Glob now provides the dedicated search tools on native builds with embedded search (previously these names were silently ignored)
+│              ▐▛███▜▌             │ `/effort` now confirms when your chosen level will persist as the default for new sessions
+│             ▝▜█████▛▘            │ /release-notes for more
+│               ▘▘ ▝▝              │
+│                                  │
+│   Sonnet 4 · API Usage Billing   │
+│        B:\Course\Project         │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+ ⚠ Claude Sonnet 4 retires June 15, 2026 · /model to switch
+
+❯ hello                                                                                                                                                                                                   
+
+● Provider API request failed. (request_id=req_9be81c4a841e)
+
+  ⎿  Kept model as Sonnet 4
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ exit 
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Resume this session with:
+claude --resume 901be2a3-7e57-43f5-9344-20dc59987c16
+PS B:\Course\Project> $env:ANTHROPIC_BASE_URL = "http://localhost:8082"             
+PS B:\Course\Project> $env:ANTHROPIC_AUTH_TOKEN = "freecc"                          
+PS B:\Course\Project> $env:ANTHROPIC_MODEL = "open_router/deepseek/deepseek-chat"   
+PS B:\Course\Project> claude
+ ▐▛███▜▌   Claude Code v2.1.162
+▝▜█████▛▘  open_router/deepseek/deepseek-chat · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+
+❯ hello                                                                                                                                                                                                   
+
+● API Error: 422 {"detail":[{"type":"literal_error","loc":["body","messages",1,"role"],"msg":"Input should be 'user' or 'assistant'","input":"system","ctx":{"expected":"'user' or 'assistant'"}}]}                                
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Resume this session with:
+claude --resume 952baac1-ac2c-4ada-be32-999031894a14
+PS B:\Course\Project> npm install -g @anthropic-ai/claude-code@2.1.153 --force         
+npm warn using --force Recommended protections disabled.
+
+changed 2 packages in 2s
+PS B:\Course\Project> $env:ANTHROPIC_BASE_URL = "http://localhost:8082"             
+PS B:\Course\Project> $env:ANTHROPIC_AUTH_TOKEN = "freecc"                       
+PS B:\Course\Project> $env:ANTHROPIC_MODEL = "open_router/deepseek/deepseek-chat"
+PS B:\Course\Project> claude                                                     
+ ▐▛███▜▌   Claude Code v2.1.153
+▝▜█████▛▘  open_router/deepseek/deepseek-chat · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+
+ ▐▛███▜▌   Claude Code v2.1.153
+▝▜█████▛▘  open_router/deepseek/deepseek-chat · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+
+  Opus 4.7 xhigh is now available! · /model to switch
+
+
+❯ hello                                                                                                                                                                                                   
+  ⎿  API Error: API returned an empty or malformed response (HTTP 200) — check for a proxy or gateway intercepting the request
+
+✻ Cogitated for 3s
+
+❯ say hello                                                                                                                                                                                               
+  ⎿  API Error: API returned an empty or malformed response (HTTP 200) — check for a proxy or gateway intercepting the request
+
+✻ Baked for 3s
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+claude --resume ca4ea067-f5ec-45ad-9153-448637deec17
+PS B:\Course\Project> claude
+╭─── Claude Code v2.1.162 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────│                                                    │ What's new│                    Welcome back!                   │ `claude agents --json` now includes `waitingFor` showing what a waiting session is blocked on (e.g. permission prompt)│                                                    │ `--tools`: explicitly listing Grep/Glob now provides the dedicated search tools on native builds with embedded search (previously these names were│                       ▐▛███▜▌                      │ `/effort` now confirms when your chosen level will persist as the default for new sessions│                      ▝▜█████▛▘                     │ /release-notes for more│                                                    ││ open_router/deepseek/deepseek… · API Usage Billing │╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+❯ say hello                                                                                                                                                                                               
+
+● API Error: 422 {"detail":[{"type":"literal_error","loc":["body","messages",1,"role"],"msg":"Input should be 'user' or 'assistant'","input":"system","ctx":{"expected":"'user' or 'assistant'"}}]}                                
+✻ Crunched for 0s
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Resume this session with:
+claude --resume be82cd45-9781-4c94-b91e-ba75bd2a80d3
+PS B:\Course\Project> npm install -g @anthropic-ai/claude-code-router
+npm error code E404
+npm error 404 Not Found - GET https://registry.npmjs.org/@anthropic-ai%2fclaude-code-router - Not found
+npm error 404
+npm error 404  The requested resource '@anthropic-ai/claude-code-router@*' could not be found or you do not have permission to access it.
+npm error 404
+npm error 404 Note that you can also install from a
+npm error 404 tarball, folder, http url, or git url.
+npm error A complete log of this run can be found in: C:\Users\PC_Nagibanka_Xx\AppData\Local\npm-cache\_logs\2026-06-04T12_45_53_195Z-debug-0.log
+PS B:\Course\Project> npm install -g @musistudio/claude-code-router
+
+added 1 package in 1s
+PS B:\Course\Project> nano ~/.claude-code-router/config.json
+nano : Имя "nano" не распознано как имя командлета, функции, файла сценария или выполняемой программы. Проверьте правильность написания имени, а также наличие и правильность пути, после чего повторите п
+строка:1 знак:1
++ nano ~/.claude-code-router/config.json
++ ~~~~
+    + CategoryInfo          : ObjectNotFound: (nano:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PS B:\Course\Project> New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude-code-router"
+
+
+    Каталог: C:\Users\PC_Nagibanka_Xx
+
+
+Mode                 LastWriteTime         Length Name                                                                                                                                                   
+----                 -------------         ------ ----                                                                                                                                                   
+d-----        04.06.2026     15:49                .claude-code-router                                                                                                                                    
+
+
+>>     {
+>>       "name": "openrouter",
+>>       "api_base_url": "https://openrouter.ai/api/v1/chat/completions",
+>>       "api_key": "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",
+>>       "models": [
+>>         "deepseek/deepseek-chat",
+>>         "qwen/qwen-2-7b-instruct:free"
+>>       ],
+>>       "transformer": {
+>>         "use": ["openrouter"]
+>>       }
+>>     }
+>>   ],
+>>   "Router": {
+>>     "default": "openrouter,deepseek/deepseek-chat",
+>>     "background": "openrouter,deepseek/deepseek-chat",
+>>     "think": "openrouter,deepseek/deepseek-chat",
+>>     "longContext": "openrouter,deepseek/deepseek-chat"
+>>   }
+>> }
+>> '@ | Out-File -FilePath "$env:USERPROFILE\.claude-code-router\config.json" -Encoding UTF8
+PS B:\Course\Project> $env:ANTHROPIC_BASE_URL = "http://localhost:8082"
+PS B:\Course\Project> $env:ANTHROPIC_AUTH_TOKEN = "freecc"
+PS B:\Course\Project> $env:ANTHROPIC_MODEL = "open_router/deepseek/deepseek-chat"
+PS B:\Course\Project> claude
+ ▐▛███▜▌   Claude Code v2.1.162
+▝▜█████▛▘  open_router/deepseek/deepseek-chat · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+
+
+  ⎿  Unable to connect to API (ConnectionRefused)
+     Retrying in 14s · attempt 6/10
+                                
+· Gitifying… (19s)
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Resume this session with:
+claude --resume 4e314862-c132-4c63-9605-82aa1961de4c
+PS B:\Course\Project> npm run build:frontend
+
+> crm-course-foundation@1.0.0 build:frontend
+> npm --prefix frontend run build
+
+> frontend@0.0.0 build
+> vite build
+
+vite v8.0.10 building client environment for production...
+✓ 65 modules transformed.
+computing gzip size...
+dist/index.html                   0.49 kB │ gzip:   0.34 kB
+dist/assets/index-BhoWj-Wq.css   26.69 kB │ gzip:   5.90 kB
+dist/assets/index-DmbdRWLk.js   359.66 kB │ gzip: 107.38 kB
+
+✓ built in 304ms
+PS B:\Course\Project> npm run start:backend
+
+> crm-course-foundation@1.0.0 start:backend
+> npm --prefix backend run start
+
+
+> backend@1.0.0 start
+> node src/server.js
+
+◇ injected env (19) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+◇ injected env (1) from ..\.env // tip: ⌘ suppress logs { quiet: true }
+[env] загружено переменных из .env: 35
+◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+◇ injected env (0) from ..\.env // tip: ◈ secrets for agents [www.dotenvx.com]
+CRM API running on https://localhost:4443
+CRM API running on http://localhost:3000 (HTTPS also enabled)
+
+=== CRM backend ==================================================
+  Рабочий адрес API (HTTP): http://localhost:3000/api
+  Проверка:                http://localhost:3000/api/health
+  WebSocket signaling:     ws://localhost:3000/ws/video?guestToken=...
+  HTTPS:                   https://localhost:4443/api
+  WSS signaling:           wss://localhost:4443/ws/video?guestToken=...
+================================================================
+
+PostgreSQL connected (Prisma).
+[telegram] config: token=да, TELEGRAM_POLLING_ENABLED=true
+[telegram-polling] started
+[telegram] режим: long polling (getUpdates)
+PS B:\Course\Project> claude
+ ▐▛███▜▌   Claude Code v2.1.162
+▝▜█████▛▘  open_router/deepseek/deepseek-chat · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+
+❯ /model 
+  ⎿  Kept model as open_router/deepseek/deepseek-chat
+
+     Retrying in 8s · attempt 6/10
+
+✽ Burrowing… (29s)
+  ⎿  Tip: Running multiple Claude sessions? Use /color and /rename to tell them apart at a glance.
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Resume this session with:
+claude --resume 46384689-7e61-44e0-94c5-9a732246d00a
+PS B:\Course\Project> claude
+ ▐▛███▜▌   Claude Code v2.1.162
+▝▜█████▛▘  open_router/deepseek/deepseek-chat · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+
+❯ hello                                                                                                                                                                                  
+● API Error: 422 {"detail":[{"type":"literal_error","loc":["body","messages",1,"role"],"msg":"Input should be 'user' or 'assistant'","input":"system","ctx":{"expected":"'user'   or 'assistant'"}}]}           
+✻ Brewed for 0s
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────                                                                                                                                                                       ● high · /effort
+
+Resume this session with:
+claude --resume 700d732e-475d-44c0-8bd6-73c89fac2080
+PS B:\Course\Project> # $env:ANTHROPIC_MODEL = ""
+PS B:\Course\Project> claude
+ ▐▛███▜▌   Claude Code v2.1.162
+▝▜█████▛▘  open_router/deepseek/deepseek-chat · API Usage Billing
+
+❯ hello                                                                                                                                                                                  
+
+● API Error: 422 {"detail":[{"type":"literal_error","loc":["body","messages",1,"role"],"msg":"Input should be 'user' or 'assistant'","input":"system","ctx":{"expected":"'user'   or 'assistant'"}}]}           
+✻ Brewed for 0s
+
+PS B:\Course\Project> npm install -g @anthropic-ai/claude-code@2.1.153 --force
+npm warn using --force Recommended protections disabled.
+npm warn cleanup Failed to remove some directories [
+npm warn cleanup   [
+npm warn cleanup     'C:\\Users\\PC_Nagibanka_Xx\\AppData\\Roaming\\npm\\node_modules\\@anthropic-ai\\.claude-code-iuqNl2Bd',
+npm warn cleanup     [Error: EPERM: operation not permitted, unlink 'C:\Users\PC_Nagibanka_Xx\AppData\Roaming\npm\node_modules\@anthropic-ai\.claude-code-iuqNl2Bd\node_modules\@anthropic-ai\claude-code-win32-x64\claude.exe'] {
+npm warn cleanup       errno: -4048,
+npm warn cleanup       code: 'EPERM',
+npm warn cleanup       syscall: 'unlink',
+npm warn cleanup       path: 'C:\\Users\\PC_Nagibanka_Xx\\AppData\\Roaming\\npm\\node_modules\\@anthropic-ai\\.claude-code-iuqNl2Bd\\node_modules\\@anthropic-ai\\claude-code-win32-x64\\claude.exe'
+npm warn cleanup     }
+npm warn cleanup   ]
+npm warn cleanup ]
+
+changed 2 packages in 2s
+PS B:\Course\Project> npm install -g @anthropic-ai/claude-code@2.1.153 --force
+npm warn using --force Recommended protections disabled.
+npm error code EBUSY
+npm error syscall copyfile
+npm error path C:\Users\PC_Nagibanka_Xx\AppData\Roaming\npm\node_modules\@anthropic-ai\claude-code\node_modules\@anthropic-ai\claude-code-win32-x64\claude.exe
+npm error dest C:\Users\PC_Nagibanka_Xx\AppData\Roaming\npm\node_modules\@anthropic-ai\.claude-code-iuqNl2Bd\node_modules\@anthropic-ai\claude-code-win32-x64\claude.exe
+npm error errno -4082
+npm error EBUSY: resource busy or locked, copyfile 'C:\Users\PC_Nagibanka_Xx\AppData\Roaming\npm\node_modules\@anthropic-ai\claude-code\node_modules\@anthropic-ai\claude-code-win32-x64\claude.exe' -> 'C:\Users\PC_Nagibanka_Xx\AppData\Roaming\npm\node_modules\@anthropic-ai\.claude-code-iuqNl2Bd\node_modules\@anthropic-ai\claude-code-win32-x64\claude.exe'
+npm error A complete log of this run can be found in: C:\Users\PC_Nagibanka_Xx\AppData\Local\npm-cache\_logs\2026-06-04T13_35_03_634Z-debug-0.log
+PS B:\Course\Project> Remove-Item Env:ANTHROPIC_*
+PS B:\Course\Project> $env:ANTHROPIC_BASE_URL = "http://localhost:8082"
+PS B:\Course\Project> $env:ANTHROPIC_BASE_URL = "http://localhost:8082"
+PS B:\Course\Project> $env:ANTHROPIC_BASE_URL = "http://localhost:8082"
+PS B:\Course\Project> $env:ANTHROPIC_AUTH_TOKEN = "freecc"
+PS B:\Course\Project> claude                                                  
+ ▐▛███▜▌   Claude Code v2.1.153
+▝▜█████▛▘  Opus 4.7 (1M context) · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+
+  Welcome to Opus 4.7 xhigh! · /effort to tune speed vs. intelligence
+ ▐▛███▜▌   Claude Code v2.1.153
+▝▜█████▛▘  Opus 4.7 (1M context) · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+
+  Welcome to Opus 4.7 xhigh! · /effort to tune speed vs. intelligence
+ ▐▛███▜▌   Claude Code v2.1.153
+▝▜█████▛▘  Opus 4.7 (1M context) · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+
+  Welcome to Opus 4.7 xhigh! · /effort to tune speed vs. intelligence
+
+
+❯ hello                                                                                                                                                                                  
+
+● Provider authentication failed. Check API key. (request_id=req_94a0527f3dad)
+
+✻ Crunched for 0s
+
+❯ hello                                                                                                                                                                                  
+
+❯ /rename 
+  ⎿  Could not generate a name: no conversation context yet. Usage: /rename &lt;name&gt;
+
+● Provider API request failed. (request_id=req_8e2ab9848088)
+
+✻ Cooked for 1m 19s
+
+❯ /memory                                                                                                                                                                                
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Memory
+    Auto-memory: on
+
+   ▐▛███▜▌rClaudeyCode v2.1.153 Saved in ~/.claude/CLAUDE.md
+▝▜█████▛▘ojOpusm4.7r(1M context)C·eAPIdUsagetBillingDE.md
+  ▘▘3▝▝OpenB:\Course\Projecter   
+ ▐▛███▜▌   Claude Code v2.1.153
+▝▜█████▛▘  Opus 4.7 (1M context) · API Usage Billing
+❯ hello                                                                                                                                                                                  
+
+● Provider authentication failed. Check API key. (request_id=req_94a0527f3dad)
+
+✻ Crunched for 0s
+
+❯ hello                                                                                                                                                                                  
+❯ /rename 
+  ⎿  Could not generate a name: no conversation context yet. Usage: /rename &lt;name&gt;
+
+● Provider API request failed. (request_id=req_8e2ab9848088)
+
+✻ Cooked for 1m 19s
+
+❯ /memory 
+  ⎿  Opened memory file at ~.claude\CLAUDE.md
+
+     ▎ To use a different editor, set the $EDITOR or $VISUAL environment variable.
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────                                                                                                               ✗ Auto-update failed · Try /doctor or npm i -g @anthropic-ai/claude-code
+                                                                                                                                                                      ◉ xhigh · /effort
+
+Resume this session with:
+claude --resume 60f9998f-461c-49c4-8367-f6a0689acf64
+PS B:\Course\Project> Remove-Item Env:ANTHROPIC_*
+PS B:\Course\Project> Remove-Item Env:CLAUDE_CODE_*
+PS B:\Course\Project> $env:ANTHROPIC_BASE_URL = "http://localhost:8082"
+PS B:\Course\Project> $env:ANTHROPIC_AUTH_TOKEN = "freecc"
+PS B:\Course\Project> Get-ChildItem Env: | Where-Object {$_.Name -like "ANTHROPIC*"}
+
+----                           -----                                                                                                                                                    
+ANTHROPIC_BASE_URL             http://localhost:8082                                                                                                                                    
+
+
+PS B:\Course\Project> claude
+╭─── Claude Code v2.1.162 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮│                                               │ What's new                                                                                                                            ││                 Welcome back!                 │ `claude agents --json` now includes `waitingFor` showing what a waiting session is blocked on (e.g. permission prompt)                ││                                               │ `--tools`: explicitly listing Grep/Glob now provides the dedicated search tools on native builds with embedded search (previously th… ││                    ▐▛███▜▌                    │ `/effort` now confirms when your chosen level will persist as the default for new sessions                                            ││                   ▝▜█████▛▘                   │ /release-notes for more                                                                                                               ││                     ▘▘ ▝▝                     │                                                                                                                                       ││                                               │                                                                                                                                       ││   Opus 4.8 (1M context) · API Usage Billing   │                                                                                                                                       ││               B:\Course\Project               │                                                                                                                                       │╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯❯ hello                                                                                                                                                                                  
+
+● API Error: 422 {"detail":[{"type":"literal_error","loc":["body","messages",1,"role"],"msg":"Input should be 'user' or 'assistant'","input":"system","ctx":{"expected":"'user'   or 'assistant'"}}]}           
+✻ Crunched for 0s
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Resume this session with:
+claude --resume 031b1198-0eb3-41ab-a41c-25e3692ef568
+PS B:\Course\Project> claude --base-url http://localhost:8082 --api-key freecc
+error: unknown option '--base-url'
+PS B:\Course\Project> New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude"
+
+
+    Каталог: C:\Users\PC_Nagibanka_Xx
+
+
+Mode                 LastWriteTime         Length Name                                                                                                                                  
+----                 -------------         ------ ----                                                                                                                                  
+d-----        04.06.2026     16:43                .claude                                                                                                                               
+
+
+PS B:\Course\Project> @'
+>> {
+>>   "baseUrl": "http://localhost:8082",
+>>   "apiKey": "freecc"
+>> }
+>> '@ | Out-File -FilePath "$env:USERPROFILE\.claude\settings.json" -Encoding UTF8
+PS B:\Course\Project> claude
+ ▐▛███▜▌   Claude Code v2.1.162
+▝▜█████▛▘  Opus 4.8 (1M context) · API Usage Billing❯ hello                                                                                                                                                                                  
+
+● API Error: 422 {"detail":[{"type":"literal_error","loc":["body","messages",1,"role"],"msg":"Input should be 'user' or 'assistant'","input":"system","ctx":{"expected":"'user'   or 'assistant'"}}]}           
+✻ Sautéed for 0s
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+Resume this session with:
+claude --resume e5e3fd2a-0779-4aba-bb2d-9c55e8980463
+PS B:\Course\Project> npm install -g @anthropic-ai/claude-code@2.1.153 --force
+npm warn using --force Recommended protections disabled.
+npm warn cleanup Failed to remove some directories [
+npm warn cleanup     'C:\\Users\\PC_Nagibanka_Xx\\AppData\\Roaming\\npm\\node_modules\\@anthropic-ai\\.claude-code-iuqNl2Bd',
+npm warn cleanup     [Error: EPERM: operation not permitted, unlink 'C:\Users\PC_Nagibanka_Xx\AppData\Roaming\npm\node_modules\@anthropic-ai\.claude-code-iuqNl2Bd\node_modules\@anthropic-ai\claude-code-win32-x64\claude.exe'] {
+npm warn cleanup       errno: -4048,
+npm warn cleanup       code: 'EPERM',
+npm warn cleanup       syscall: 'unlink',
+npm warn cleanup       path: 'C:\\Users\\PC_Nagibanka_Xx\\AppData\\Roaming\\npm\\node_modules\\@anthropic-ai\\.claude-code-iuqNl2Bd\\node_modules\\@anthropic-ai\\claude-code-win32-x64\\claude.exe'
+npm warn cleanup     }
+npm warn cleanup ]
+
+changed 2 packages in 1s
+PS B:\Course\Project> Remove-Item Env:ANTHROPIC_*
+PS B:\Course\Project> Remove-Item Env:CLAUDE_CODE_*
+PS B:\Course\Project> npm install -g @anthropic-ai/claude-code@2.1.153 --force
+npm warn using --force Recommended protections disabled.
+npm error code EBUSY
+npm error dest C:\Users\PC_Nagibanka_Xx\AppData\Roaming\npm\node_modules\@anthropic-ai\.claude-code-iuqNl2Bd\node_modules\@anthropic-ai\claude-code-win32-x64\claude.exe
+npm error errno -4082
+npm error EBUSY: resource busy or locked, copyfile 'C:\Users\PC_Nagibanka_Xx\AppData\Roaming\npm\node_modules\@anthropic-ai\claude-code\node_modules\@anthropic-ai\claude-code-win32-x64\claude.exe' -> 'C:\Users\PC_Nagibanka_Xx\AppData\Roaming\npm\node_modules\@anthropic-ai\.claude-code-iuqNl2Bd\node_modules\@anthropic-ai\claude-code-win32-x64\claude.exe'
+npm error A complete log of this run can be found in: C:\Users\PC_Nagibanka_Xx\AppData\Local\npm-cache\_logs\2026-06-04T13_45_03_346Z-debug-0.log
+PS B:\Course\Project> Get-Process -Name claude -ErrorAction SilentlyContinue
+-------  ------    -----      -----     ------     --  -- -----------                                                                                                                   
+    261      21   473824     338528       5,78  18020   1 claude                                                                                                                        
+
+строка:1 знак:39
++ Get-Process -Name claude -ErrorAction SilicitlyContinue | Stop-Proces ...
++                                       ~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Get-Process], ParameterBindingException
+    + FullyQualifiedErrorId : CannotConvertArgumentNoMessage,Microsoft.PowerShell.Commands.GetProcessCommand
+ 
+PS B:\Course\Project> Get-Process -Name node -ErrorAction SilentlyContinue | Where-Object { $_.Path -like "*claude*" } | S
+S : Имя "S" не распознано как имя командлета, функции, файла сценария или выполняемой программы. Проверьте правильность написания имени, а также наличие и правильность пути, после чего
+ повторите попытку.
+строка:1 знак:100
++ ... tion SilentlyContinue | Where-Object { $_.Path -like "*claude*" } | S
++                                                                         ~
+    + CategoryInfo          : ObjectNotFound: (S:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PS B:\Course\Project> Get-Process -Name node -ErrorAction SilentlyContinue | Where-Object { $_.Path -like "*claude*" } | Stop-Process -Force
+PS B:\Course\Project>  Get-Process -Name claude -ErrorAction SilentlyContinue
+
+Handles  NPM(K)    PM(K)      WS(K)     CPU(s)     Id  SI ProcessName                                                                                                                   
+    261      21   473912     338620       5,81  18020   1 claude                                                                                                                        
+
+
+PS B:\Course\Project>  Get-Process -Name claude -ErrorAction SilentlyContinue
+PS B:\Course\Project>  npm install -g @anthropic-ai/claude-code@2.1.153 --force
+npm warn using --force Recommended protections disabled.
+
+changed 2 packages in 2s
+PS B:\Course\Project>  Remove-Item Env:ANTHROPIC_*
+PS B:\Course\Project>  Remove-Item Env:CLAUDE_CODE_*
+PS B:\Course\Project> $env:ANTHROPIC_BASE_URL = "http://localhost:8082"
+PS B:\Course\Project> $env:ANTHROPIC_AUTH_TOKEN = "freecc"
+PS B:\Course\Project> claude
+ ▐▛███▜▌   Claude Code v2.1.153
+▝▜█████▛▘  Opus 4.7 (1M context) · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+  Welcome to Opus 4.7 xhigh! · /effort to tune speed vs. intelligence
+
+❯ hello                                                                                                                                                                                  
+
+● Provider API request failed. (request_id=req_34c9a5e37bdb)
+                                                                                                                                                                         
+✻ Baked for 0s
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Resume this session with:
+claude --resume 2c8c9e02-a5b3-4cf1-b15f-7e01c6649146
+PS B:\Course\Project> New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude"
+
+
+    Каталог: C:\Users\PC_Nagibanka_Xx
+
+
+Mode                 LastWriteTime         Length Name                                                                                                                                  
+----                 -------------         ------ ----                                                                                                                                  
+d-----        04.06.2026     16:49                .claude                                                                                                                               
+
+
+PS B:\Course\Project> @'
+>> {   
+>>   "baseUrl": "http://localhost:8082",   
+>>   "apiKey": "freecc"   
+>> }   
+>> '@ | Out-File -FilePath "$env:USERPROFILE\.claude\settings.json" -Encoding UTF8   
+PS B:\Course\Project> claude
+╭─── Claude Code v2.1.162 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮│                                               │ What's new                                                                                                                            ││                 Welcome back!                 │ `claude agents --json` now includes `waitingFor` showing what a waiting session is blocked on (e.g. permission prompt)                ││                                               │ `--tools`: explicitly listing Grep/Glob now provides the dedicated search tools on native builds with embedded search (previously th… ││                    ▐▛███▜▌                    │ `/effort` now confirms when your chosen level will persist as the default for new sessions                                            ││                   ▝▜█████▛▘                   │ /release-notes for more                                                                                                               ││                                               │                                                                                                                                       ││               B:\Course\Project               │                                                                                                                                       │╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+❯ /model 
+
+
+● API Error: 422 {"detail":[{"type":"literal_error","loc":["body","messages",1,"role"],"msg":"Input should be 'user' or 'assistant'","input":"system","ctx":{"expected":"'user'   or 'assistant'"}}]}
+
+✻ Crunched for 0s
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────                                                                                                                                                                       ● high · /effort
+
+Resume this session with:
+claude --resume edc1fbc7-2150-4310-bc60-b1f8a043579c
+PS B:\Course\Project> npm install -g free-claude-code
+npm error code E404
+npm error 404 Not Found - GET https://registry.npmjs.org/free-claude-code - Not found
+npm error 404
+npm error 404  The requested resource 'free-claude-code@*' could not be found or you do not have permission to access it.
+npm error 404
+npm error 404 Note that you can also install from a
+npm error 404 tarball, folder, http url, or git url.
+npm error A complete log of this run can be found in: C:\Users\PC_Nagibanka_Xx\AppData\Local\npm-cache\_logs\2026-06-04T13_50_52_313Z-debug-0.log
+PS B:\Course\Project> claude --version
+PS B:\Course\Project> npm uninstall -g @anthropic-ai/claude-code
+
+removed 2 packages in 488ms
+PS B:\Course\Project> npm install -g @anthropic-ai/claude-code@2.1.153
+
+added 2 packages in 1s
+PS B:\Course\Project> claude --version
+2.1.153 (Claude Code)
+PS B:\Course\Project> claude
+ ▐▛███▜▌   Claude Code v2.1.153
+▝▜█████▛▘  Opus 4.7 (1M context) · API Usage Billing
+  ▘▘ ▝▝    B:\Course\Project
+  Welcome to Opus 4.7 xhigh! · /effort to tune speed vs. intelligence
+
+❯ hello                                                                                                                                                                                  
+
+● Provider API request failed. (request_id=req_63cefd4f725d)
+                                                                                                                                                                         
+✻ Cogitated for 0s
+
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────❯ exit 
+─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────                                                                                                                                                                      ◉ xhigh · /effort
+
+Resume this session with:
+claude --resume 93284247-af33-45b8-8d7e-d36ea19dc5fd
+PS B:\Course\Project> @echo off
+>> set ANTHROPIC_BASE_URL=http://localhost:8082
+>> set ANTHROPIC_AUTH_TOKEN=freecc
+строка:1 знак:7
++ @echo off
++       ~~~
+Непредвиденная лексема "off" в выражении или операторе.
+строка:1 знак:1
++ @echo off
++ ~~~~~
+Оператор с символом "@" невозможно использовать для ссылки на переменные в выражении. "@echo" может использоваться только как аргумент для команды. Для ссылки на переменные в выражении
+ используйте "$echo".
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+ 
+PS B:\Course\Project> npm install -g @musistudio/claude-code-router
+
+changed 1 package in 1s
+PS B:\Course\Project> New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude-code-router"
+>> 
+>> @'
+>> {
+>>   "Providers": [{
+>>     "name": "freecc_proxy",
+>>     "api_base_url": "http://localhost:8082/v1",
+>>     "api_key": "freecc",
+>>     "transformer": {
+>>       "use": ["direct"]
+>>     }
+>>   }],
+>>   "Router": {
+>>     "default": "freecc_proxy"
+>>   }
+>> }
+>> '@ | Out-File -FilePath "$env:USERPROFILE\.claude-code-router\config.json" -Encoding UTF8
+
+
+    Каталог: C:\Users\PC_Nagibanka_Xx
+
+
+----                 -------------         ------ ----                                                                                                                                  
+d-----        04.06.2026     16:47                .claude-code-router                                                                                                                   
+
+
+PS B:\Course\Project> fcc-server
+INFO:     Started server process [6552]
+INFO:     Waiting for application startup.
+INFO:     Admin UI: http://127.0.0.1:8082/admin (local-only)
+INFO:     Application startup complete.
+ERROR:    [Errno 10048] error while attempting to bind on address ('0.0.0.0', 8082): [winerror 10048] обычно разрешается только одно использование адреса сокета (протокол/сетевой адрес/порт)
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Started server process [11744]
+INFO:     Waiting for application startup.
+INFO:     Admin UI: http://127.0.0.1:8082/admin (local-only)
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8082 (Press CTRL+C to quit)
+INFO:     127.0.0.1:50997 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51003 - "GET /admin/api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51003 - "POST /admin/api/config/validate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51003 - "GET /admin/api/providers/local-status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51003 - "POST /admin/api/providers/open_router/test HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51052 - "POST /v1 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51052 - "POST /v1 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51094 - "HEAD / HTTP/1.1" 204 No Content
+INFO:     127.0.0.1:51099 - "POST /v1/messages?beta=true HTTP/1.1" 422 Unprocessable Content
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [11744]
+PS B:\Course\Project> fcc-server
+INFO:     Started server process [252]
+INFO:     Waiting for application startup.
+INFO:     Admin UI: http://127.0.0.1:8082/admin (local-only)
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8082 (Press CTRL+C to quit)
+INFO:     127.0.0.1:51191 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51200 - "GET /admin/api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51200 - "POST /admin/api/config/validate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51200 - "GET /admin/api/providers/local-status HTTP/1.1" 200 OK
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [252]
+PS B:\Course\Project> fcc-server
+INFO:     Started server process [15752]
+INFO:     Waiting for application startup.
+INFO:     Admin UI: http://127.0.0.1:8082/admin (local-only)
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8082 (Press CTRL+C to quit)
+INFO:     127.0.0.1:51481 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51486 - "GET /admin/api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51486 - "POST /admin/api/config/validate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51589 - "HEAD / HTTP/1.1" 204 No Content
+INFO:     127.0.0.1:51593 - "POST /v1/messages?beta=true HTTP/1.1" 422 Unprocessable Content
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+PS B:\Course\Project> fcc-server
+INFO:     Started server process [17072]
+INFO:     Waiting for application startup.
+INFO:     Admin UI: http://127.0.0.1:8082/admin (local-only)
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8082 (Press CTRL+C to quit)
+INFO:     127.0.0.1:51635 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51643 - "GET /admin/api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51643 - "POST /admin/api/config/validate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51643 - "GET /admin/api/providers/local-status HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [17072]
+PS B:\Course\Project> fcc-server
+INFO:     Started server process [10712]
+INFO:     Waiting for application startup.
+INFO:     Admin UI: http://127.0.0.1:8082/admin (local-only)
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8082 (Press CTRL+C to quit)
+INFO:     127.0.0.1:51886 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51893 - "GET /admin/api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51893 - "POST /admin/api/config/validate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51893 - "GET /admin/api/providers/local-status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51963 - "POST /v1 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51963 - "POST /v1 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51986 - "POST /v1 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51986 - "POST /v1 HTTP/1.1" 404 Not Found
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [10712]
+PS B:\Course\Project> fcc-server
+INFO:     Started server process [4196]
+INFO:     Waiting for application startup.
+INFO:     Admin UI: http://127.0.0.1:8082/admin (local-only)
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8082 (Press CTRL+C to quit)
+INFO:     127.0.0.1:51992 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52000 - "GET /admin/api/config HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52000 - "POST /admin/api/config/validate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52000 - "GET /admin/api/providers/local-status HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52279 - "HEAD / HTTP/1.1" 204 No Content
+INFO:     127.0.0.1:52286 - "POST /v1/messages?beta=true HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:52302 - "HEAD / HTTP/1.1" 204 No Content
+INFO:     127.0.0.1:52305 - "POST /v1/messages?beta=true HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:52305 - "POST /v1/messages?beta=true HTTP/1.1" 422 Unprocessable Content
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [4196]
+PS B:\Course\Project> 

@@ -1,0 +1,25 @@
+﻿№;Функция web-приложения;Автоматический тест (pytest);Файл;Статус (CI/локально)
+1;Регистрация (отключена);test_functional_table_4_1.py::TestFunctionalTable41::test_01_register_disabled;test_functional_table_4_1.py;pytest
+2;Подтверждение регистрации (отключено);test_functional_table_4_1.py::TestFunctionalTable41::test_02_verify_register_disabled;test_functional_table_4_1.py;pytest
+3;Публичное приглашение клиента;test_functional_table_4_1.py::TestFunctionalTable41::test_03_public_client_invite;test_functional_table_4_1.py;pytest
+4;Аутентификация менеджера;test_functional_table_4_1.py::TestFunctionalTable41::test_04_manager_login;test_functional_table_4_1.py;pytest
+5;Аутентификация администратора;test_functional_table_4_1.py::TestFunctionalTable41::test_05_admin_login;test_functional_table_4_1.py;pytest
+6;Получение списка клиентов;test_functional_table_4_1.py::TestFunctionalTable41::test_06_list_clients_manager;test_functional_table_4_1.py;pytest
+7;Получение карточки клиента;test_functional_table_4_1.py::TestFunctionalTable41::test_07_get_client_by_id;test_functional_table_4_1.py;pytest
+8;Создание клиента;test_functional_table_4_1.py::TestFunctionalTable41::test_08_create_client;test_functional_table_4_1.py;pytest
+9;Создание сделки;test_functional_table_4_1.py::TestFunctionalTable41::test_09_create_deal;test_functional_table_4_1.py;pytest
+10;Создание задачи CRM;test_functional_table_4_1.py::TestFunctionalTable41::test_10_create_task;test_functional_table_4_1.py;pytest
+11;Сводка панели управления (менеджер);test_functional_table_4_1.py::TestFunctionalTable41::test_11_dashboard_manager;test_functional_table_4_1.py;pytest
+12;Сводка панели управления (администратор);test_functional_table_4_1.py::TestFunctionalTable41::test_12_dashboard_admin;test_functional_table_4_1.py;pytest
+13;Получение списка звонков;test_functional_table_4_1.py::TestFunctionalTable41::test_13_list_calls;test_functional_table_4_1.py;pytest
+14;Создание видеосессии;test_functional_table_4_1.py::TestFunctionalTable41::test_14_create_video_session;test_functional_table_4_1.py;pytest
+15;Метаданные входа гостя в видеозвонок;test_functional_table_4_1.py::TestFunctionalTable41::test_15_video_join_meta;test_functional_table_4_1.py;pytest
+16;Список пользователей (администратор);test_functional_table_4_1.py::TestFunctionalTable41::test_16_list_users_admin;test_functional_table_4_1.py;pytest
+17;Создание менеджера;test_functional_table_4_1.py::TestFunctionalTable41::test_17_create_manager_user;test_functional_table_4_1.py;pytest
+18;Удаление задачи;test_functional_table_4_1.py::TestFunctionalTable41::test_18_delete_task;test_functional_table_4_1.py;pytest
+19;Ссылка приглашения клиента;test_functional_table_4_1.py::TestFunctionalTable41::test_19_client_invite_link;test_functional_table_4_1.py;pytest
+20;Создание звонка (администратор);test_calls_manager_restrictions.py::TestCallsManagerRestrictions::test_admin_can_still_create_call;test_calls_manager_restrictions.py;pytest
+21;Загрузка аудиозаписи;test_functional_table_4_1.py::TestFunctionalTable41::test_21_upload_voice_optional;test_functional_table_4_1.py;pytest
+22;Привязка записи к звонку;test_functional_table_4_1.py::TestFunctionalTable41::test_22_update_call_recording_optional;test_functional_table_4_1.py;pytest
+23;Профиль текущего пользователя;test_functional_table_4_1.py::TestFunctionalTable41::test_23_auth_me;test_functional_table_4_1.py;pytest
+24;Проверка работоспособности API;test_functional_table_4_1.py::TestFunctionalTable41::test_24_health;test_functional_table_4_1.py;pytest

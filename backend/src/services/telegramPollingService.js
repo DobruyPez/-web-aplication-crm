@@ -56,9 +56,17 @@ const pollOnce = async () => {
 
 const startTelegramPolling = async () => {
   if (!TELEGRAM_POLLING_ENABLED) {
+    console.warn(
+      "[telegram] Polling выключен (TELEGRAM_POLLING_ENABLED не true). " +
+        "Для Docker/localhost задайте TELEGRAM_POLLING_ENABLED=true в .env и перезапустите backend. " +
+        "Webhook с Telegram на localhost не доставляется — нужен polling или публичный HTTPS URL.",
+    );
     return { started: false, reason: "disabled" };
   }
   if (!isBotEnabled()) {
+    console.warn(
+      "[telegram] TELEGRAM_BOT_TOKEN не задан — бот не запущен. Добавьте токен BotFather в корневой .env (env_file в docker-compose).",
+    );
     return { started: false, reason: "bot_token_missing" };
   }
   try {

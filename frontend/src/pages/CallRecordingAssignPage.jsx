@@ -1,10 +1,53 @@
 import { useCallback, useEffect, useState } from "react";
-import { deleteUploadedVoiceFileFromServer, fetchUploadedVoiceFiles, uploadVoiceFileToServer } from "../api";
+import { useNavigate } from "react-router-dom";
+import {
+  deleteUploadedVoiceFileFromServer,
+  fetchUploadedVoiceFiles,
+  uploadVoiceFileToServer,
+} from "../api";
+import { useAuth } from "../authContext";
 import { API_ORIGIN, UPLOAD_MANAGEMENT_ALLOWED_VOICE_EXTENSIONS } from "../config";
+import VideoConferenceSetupModal from "../components/VideoConferenceSetupModal";
+import ManagerIncomingVideoInvite from "../components/ManagerIncomingVideoInvite";
 
 const audioHref = (filePath) => (filePath ? encodeURI(`${API_ORIGIN}${filePath}`) : "#");
 
-function CallRecordingAssignPage() {
+/** Менеджер: только видеоконференции (без upload/voice list). */
+function ManagerVideoCallsPanel() {
+  const navigate = useNavigate();
+  const [setupOpen, setSetupOpen] = useState(false);
+
+  const onSessionStarted = (session) => {
+    navigate(`/calls/video-host/${session.sessionId || session.id}`);
+  };
+
+  return (
+    <div className="frame-page doc-upload-page">
+      <header className="doc-upload-head">
+        <div>
+          <p className="hint">
+            Видеоконференция с автозаписью и автоматическим созданием звонка после завершения сессии. Рекомендуется браузер
+            Google Chrome.
+          </p>
+        </div>
+      </header>
+
+      <ManagerIncomingVideoInvite onOutgoingClick={() => setSetupOpen(true)} />
+
+      <section className="resource-section-card" style={{ marginTop: 16 }}>
+        <p className="hint" style={{ margin: 0 }}>
+          До 10 участников в комнате. Запись начинается, когда подключится второй участник. Готовые звонки — в разделе
+          «Звонки». Рекомендуется Google Chrome.
+        </p>
+      </section>
+
+      <VideoConferenceSetupModal open={setupOpen} onClose={() => setSetupOpen(false)} onStarted={onSessionStarted} />
+    </div>
+  );
+}
+
+/** Админ: ручная загрузка голосовых файлов (без старта видеосессии). */
+function AdminVoiceUploadPanel() {
   const [voiceFiles, setVoiceFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -63,7 +106,10 @@ function CallRecordingAssignPage() {
     <div className="frame-page doc-upload-page">
       <header className="doc-upload-head">
         <div>
-          <p className="hint">Голосовые файлы хранятся на сервере в `uploads/voice`, а в БД сохраняется относительный путь.</p>
+          <p className="hint">
+            Голосовые файлы хранятся на сервере в `uploads/voice`, а в БД сохраняется относительный путь. Создание звонков
+            — в разделе «Звонки».
+          </p>
         </div>
         <button type="button" className="refresh-btn modern-btn" onClick={reload} disabled={loading || uploading}>
           Обновить
@@ -86,6 +132,9 @@ function CallRecordingAssignPage() {
       <section className="resource-section-card">
         <div className="resource-section-head">
           <h3>Голосовые файлы ({voiceFiles.length})</h3>
+          <p className="hint">
+            Администратор может подключиться к видеосессии по guest-ссылке менеджера (режим наблюдателя, без записи).
+          </p>
         </div>
         <div className="doc-upload-cards">
           {voiceFiles.map((voice) => (
@@ -115,6 +164,32 @@ function CallRecordingAssignPage() {
           ))}
         </div>
       </section>
+    </div>
+  );
+}
+
+function CallRecordingAssignPage() {
+  const { user, isAdmin, isManager, authReady } = useAuth();
+
+  if (!authReady) {
+    return (
+      <div className="frame-page doc-upload-page">
+        <p className="hint">Загрузка профиля...</p>
+      </div>
+    );
+  }
+
+  if (isManager && !isAdmin) {
+    return <ManagerVideoCallsPanel />;
+  }
+
+  if (isAdmin) {
+    return <AdminVoiceUploadPanel />;
+  }
+
+  return (
+    <div className="frame-page doc-upload-page">
+      <p className="hint error">Неизвестная роль: {user?.role ?? "—"}</p>
     </div>
   );
 }

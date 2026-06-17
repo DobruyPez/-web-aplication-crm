@@ -1,8 +1,5 @@
-const path = require("path");
-require("dotenv").config({
-  path: path.join(__dirname, "..", "..", ".env"),
-  override: true,
-});
+const { loadEnv } = require("../loadEnv");
+loadEnv();
 
 if (!process.env.DATABASE_URL) {
   process.env.DATABASE_URL =

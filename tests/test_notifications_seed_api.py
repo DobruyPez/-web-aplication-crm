@@ -30,9 +30,9 @@
   pytest tests/test_notifications_seed_api.py -s
 
 По умолчанию URL берётся из tests/config.py (переменная BASE_URL). Учётные данные
-администратора: переменные CRM_TEST_ADMIN_EMAIL и CRM_TEST_ADMIN_PASSWORD; если
-логин с паролем из CRM_TEST_ADMIN_PASSWORD не удался, пробуется запасной список
-(1234, admin123) — под разные способы инициализации БД.
+администратора: user_1@test.crm.local / 1234 (как в tests/seed_test_data.sql), либо
+переменные CRM_TEST_ADMIN_EMAIL и CRM_TEST_ADMIN_PASSWORD; если логин не удался,
+пробуется запасной список паролей (1234, admin123).
 
 Тест создаёт пользователей и сущности и намеренно не удаляет их — чтобы можно было
 войти в приложение и визуально проверить дашборд и связи (клиенты, сделки, задачи,
@@ -53,7 +53,7 @@ from config import BASE_URL as CONFIG_BASE_URL, TIMEOUT
 
 BASE_URL = os.environ.get("CRM_API_BASE_URL", CONFIG_BASE_URL).rstrip("/")
 
-ADMIN_EMAIL = os.environ.get("CRM_TEST_ADMIN_EMAIL", "admin@crm.by")
+ADMIN_EMAIL = os.environ.get("CRM_TEST_ADMIN_EMAIL", "user_1@test.crm.local")
 _ADMIN_PW_ENV = os.environ.get("CRM_TEST_ADMIN_PASSWORD")
 ADMIN_PASSWORD_FALLBACKS = ["1234", "admin123"]
 
@@ -131,7 +131,7 @@ def admin_headers(admin_token: str) -> dict[str, str]:
     return _auth_headers(admin_token)
 
 
-def test_seed_notification_demo_data(session: requests.Session, admin_headers: dict[str, str]):
+def _seed_notification_demo_data_impl(session: requests.Session, admin_headers: dict[str, str]) -> None:
     """
     Создаёт трёх менеджеров, клиентов, загрузки файлов, документы, сделки (разные этапы),
     задачи (разные статусы/приоритеты и сроки) — через публичный API от имени админа.
@@ -154,7 +154,7 @@ def test_seed_notification_demo_data(session: requests.Session, admin_headers: d
             "fullName": name,
             "email": email,
             "password": MANAGER_PASSWORD,
-            "phone": f"+37529{9000000 + i}",
+            "phone": f"+37529{9000000 + i:07d}",
         }
         r = session.post(f"{BASE_URL}/api/users", json=body, headers=admin_headers, timeout=TIMEOUT)
         assert r.status_code == 201, r.text
@@ -183,8 +183,8 @@ def test_seed_notification_demo_data(session: requests.Session, admin_headers: d
         # --- Клиент ---
         client_payload = {
             "name": f"Клиент уведомлений #{idx + 1} ({tag})",
-            "company": f"DemoCo-{tag}",
-            "phone": f"+37517{100000 + idx}",
+            "name": f"DemoCo-{tag}",
+            "phone": f"+37529{1_000_000 + idx:07d}",
             "email": f"client_{tag}_{idx}@example.com",
             "address": "Минск",
             "notes": "Создано тестом test_notifications_seed_api",
@@ -231,6 +231,7 @@ def test_seed_notification_demo_data(session: requests.Session, admin_headers: d
             assert name in index_by_name, f"Файл {name} должен появиться в GET /api/uploads/docs"
 
         # --- Документы (привязка к клиенту и загрузчику; filename из индекса) ---
+        document_ids: list[int] = []
         for stored_name in uploaded_names:
             row = index_by_name[stored_name]
             doc_payload = {
@@ -248,7 +249,9 @@ def test_seed_notification_demo_data(session: requests.Session, admin_headers: d
                 timeout=TIMEOUT,
             )
             assert rd.status_code == 201, rd.text
-            print(f"[seed] Документ id={rd.json().get('id')} filename={stored_name}")
+            doc_id = int(rd.json()["id"])
+            document_ids.append(doc_id)
+            print(f"[seed] Документ id={doc_id} filename={stored_name}")
 
         # --- Сделки: все этапы workflow, разные суммы и даты закрытия ---
         deals_meta = [
@@ -299,6 +302,7 @@ def test_seed_notification_demo_data(session: requests.Session, admin_headers: d
                 "closingDate": dm["closingDate"],
                 "clientId": client_id,
                 "managerId": mid,
+                "documentIds": document_ids,
             }
             rz = session.post(
                 f"{BASE_URL}/api/deals",
@@ -412,3 +416,7 @@ def test_seed_notification_demo_data(session: requests.Session, admin_headers: d
         "  3) Telegram: только при TELEGRAM_BOT_TOKEN и заполненном telegramChatId в профиле.\n"
         f"\nМаркер данных в названиях сущностей: {tag}\n"
     )
+
+
+def test_seed_notification_demo_data(session: requests.Session, admin_headers: dict[str, str]):
+    _seed_notification_demo_data_impl(session, admin_headers)

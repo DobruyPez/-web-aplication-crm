@@ -1,0 +1,100 @@
+{
+  "files": [
+    {
+      "filename": "video-1f4b875e-decc-4e84-bebe-4c9a2faf98e8-1780600604123.webm",
+      "filePath": "/uploads/voice/video-1f4b875e-decc-4e84-bebe-4c9a2faf98e8-1780600604123.webm",
+      "fileSize": 2536657,
+      "mimeType": "video/webm",
+      "uploadedAt": "2026-06-04T19:16:44.144Z",
+      "uploadedByUserId": 20,
+      "videoSessionId": "1f4b875e-decc-4e84-bebe-4c9a2faf98e8"
+    },
+    {
+      "filename": "video-2f1616fd-2887-44e1-b4cc-39e5995bac05-1780904489572.webm",
+      "filePath": "/uploads/voice/video-2f1616fd-2887-44e1-b4cc-39e5995bac05-1780904489572.webm",
+      "fileSize": 1855335,
+      "mimeType": "video/webm",
+      "uploadedAt": "2026-06-08T07:41:29.617Z",
+      "uploadedByUserId": 20,
+      "videoSessionId": "2f1616fd-2887-44e1-b4cc-39e5995bac05"
+    },
+    {
+      "filename": "video-45c3d238-e15a-4e0e-8fa8-c680156d5069-1779444274506.webm",
+      "filePath": "/uploads/voice/video-45c3d238-e15a-4e0e-8fa8-c680156d5069-1779444274506.webm",
+      "fileSize": 4431867,
+      "mimeType": "video/webm",
+      "uploadedAt": "2026-05-22T10:04:34.600Z",
+      "uploadedByUserId": 2,
+      "videoSessionId": "45c3d238-e15a-4e0e-8fa8-c680156d5069"
+    },
+    {
+      "filename": "video-4784b010-918c-4182-9b17-08811b9b7fcf-1779444630608.webm",
+      "filePath": "/uploads/voice/video-4784b010-918c-4182-9b17-08811b9b7fcf-1779444630608.webm",
+      "fileSize": 1390951,
+      "mimeType": "video/webm",
+      "uploadedAt": "2026-05-22T10:10:30.645Z",
+      "uploadedByUserId": 2,
+      "videoSessionId": "4784b010-918c-4182-9b17-08811b9b7fcf"
+    },
+    {
+      "filename": "video-4cd79385-0cb1-49d6-8d2c-ca3ba6e826f7-1779445048588.webm",
+      "filePath": "/uploads/voice/video-4cd79385-0cb1-49d6-8d2c-ca3ba6e826f7-1779445048588.webm",
+      "fileSize": 2477688,
+      "mimeType": "video/webm",
+      "uploadedAt": "2026-05-22T10:17:28.645Z",
+      "uploadedByUserId": 2,
+      "videoSessionId": "4cd79385-0cb1-49d6-8d2c-ca3ba6e826f7"
+    },
+    {
+      "filename": "video-6a33812c-d4bb-4e00-9015-4a3eaa1b4032-1780904029550.webm",
+      "filePath": "/uploads/voice/video-6a33812c-d4bb-4e00-9015-4a3eaa1b4032-1780904029550.webm",
+      "fileSize": 3464629,
+      "mimeType": "video/webm",
+      "uploadedAt": "2026-06-08T07:33:49.636Z",
+      "uploadedByUserId": 20,
+      "videoSessionId": "6a33812c-d4bb-4e00-9015-4a3eaa1b4032"
+    },
+    {
+      "filename": "video-a04b6164-f022-45bb-95d0-4e6413310ce1-1779410387710.webm",
+      "filePath": "/uploads/voice/video-a04b6164-f022-45bb-95d0-4e6413310ce1-1779410387710.webm",
+      "fileSize": 4950078,
+      "mimeType": "video/webm",
+      "uploadedAt": "2026-05-22T00:39:47.748Z",
+      "uploadedByUserId": 2,
+      "videoSessionId": "a04b6164-f022-45bb-95d0-4e6413310ce1"
+    },
+    {
+      "filename": "video-e404aee8-767d-4d34-b811-ecb1e5fafd86-1779447577070.webm",
+      "filePath": "/uploads/voice/video-e404aee8-767d-4d34-b811-ecb1e5fafd86-1779447577070.webm",
+      "fileSize": 9866518,
+      "mimeType": "video/webm",
+      "uploadedAt": "2026-05-22T10:59:37.385Z",
+      "uploadedByUserId": 2,
+      "videoSessionId": "e404aee8-767d-4d34-b811-ecb1e5fafd86"
+    },
+    {
+      "filename": "videoplayback (1).mp3",
+      "filePath": "/uploads/voice/videoplayback (1).mp3",
+      "fileSize": 1761132,
+      "mimeType": "audio/mpeg",
+      "uploadedAt": "2026-06-04T20:14:28.774Z",
+      "uploadedByUserId": 1
+    },
+    {
+      "filename": "videoplayback-_28_.m4a",
+      "filePath": "/uploads/voice/videoplayback-_28_.m4a",
+      "fileSize": 418238,
+      "mimeType": "audio/x-m4a",
+      "uploadedAt": "2026-06-04T19:53:02.437Z",
+      "uploadedByUserId": 1
+    },
+    {
+      "filename": "videoplayback-_7_.mp3",
+      "filePath": "/uploads/voice/videoplayback-_7_.mp3",
+      "fileSize": 383946,
+      "mimeType": "audio/mpeg",
+      "uploadedAt": "2026-06-04T20:00:03.883Z",
+      "uploadedByUserId": 1
+    }
+  ]
+}
